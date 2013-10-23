@@ -21,6 +21,10 @@
 		5A5ABB5F1818420D00155B8F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB411818420D00155B8F /* UIKit.framework */; };
 		5A5ABB671818420D00155B8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB651818420D00155B8F /* InfoPlist.strings */; };
 		5A5ABB691818420D00155B8F /* JustMovdAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABB681818420D00155B8F /* JustMovdAppTests.m */; };
+		5A5ABB7618186E6700155B8F /* Questionnaire.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB7518186E6700155B8F /* Questionnaire.storyboard */; };
+		5A5ABB7918186E9200155B8F /* QuestionnaireViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABB7818186E9200155B8F /* QuestionnaireViewController.m */; };
+		5A5ABB7B1818723800155B8F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB7A1818723800155B8F /* Parse.framework */; };
+		5A5ABB7E18187CB700155B8F /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABB7D18187CB700155B8F /* QuestionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,12 @@
 		5A5ABB641818420D00155B8F /* JustMovdAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JustMovdAppTests-Info.plist"; sourceTree = "<group>"; };
 		5A5ABB661818420D00155B8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A5ABB681818420D00155B8F /* JustMovdAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JustMovdAppTests.m; sourceTree = "<group>"; };
+		5A5ABB7518186E6700155B8F /* Questionnaire.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Questionnaire.storyboard; sourceTree = "<group>"; };
+		5A5ABB7718186E9200155B8F /* QuestionnaireViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionnaireViewController.h; sourceTree = "<group>"; };
+		5A5ABB7818186E9200155B8F /* QuestionnaireViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionnaireViewController.m; sourceTree = "<group>"; };
+		5A5ABB7A1818723800155B8F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		5A5ABB7C18187CB700155B8F /* QuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionView.h; sourceTree = "<group>"; };
+		5A5ABB7D18187CB700155B8F /* QuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A5ABB7B1818723800155B8F /* Parse.framework in Frameworks */,
 				5A5ABB401818420D00155B8F /* CoreGraphics.framework in Frameworks */,
 				5A5ABB421818420D00155B8F /* UIKit.framework in Frameworks */,
 				5A5ABB3E1818420D00155B8F /* Foundation.framework in Frameworks */,
@@ -101,6 +112,7 @@
 		5A5ABB3C1818420D00155B8F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A5ABB7A1818723800155B8F /* Parse.framework */,
 				5A5ABB3D1818420D00155B8F /* Foundation.framework */,
 				5A5ABB3F1818420D00155B8F /* CoreGraphics.framework */,
 				5A5ABB411818420D00155B8F /* UIKit.framework */,
@@ -112,9 +124,9 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
+				5A5ABB721818422100155B8F /* Kabir */,
 				5A5ABB741818423900155B8F /* Kyle */,
 				5A5ABB731818422700155B8F /* Eric */,
-				5A5ABB721818422100155B8F /* Kabir */,
 				5A5ABB4C1818420D00155B8F /* AppDelegate.h */,
 				5A5ABB4D1818420D00155B8F /* AppDelegate.m */,
 				5A5ABB4F1818420D00155B8F /* Main.storyboard */,
@@ -158,6 +170,11 @@
 		5A5ABB721818422100155B8F /* Kabir */ = {
 			isa = PBXGroup;
 			children = (
+				5A5ABB7518186E6700155B8F /* Questionnaire.storyboard */,
+				5A5ABB7C18187CB700155B8F /* QuestionView.h */,
+				5A5ABB7D18187CB700155B8F /* QuestionView.m */,
+				5A5ABB7718186E9200155B8F /* QuestionnaireViewController.h */,
+				5A5ABB7818186E9200155B8F /* QuestionnaireViewController.m */,
 			);
 			name = Kabir;
 			sourceTree = "<group>";
@@ -255,6 +272,7 @@
 				5A5ABB561818420D00155B8F /* Images.xcassets in Resources */,
 				5A5ABB481818420D00155B8F /* InfoPlist.strings in Resources */,
 				5A5ABB511818420D00155B8F /* Main.storyboard in Resources */,
+				5A5ABB7618186E6700155B8F /* Questionnaire.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,8 +291,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A5ABB7E18187CB700155B8F /* QuestionView.m in Sources */,
 				5A5ABB541818420D00155B8F /* ViewController.m in Sources */,
 				5A5ABB4E1818420D00155B8F /* AppDelegate.m in Sources */,
+				5A5ABB7918186E9200155B8F /* QuestionnaireViewController.m in Sources */,
 				5A5ABB4A1818420D00155B8F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,6 +422,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/KabirMahal/Documents/Mobile\\ Makers/JustMovdApp",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JustMovdApp/JustMovdApp-Prefix.pch";
 				INFOPLIST_FILE = "JustMovdApp/JustMovdApp-Info.plist";
@@ -415,6 +439,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/KabirMahal/Documents/Mobile\\ Makers/JustMovdApp",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JustMovdApp/JustMovdApp-Prefix.pch";
 				INFOPLIST_FILE = "JustMovdApp/JustMovdApp-Info.plist";
@@ -484,6 +512,7 @@
 				5A5ABB6E1818420D00155B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5A5ABB6F1818420D00155B8F /* Build configuration list for PBXNativeTarget "JustMovdAppTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +521,7 @@
 				5A5ABB711818420D00155B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
