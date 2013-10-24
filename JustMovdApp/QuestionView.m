@@ -23,6 +23,8 @@
         
         answerTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, 180, 200, 30)];
         answerTextField.borderStyle = UITextBorderStyleRoundedRect;
+        
+        self.backgroundColor = [UIColor blueColor];
 
         [self addSubview:answerTextField];
         
