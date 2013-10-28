@@ -25,6 +25,19 @@
 		5A5ABB7918186E9200155B8F /* QuestionnaireViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABB7818186E9200155B8F /* QuestionnaireViewController.m */; };
 		5A5ABB7B1818723800155B8F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB7A1818723800155B8F /* Parse.framework */; };
 		5A5ABB7E18187CB700155B8F /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABB7D18187CB700155B8F /* QuestionView.m */; };
+		5A5ABB931819AAD000155B8F /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB921819AAD000155B8F /* background.png */; };
+		5A5ABB961819B3EB00155B8F /* bluebeer_tall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB941819B3EB00155B8F /* bluebeer_tall.png */; };
+		5A5ABB971819B3EB00155B8F /* coffee_tall.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB951819B3EB00155B8F /* coffee_tall.png */; };
+		5A5ABB9D1819DDFF00155B8F /* background2_size.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB9C1819DDFF00155B8F /* background2_size.png */; };
+		5A5ABB9F1819DFC600155B8F /* background3_size.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB9E1819DFC600155B8F /* background3_size.png */; };
+		5A5ABBA1181ADB9A00155B8F /* coffee_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABBA0181ADB9A00155B8F /* coffee_circle.png */; };
+		5A5ABBA3181ADBAC00155B8F /* beer_size@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABBA2181ADBAC00155B8F /* beer_size@2x.png */; };
+		5A5ABBA7181AE96400155B8F /* weightlifting_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABBA5181AE96400155B8F /* weightlifting_circle.png */; };
+		5A5ABBA8181AE96400155B8F /* yoga_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABBA6181AE96400155B8F /* yoga_circle.png */; };
+		5A5ABBAB181B071A00155B8F /* sports_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABBA9181B071A00155B8F /* sports_circle.png */; };
+		5A5ABBAC181B071A00155B8F /* vidgame_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABBAA181B071A00155B8F /* vidgame_circle.png */; };
+		5A5ABC0E181EC1D700155B8F /* IntroChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABC0B181EC1D700155B8F /* IntroChildViewController.m */; };
+		5A5ABC0F181EC1D700155B8F /* IntroParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABC0D181EC1D700155B8F /* IntroParentViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +76,26 @@
 		5A5ABB7A1818723800155B8F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		5A5ABB7C18187CB700155B8F /* QuestionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionView.h; sourceTree = "<group>"; };
 		5A5ABB7D18187CB700155B8F /* QuestionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionView.m; sourceTree = "<group>"; };
+		5A5ABB921819AAD000155B8F /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		5A5ABB941819B3EB00155B8F /* bluebeer_tall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluebeer_tall.png; sourceTree = "<group>"; };
+		5A5ABB951819B3EB00155B8F /* coffee_tall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coffee_tall.png; sourceTree = "<group>"; };
+		5A5ABB981819B9A700155B8F /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		5A5ABB991819B9A700155B8F /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		5A5ABB9A1819B9A700155B8F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		5A5ABB9B1819B9A700155B8F /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		5A5ABB9C1819DDFF00155B8F /* background2_size.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2_size.png; sourceTree = "<group>"; };
+		5A5ABB9E1819DFC600155B8F /* background3_size.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background3_size.png; sourceTree = "<group>"; };
+		5A5ABBA0181ADB9A00155B8F /* coffee_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coffee_circle.png; sourceTree = "<group>"; };
+		5A5ABBA2181ADBAC00155B8F /* beer_size@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beer_size@2x.png"; sourceTree = "<group>"; };
+		5A5ABBA4181AE04800155B8F /* QuestionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionViewDelegate.h; sourceTree = "<group>"; };
+		5A5ABBA5181AE96400155B8F /* weightlifting_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weightlifting_circle.png; sourceTree = "<group>"; };
+		5A5ABBA6181AE96400155B8F /* yoga_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yoga_circle.png; sourceTree = "<group>"; };
+		5A5ABBA9181B071A00155B8F /* sports_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sports_circle.png; sourceTree = "<group>"; };
+		5A5ABBAA181B071A00155B8F /* vidgame_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vidgame_circle.png; sourceTree = "<group>"; };
+		5A5ABC0A181EC1D700155B8F /* IntroChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroChildViewController.h; sourceTree = "<group>"; };
+		5A5ABC0B181EC1D700155B8F /* IntroChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroChildViewController.m; sourceTree = "<group>"; };
+		5A5ABC0C181EC1D700155B8F /* IntroParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroParentViewController.h; sourceTree = "<group>"; };
+		5A5ABC0D181EC1D700155B8F /* IntroParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroParentViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,11 +203,17 @@
 		5A5ABB721818422100155B8F /* Kabir */ = {
 			isa = PBXGroup;
 			children = (
+				5A5ABC0A181EC1D700155B8F /* IntroChildViewController.h */,
+				5A5ABC0B181EC1D700155B8F /* IntroChildViewController.m */,
+				5A5ABC0C181EC1D700155B8F /* IntroParentViewController.h */,
+				5A5ABC0D181EC1D700155B8F /* IntroParentViewController.m */,
 				5A5ABB7518186E6700155B8F /* Questionnaire.storyboard */,
 				5A5ABB7C18187CB700155B8F /* QuestionView.h */,
 				5A5ABB7D18187CB700155B8F /* QuestionView.m */,
+				5A5ABBA4181AE04800155B8F /* QuestionViewDelegate.h */,
 				5A5ABB7718186E9200155B8F /* QuestionnaireViewController.h */,
 				5A5ABB7818186E9200155B8F /* QuestionnaireViewController.m */,
+				5A5ABB7F1819830B00155B8F /* Assets */,
 			);
 			name = Kabir;
 			sourceTree = "<group>";
@@ -191,6 +230,28 @@
 			children = (
 			);
 			name = Kyle;
+			sourceTree = "<group>";
+		};
+		5A5ABB7F1819830B00155B8F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				5A5ABBA9181B071A00155B8F /* sports_circle.png */,
+				5A5ABBAA181B071A00155B8F /* vidgame_circle.png */,
+				5A5ABBA5181AE96400155B8F /* weightlifting_circle.png */,
+				5A5ABBA6181AE96400155B8F /* yoga_circle.png */,
+				5A5ABBA2181ADBAC00155B8F /* beer_size@2x.png */,
+				5A5ABBA0181ADB9A00155B8F /* coffee_circle.png */,
+				5A5ABB9E1819DFC600155B8F /* background3_size.png */,
+				5A5ABB9C1819DDFF00155B8F /* background2_size.png */,
+				5A5ABB981819B9A700155B8F /* Roboto-Light.ttf */,
+				5A5ABB991819B9A700155B8F /* Roboto-Medium.ttf */,
+				5A5ABB9A1819B9A700155B8F /* Roboto-Regular.ttf */,
+				5A5ABB9B1819B9A700155B8F /* Roboto-Thin.ttf */,
+				5A5ABB941819B3EB00155B8F /* bluebeer_tall.png */,
+				5A5ABB951819B3EB00155B8F /* coffee_tall.png */,
+				5A5ABB921819AAD000155B8F /* background.png */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,10 +330,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A5ABB961819B3EB00155B8F /* bluebeer_tall.png in Resources */,
+				5A5ABBA7181AE96400155B8F /* weightlifting_circle.png in Resources */,
+				5A5ABBA1181ADB9A00155B8F /* coffee_circle.png in Resources */,
 				5A5ABB561818420D00155B8F /* Images.xcassets in Resources */,
+				5A5ABB9F1819DFC600155B8F /* background3_size.png in Resources */,
+				5A5ABB931819AAD000155B8F /* background.png in Resources */,
+				5A5ABB9D1819DDFF00155B8F /* background2_size.png in Resources */,
+				5A5ABBA3181ADBAC00155B8F /* beer_size@2x.png in Resources */,
+				5A5ABBA8181AE96400155B8F /* yoga_circle.png in Resources */,
 				5A5ABB481818420D00155B8F /* InfoPlist.strings in Resources */,
+				5A5ABBAB181B071A00155B8F /* sports_circle.png in Resources */,
 				5A5ABB511818420D00155B8F /* Main.storyboard in Resources */,
+				5A5ABBAC181B071A00155B8F /* vidgame_circle.png in Resources */,
 				5A5ABB7618186E6700155B8F /* Questionnaire.storyboard in Resources */,
+				5A5ABB971819B3EB00155B8F /* coffee_tall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,9 +365,11 @@
 			files = (
 				5A5ABB7E18187CB700155B8F /* QuestionView.m in Sources */,
 				5A5ABB541818420D00155B8F /* ViewController.m in Sources */,
+				5A5ABC0E181EC1D700155B8F /* IntroChildViewController.m in Sources */,
 				5A5ABB4E1818420D00155B8F /* AppDelegate.m in Sources */,
 				5A5ABB7918186E9200155B8F /* QuestionnaireViewController.m in Sources */,
 				5A5ABB4A1818420D00155B8F /* main.m in Sources */,
+				5A5ABC0F181EC1D700155B8F /* IntroParentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,18 +12,15 @@
 @interface QuestionnaireViewController ()
 {
     UIView *questionsHolder;
-    
-    QuestionView *onScreenView;
-    QuestionView *nextView;
-    //QuestionView *tempView;
+
     NSArray *questions;
     NSMutableArray *answers;
     
     NSMutableArray *questionViewsArray;
-    CGRect onScreenFrame;
-    CGRect offScreenFrame;
     
     int counter;
+    
+    NSMutableArray *imagesArray;
 }
 
 @end
@@ -36,26 +33,33 @@
 {
     [super viewDidLoad];
     
-    answers = [NSMutableArray new];
-    questions = @[@"First Question:", @"Second Question:", @"Third Question:", @"Fourth Question:"];
-    counter = 0;
     
-//    QuestionView *view1 = [[QuestionView alloc] initWithFrame:CGRectMake(30, 60, 260, 400)];
-//    view1.questionLabel.text = [questions objectAtIndex:counter];
-//    view1.backgroundColor = [UIColor blueColor];
-//    onScreenFrame = view1.frame;
-//    
-//
-//    QuestionView *view2 = [[QuestionView alloc] initWithFrame:CGRectMake(320, 60, 260, 400)];
-//    view2.backgroundColor = [UIColor greenColor];
-//    offScreenFrame = view2.frame;
-//
-//    
-//    [self.view addSubview:view1];
-//    [self.view addSubview:view2];
-//    
-//    onScreenView = view1;
-//    nextView = view2;
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background3_size.png"]];
+    
+    answers = [NSMutableArray new];
+    questionViewsArray = [NSMutableArray new];
+    imagesArray = [NSMutableArray new];
+    
+    questions = @[@"Coffee Or Beer?", @"Lift Or Yoga?", @"Video Games or Sports?"];
+    
+    NSMutableDictionary *firstViewDict = [[NSMutableDictionary alloc] init];
+    [firstViewDict setObject:@"coffee_circle" forKey:@"first"];
+    [firstViewDict setObject:@"beer_size@2x" forKey:@"second"];
+    
+    NSMutableDictionary *secondViewDict = [[NSMutableDictionary alloc] init];
+    [secondViewDict setObject:@"weightlifting_circle" forKey:@"first"];
+    [secondViewDict setObject:@"yoga_circle" forKey:@"second"];
+    
+    NSMutableDictionary *thirdViewDict = [[NSMutableDictionary alloc] init];
+    [thirdViewDict setObject:@"vidgame_circle" forKey:@"first"];
+    [thirdViewDict setObject:@"sports_circle" forKey:@"second"];
+    
+    [imagesArray addObject:firstViewDict];
+    [imagesArray addObject:secondViewDict];
+    [imagesArray addObject:thirdViewDict];
+    
+    
+    counter = 0;
     
     [self makeQuestionViews];
     
@@ -77,11 +81,14 @@
     questionsHolder = [[UIView alloc] initWithFrame:CGRectMake(30, 60, 320*[questions count], 400)];
     [self.view addSubview:questionsHolder];
     
-    int spacing =290;
+    int spacing = 320;
     
     for (int i = 0; i < [questions count]; i++){
         
-        QuestionView *tempView = [[QuestionView alloc] initWithFrame:CGRectMake((i*spacing),0, 260, 400)];
+        QuestionView *tempView = [[QuestionView alloc] initWithFrame:CGRectMake((i*spacing),0, 260, 400) andFirstImage:[[imagesArray objectAtIndex:i] objectForKey:@"first"] andSecondImage:[[imagesArray objectAtIndex:i] objectForKey:@"second"] andQuestion:[questions objectAtIndex:i]];
+
+
+        [questionViewsArray addObject:tempView];
         [questionsHolder addSubview:tempView];
     }
     
@@ -91,34 +98,17 @@
 
 -(void)moveView{
     
-    counter++;
-    
-    //tempView = onScreenView;
-    nextView.questionLabel.text = [questions objectAtIndex:counter];
-
-    
-//    [UIView animateWithDuration:0.2 animations:^{
-//        onScreenView.transform = CGAffineTransformMakeTranslation(20, 0);
-//    } completion:^(BOOL finished) {
-//        [UIView animateWithDuration:0.8 animations:^{
-//            onScreenView.transform = CGAffineTransformMakeTranslation(-500, 0);
-//            nextView.transform = CGAffineTransformMakeTranslation(-290, 0);
-//        } completion:^(BOOL finished) {
-//            
-//        }];
-//    }];
-    
     [UIView animateWithDuration:0.1 animations:^{
-       // questionsHolder.transform = CGAffineTransformMakeTranslation(20, 0);
         questionsHolder.transform = CGAffineTransformTranslate(questionsHolder.transform, 20, 0);
 
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.6 animations:^{
-            //questionsHolder.transform = CGAffineTransformMakeTranslation(-290, 0);
-            questionsHolder.transform = CGAffineTransformTranslate(questionsHolder.transform, -310, 0);
+            questionsHolder.transform = CGAffineTransformTranslate(questionsHolder.transform, -340, 0);
             
         }];
     }];
+                              
+    counter++;
     
     
 }

@@ -11,6 +11,8 @@
 @interface QuestionView : UIView
 
 @property (strong, nonatomic) UILabel *questionLabel;
-@property (strong, nonatomic) UITextField *answerTextField;
+
+
+-(id)initWithFrame:(CGRect)frame andFirstImage:(NSString*)firstImage andSecondImage:(NSString*)secondImage andQuestion:(NSString*)question;
 
 @end
