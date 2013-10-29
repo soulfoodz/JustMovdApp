@@ -6,15 +6,90 @@
 //  Copyright (c) 2013 Kabir Mahal. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "AppDelegate.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO"
+                  clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
+    
+    
+    // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
+    // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
+    // [PFFacebookUtils initializeFacebook];
+    // ****************************************************************************
+    
+    [PFUser enableAutomaticUser];
+    
+    PFACL *defaultACL = [PFACL ACL];
+    
+    // If you would like all objects to be private by default, remove this line.
+    [defaultACL setPublicReadAccess:YES];
+    
+    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    
+   // [self.window makeKeyAndVisible];
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+     UIRemoteNotificationTypeAlert|
+     UIRemoteNotificationTypeSound];
+    
+//    PFUser *firstUser = [PFUser user];
+//    firstUser.username = @"Eric";
+//    firstUser.password = @"hotStuff";
+//    firstUser.email = @"ericwebb85@yahoo.com";
+//    [firstUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if (succeeded == YES) {
+//            NSLog(@"success!");
+//        }
+//        else NSLog(@"Failure!");
+//    }];
+    
+    [PFUser logInWithUsernameInBackground:@"David Deleon" password:@"password"
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                            NSLog(@"got it");
+                                        } else {
+                                            // The login failed. Check error to see why.
+                                            NSLog(@"error %@", error);
+                                        }
+                                    }];
+    
     return YES;
 }
+
+//
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
+//    [PFPush storeDeviceToken:newDeviceToken];
+//    [PFPush subscribeToChannelInBackground:@"" target:self selector:@selector(subscribeFinished:error:)];
+//}
+//
+//
+//- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+//    if (error.code == 3010) {
+//        NSLog(@"Push notifications are not supported in the iOS Simulator.");
+//    } else {
+//        // show some alert or otherwise handle the failure to register.
+//        NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+//	}
+//}
+//
+//
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+//    [PFPush handlePush:userInfo];
+//    
+//    if (application.applicationState != UIApplicationStateActive) {
+//        [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
+//    }
+//}
+
+
+
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -41,6 +116,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - ()
+
+- (void)subscribeFinished:(NSNumber *)result error:(NSError *)error {
+    if ([result boolValue]) {
+        NSLog(@"ParseStarterProject successfully subscribed to push notifications on the broadcast channel.");
+    } else {
+        NSLog(@"ParseStarterProject failed to subscribe to push notifications on the broadcast channel.");
+    }
 }
 
 @end
