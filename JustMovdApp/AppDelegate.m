@@ -7,15 +7,44 @@
 //
 
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO"
+                  clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
+    
+    // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
+    // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
+    [PFFacebookUtils initializeFacebook];
+    // ****************************************************************************
+    
+    //[PFUser enableAutomaticUser];
+    
+//    PFACL *defaultACL = [PFACL ACL];
+//    
+//    // If you would like all objects to be private by default, remove this line.
+//    [defaultACL setPublicReadAccess:YES];
+//    
+//    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
+    
     // Override point for customization after application launch.
+    
+    //[self.window makeKeyAndVisible];
+    
+//    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+//    
+//    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+//     UIRemoteNotificationTypeAlert|
+//     UIRemoteNotificationTypeSound];
+    
+    
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
