@@ -51,8 +51,19 @@
 //     UIRemoteNotificationTypeAlert|
 //     UIRemoteNotificationTypeSound];
     
+    [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO" clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
+
     
+    [PFFacebookUtils initializeFacebook];
     return YES;
+}
+
+- (BOOL) application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [PFFacebookUtils handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [PFFacebookUtils handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Comms.h"
 
-@interface IntroParentViewController : UIViewController <UIPageViewControllerDataSource>
+
+@interface IntroParentViewController : UIViewController <UIPageViewControllerDataSource, CommsDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 
