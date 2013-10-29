@@ -27,19 +27,32 @@
 @synthesize pageController;
 @synthesize skipBarButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+
+
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    if (![PFUser currentUser])
+    {
+        [self loadIntro];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"toAppDirectly" sender:self];
+    }
+    
+}
+
+-(void)loadIntro{
+    
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     
     pageController.dataSource = self;
@@ -48,7 +61,7 @@
     IntroChildViewController *initialViewController = [self viewControllerAtIndex:0];
     
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
-
+    
     [pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     [self addChildViewController:self.pageController];
@@ -65,13 +78,14 @@
     [self.view addSubview:nextButton];
     
     [nextButton addTarget:self action:@selector(nextView) forControlEvents:UIControlEventTouchUpInside];
-
+    
     
 }
 
+
+
+
 -(void)nextView{
-   // [self performSegueWithIdentifier:@"abc" sender:self];
-    //[self.loginButton setEnabled:NO];
     
     // Do the login
     [Comms login:self];
@@ -135,7 +149,7 @@
              [user setObject:imageFile forKey:@"profilePictureFile"];
              [user save]; // <--- Don't want to save in bacgkground, only let user in if their pictures are good
              [[NSURLCache sharedURLCache] removeAllCachedResponses];
-             //[self dismissViewControllerAnimated:YES completion:nil];
+             
              [self performSegueWithIdentifier:@"abc" sender:self];
              
          }];
@@ -185,7 +199,7 @@
     
     index++;
     
-    if (index == 5) {
+    if (index == 3) {
         return nil;
     }
     
@@ -195,7 +209,7 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
     // The number of items reflected in the page indicator.
-    return 5;
+    return 3;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
