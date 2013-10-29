@@ -1,17 +1,16 @@
 //
-//  AppDelegate.h
+//  FakeProfileViewController.h
 //  JustMovdApp
 //
-//  Created by Kabir Mahal on 10/23/13.
+//  Created by MacBook Pro on 10/26/13.
 //  Copyright (c) 2013 Kabir Mahal. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface FakeProfileViewController : UIViewController
 
-@property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) PFUser *user;
 
 @end

@@ -13,66 +13,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
-
-    
-    // ****************************************************************************
-    // Uncomment and fill in with your Parse credentials:
-    // [Parse setApplicationId:@"your_application_id" clientKey:@"your_client_key"];
-    //
-    // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
-    // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
-    // [PFFacebookUtils initializeFacebook];
-    // ****************************************************************************
-    
-//    [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO"
-//                  clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
-    
-//    [PFUser enableAutomaticUser];
-//    
-
-    
-    [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO"
-                  clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
-    
-    // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
-    // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
-    [PFFacebookUtils initializeFacebook];
-    // ****************************************************************************
-    
-    //[PFUser enableAutomaticUser];
-    
-//    PFACL *defaultACL = [PFACL ACL];
-//    
-//    // If you would like all objects to be private by default, remove this line.
-//    [defaultACL setPublicReadAccess:YES];
-//    
-//    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
-
-//    
-//    // Override point for customization after application launch.
-//    
-//    //UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
-//    //UIViewController *vc = [sb instantiateViewControllerWithIdentifier:@"questions"];
-//    
-//    //self.window.rootViewController = vc;
-//
-//    
-//    //[self.window makeKeyAndVisible];
-//    
-//    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
-    
-    // Override point for customization after application launch.
-    
-    //[self.window makeKeyAndVisible];
-    
-//    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-//    
-
-//    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
-//     UIRemoteNotificationTypeAlert|
-//     UIRemoteNotificationTypeSound];
     
 
     [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO" clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
@@ -91,9 +31,8 @@
 }
 
 
-//    
-//    return YES;
-//}
+
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -121,6 +60,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - ()
+
+- (void)subscribeFinished:(NSNumber *)result error:(NSError *)error {
+    if ([result boolValue]) {
+        NSLog(@"ParseStarterProject successfully subscribed to push notifications on the broadcast channel.");
+    } else {
+        NSLog(@"ParseStarterProject failed to subscribe to push notifications on the broadcast channel.");
+    }
 }
 
 @end

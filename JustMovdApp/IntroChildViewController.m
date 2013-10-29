@@ -21,7 +21,7 @@
 {
     [super viewDidLoad];
 
-    myLabel.text = [NSString stringWithFormat:@"%d", index];
+    myLabel.text = [NSString stringWithFormat:@"%ld", (long)index];
 
 }
 
