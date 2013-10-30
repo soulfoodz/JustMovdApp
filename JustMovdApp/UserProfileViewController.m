@@ -28,6 +28,8 @@
     CGRect postCellHeight;
     TTTTimeIntervalFormatter *timeFormatter;
     PFObject *selectedUserObject;
+    NSMutableArray *commentCount;
+    int index;
 }
 
 @end
@@ -40,23 +42,24 @@
 
 - (void)viewDidLoad
 {
-    facebookUsername = @"stephenfouasnon";
+    facebookUsername = @"daviddeleon";
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
     [self intializeNeededStuff];
+    [self retrieveUserInfoFromParse];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self showFBLoginViewController];
 }
 
 - (void)intializeNeededStuff
 {
     //Initialize stuff
+    commentCount = [[NSMutableArray alloc] init];
     userInfoDictionary = [[NSMutableDictionary alloc] init];
     userInfoDictionary[@"name"]     = @"";
     userInfoDictionary[@"gender"]   = @"";
@@ -73,21 +76,6 @@
 }
 
 ///////////////////////
-
-
-- (void)showFBLoginViewController
-{
-    if (![PFUser currentUser])
-    {
-        //If not logged in, load FBLoginViewController
-        [self performSegueWithIdentifier:@"FBLoginVC" sender:self];
-    }
-    else
-    {
-        //If already logged in, do something else...
-        [self retrieveUserInfoFromParse];
-    }
-}
 
 - (void)retrieveUserInfoFromParse
 {
@@ -161,13 +149,18 @@
         [postsQuery whereKey:@"user" equalTo:[PFUser currentUser]];
         [postsQuery whereKey:@"type" equalTo:@"JMPost"];
         [postsQuery orderByDescending:@"createdAt"];
-        [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            [userInfoDictionary setObject:objects forKey:@"posts"];
+        [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error)
+        {
+            [userInfoDictionary setObject:posts forKey:@"posts"];
+            
+            for (int i = 0; i < [posts count]; i++)
+            {
+                [commentCount addObject:@"0"];
+                [self retrieveCommentsForPost:i];
+            }
+            
             [userProfileTableView reloadData];
         }];
-        
-//        PFQuery *commentQuery = [PFQuery queryWithClassName:@"Activity"];
-//        [commentQuery whereKey:@"post" equalTo:userInfoDictionary[@"posts"]];
     }
     else
     {
@@ -175,11 +168,32 @@
         [postsQuery whereKey:@"user" equalTo:selectedUserObject];
         [postsQuery whereKey:@"type" equalTo:@"JMPost"];
         [postsQuery orderByDescending:@"createdAt"];
-        [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            [userInfoDictionary setObject:objects forKey:@"posts"];
+        [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error)
+        {
+            [userInfoDictionary setObject:posts forKey:@"posts"];
+            
+            for (int i = 0; i < [posts count]; i++)
+            {
+                [commentCount addObject:@"0"];
+                [self retrieveCommentsForPost:i];
+            }
+            
             [userProfileTableView reloadData];
         }];
     }
+}
+
+- (void)retrieveCommentsForPost:(int)postIndex
+{
+    PFQuery *commentQuery = [PFQuery queryWithClassName:@"Activity"];
+    [commentQuery whereKey:@"post" equalTo:[userInfoDictionary[@"posts"] objectAtIndex:postIndex]];
+    [commentQuery whereKey:@"type" equalTo:@"JMComment"];
+    [commentQuery findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error)
+     {
+         [commentCount insertObject:[NSString stringWithFormat:@"%i", comments.count] atIndex:postIndex];
+         [userInfoDictionary setObject:commentCount forKey:@"commentsCount"];
+         [userProfileTableView reloadData];
+     }];
 }
 
 - (NSInteger)calculateYearsFromDateStringWithFormatMMddyyyy:(NSString *)dateString
@@ -345,7 +359,11 @@
         postCell.nameLabel.text = userInfoDictionary[@"name"];
         postCell.timeLabel.text = timeString;
         postCell.detailLabel.text = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"textContent"];
-        postCell.commentCountLabel.text = @"6 Comments";
+        if (userInfoDictionary[@"commentsCount"][indexPath.row] == nil) {
+            postCell.commentCountLabel.text = @"Updating...";
+        }
+        else
+            postCell.commentCountLabel.text = [NSString stringWithFormat:@"%@ Comments", userInfoDictionary[@"commentsCount"][indexPath.row]];
         cell = postCell;
     }
     

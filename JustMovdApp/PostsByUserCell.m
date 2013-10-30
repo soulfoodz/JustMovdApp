@@ -80,6 +80,8 @@
     commentCountLabel.font = [UIFont fontWithName:@"Roboto-Light" size:12.0];
     commentCountLabel.textColor = [UIColor darkGrayColor];
     commentCountLabel.textAlignment = NSTextAlignmentCenter;
+    commentCountLabel.layer.borderWidth = 0.5;
+    commentCountLabel.layer.borderColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor;
     [self addSubview:commentCountLabel];
 }
 
