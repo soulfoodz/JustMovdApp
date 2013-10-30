@@ -10,6 +10,6 @@
 
 @protocol QuestionViewDelegate <NSObject>
 
--(void)passBackQuestionView:(id)view andImage:(id)view;
+-(void)passBackQuestionView:(id)view withTag:(NSInteger)tag;
 
 @end

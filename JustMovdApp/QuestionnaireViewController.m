@@ -63,15 +63,15 @@
     
     [self makeQuestionViews];
     
-    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [nextButton setTitle:@"Next View" forState:UIControlStateNormal];
-    [nextButton sizeToFit];
-    nextButton.center = CGPointMake(160, 500);
-
-    
-    [self.view addSubview:nextButton];
-    
-    [nextButton addTarget:self action:@selector(moveView) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [nextButton setTitle:@"Next View" forState:UIControlStateNormal];
+//    [nextButton sizeToFit];
+//    nextButton.center = CGPointMake(160, 500);
+//
+//    
+//    [self.view addSubview:nextButton];
+//    
+//    [nextButton addTarget:self action:@selector(moveView) forControlEvents:UIControlEventTouchUpInside];
 
 
 }
@@ -86,7 +86,8 @@
     for (int i = 0; i < [questions count]; i++){
         
         QuestionView *tempView = [[QuestionView alloc] initWithFrame:CGRectMake((i*spacing),0, 260, 400) andFirstImage:[[imagesArray objectAtIndex:i] objectForKey:@"first"] andSecondImage:[[imagesArray objectAtIndex:i] objectForKey:@"second"] andQuestion:[questions objectAtIndex:i]];
-
+        
+        tempView.delegate = self;
 
         [questionViewsArray addObject:tempView];
         [questionsHolder addSubview:tempView];
@@ -107,9 +108,36 @@
             
         }];
     }];
-                              
+    
     counter++;
     
+    if (counter == [questions count]){
+        
+        PFObject *interests = [PFObject objectWithClassName:@"Interests"];
+        interests[@"User"] = [PFUser currentUser];
+        interests[@"first"] = [answers objectAtIndex:0];
+        interests[@"second"] = [answers objectAtIndex:1];
+        interests[@"third"] = [answers objectAtIndex:2];
+        
+        [interests save];
+
+        
+        [self performSegueWithIdentifier:@"done" sender:self];
+    }
+
+    
+    
+}
+
+-(void)passBackQuestionView:(id)view withTag:(NSInteger)tag{
+    
+    if (tag == 0){
+        [answers addObject:[[imagesArray objectAtIndex:counter] objectForKey:@"first"]];
+    } else {
+        [answers addObject:[[imagesArray objectAtIndex:counter] objectForKey:@"second"]];
+    }
+    
+    [self moveView];
     
 }
 
