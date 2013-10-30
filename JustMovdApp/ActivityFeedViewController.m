@@ -47,6 +47,7 @@
     refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
     [refresh addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
     
+    [self setupTableViewHeader];
     self.refreshControl = refresh;
 }
 
@@ -190,7 +191,14 @@
         AddCommentViewController *addVC = segue.destinationViewController;
         addVC.user = [PFUser currentUser];
         addVC.navigationItem.title = @"New Post";
+        addVC.delegate = self;
     }
+    
+    if ([segue.identifier isEqualToString:@"SegueToVenueMap"])
+    {
+        VenuesMapViewController *venueVC = segue.destinationViewController;
+    }
+
 }
 
 
@@ -257,41 +265,58 @@
 
     return;
 }
+
+
+#pragma mark - AddNewPostToFeedDelegate Methods
+- (void)addNewlyCreatedPostToActivityFeed:(PFObject *)post
+{
+    [self.postsArray insertObject:post atIndex:0];
+    [self.tableView reloadData];
+}
+
+
+- (void)removePost:(PFObject *)post fromActivityFeedWithError:(NSError *)error
+{
+    [self.postsArray removeObject:post];
+    [self.tableView reloadData];
+    
+    NSLog(@"Removed post from feed due to error: %@", error);
+}
+
+
+- (void)goToStatusUpdate:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"SegueToAddNewStatusUpdate" sender:sender];
+}
+
+
+- (void)goToCheckIn:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:@"SegueToVenueMap" sender:sender];
+}
+
+
+- (void)setupTableViewHeader
+{
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
+    UIButton *checkInBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];
+    UIButton *statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 160, 44)];
+    
+    [checkInBtn setTitle:@"Check in" forState:UIControlStateNormal];
+    [checkInBtn setTitle:@"Check in" forState:UIControlStateSelected];
+    [checkInBtn addTarget:self action:@selector(goToCheckIn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [statusBtn setTitle:@"Status" forState:UIControlStateNormal];
+    [statusBtn setTitle:@"Check in" forState:UIControlStateSelected];
+    [statusBtn addTarget:self action:@selector(goToStatusUpdate:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [toolBar addSubview:checkInBtn];
+    [toolBar addSubview:statusBtn];
+    toolBar.backgroundColor = [UIColor cyanColor];
+    
+    self.tableView.tableHeaderView = toolBar;
+}
+
+
                              
 @end
-    
-
-
-
-
-/*
- - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
- {
- return 56.0f;
- 
- 
- 
- - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
- {
- UpdateCellHeader *cellHeader;
- NSDateFormatter *formatter;
- NSDate *date;
- 
- date = [NSDate date];
- formatter = [NSDateFormatter new];
- formatter.timeStyle = NSDateFormatterShortStyle;
- 
- cellHeader = [UpdateCellHeader new];
- 
- date = [NSDate date];
- formatter = [NSDateFormatter new];
- formatter.timeStyle = NSDateFormatterShortStyle;
- 
- cellHeader.nameLabel.text = @"Eric Webb";
- cellHeader.profileImage.image = [UIImage imageNamed:@"will_profile.jpg"];
- cellHeader.timeLabel.text = [formatter stringFromDate:date];
- 
- return cellHeader;
- }
- */
-
