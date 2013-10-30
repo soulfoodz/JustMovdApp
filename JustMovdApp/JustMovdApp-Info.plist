@@ -40,12 +40,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Light.ttf</string>
-		<string>Roboto-Medium.ttf</string>
 		<string>Roboto-Regular.ttf</string>
-		<string>Roboto-Thin.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
-	<string>Questionnaire</string>
+	<string>KyleMai</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -54,12 +52,5 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Roboto-Light.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-	</array>
-	<key>UIMainStoryboardFile</key>
-	<string>FeedStoryboard</string>
 </dict>
 </plist>

@@ -61,7 +61,7 @@
 		5A169B2618201F340042767E /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AE318201F340042767E /* Roboto-Thin.ttf */; };
 		5A169B2718201F340042767E /* Screen Shot 2013-10-23 at 9.08.02 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AE418201F340042767E /* Screen Shot 2013-10-23 at 9.08.02 PM.png */; };
 		5A169B2818201F340042767E /* Screen Shot 2013-10-28 at 7.03.39 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AE518201F340042767E /* Screen Shot 2013-10-28 at 7.03.39 PM.png */; };
-		5A169B2918201F340042767E /* SearchUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AE718201F340042767E /* SearchUsersViewController.m */; };
+		5A169B2918201F340042767E /* ConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AE718201F340042767E /* ConversationViewController.m */; };
 		5A169B2A18201F340042767E /* sports_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AE818201F340042767E /* sports_circle.png */; };
 		5A169B2B18201F340042767E /* stephen_profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AE918201F340042767E /* stephen_profile.jpg */; };
 		5A169B2C18201F340042767E /* TableViewBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AEA18201F340042767E /* TableViewBG@2x.png */; };
@@ -110,6 +110,7 @@
 		E564658D181884E300E2C4A1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E564658C181884E300E2C4A1 /* StoreKit.framework */; };
 		E564658F181884EF00E2C4A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E564658E181884EF00E2C4A1 /* SystemConfiguration.framework */; };
 		E56AE9A7181F49B200E12C87 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56AE9A6181F49B100E12C87 /* Accelerate.framework */; };
+		E56AE9BA1820C24400E12C87 /* ChatTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E56AE9B91820C24400E12C87 /* ChatTextView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,8 +199,8 @@
 		5A169AE318201F340042767E /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		5A169AE418201F340042767E /* Screen Shot 2013-10-23 at 9.08.02 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2013-10-23 at 9.08.02 PM.png"; sourceTree = "<group>"; };
 		5A169AE518201F340042767E /* Screen Shot 2013-10-28 at 7.03.39 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2013-10-28 at 7.03.39 PM.png"; sourceTree = "<group>"; };
-		5A169AE618201F340042767E /* SearchUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchUsersViewController.h; sourceTree = "<group>"; };
-		5A169AE718201F340042767E /* SearchUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchUsersViewController.m; sourceTree = "<group>"; };
+		5A169AE618201F340042767E /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationViewController.h; sourceTree = "<group>"; };
+		5A169AE718201F340042767E /* ConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationViewController.m; sourceTree = "<group>"; };
 		5A169AE818201F340042767E /* sports_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sports_circle.png; sourceTree = "<group>"; };
 		5A169AE918201F340042767E /* stephen_profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = stephen_profile.jpg; sourceTree = "<group>"; };
 		5A169AEA18201F340042767E /* TableViewBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TableViewBG@2x.png"; sourceTree = "<group>"; };
@@ -253,6 +254,8 @@
 		E564658C181884E300E2C4A1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		E564658E181884EF00E2C4A1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E56AE9A6181F49B100E12C87 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		E56AE9B81820C24400E12C87 /* ChatTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTextView.h; sourceTree = "<group>"; };
+		E56AE9B91820C24400E12C87 /* ChatTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,9 +391,30 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
+				5A169AA218201F340042767E /* activityfeedcell_icon_comment.png */,
 				5A169AA018201F340042767E /* AboutEditCell.h */,
 				5A169AA118201F340042767E /* AboutEditCell.m */,
-				5A169AA218201F340042767E /* activityfeedcell_icon_comment.png */,
+				5A169ABA18201F340042767E /* EditProfileViewController.h */,
+				5A169ABB18201F340042767E /* EditProfileViewController.m */,
+				5A169AC318201F340042767E /* InfoCell.h */,
+				5A169AC418201F340042767E /* InfoCell.m */,
+				5A169ACB18201F340042767E /* KyleMai.storyboard */,
+				5A169ACC18201F340042767E /* KyleMai@2x.jpg */,
+				5A169ACE18201F340042767E /* messageButton@2x.png */,
+				5A169ACF18201F340042767E /* OtherEditCell.h */,
+				5A169AD018201F340042767E /* OtherEditCell.m */,
+				5A169AD318201F340042767E /* PictureCell.h */,
+				5A169AD418201F340042767E /* PictureCell.m */,
+				5A169AD718201F340042767E /* PostsByUserCell.h */,
+				5A169AD818201F340042767E /* PostsByUserCell.m */,
+				5A169AE618201F340042767E /* ConversationViewController.h */,
+				5A169AE718201F340042767E /* ConversationViewController.m */,
+				E56AE9B81820C24400E12C87 /* ChatTextView.h */,
+				E56AE9B91820C24400E12C87 /* ChatTextView.m */,
+				5A169AF118201F340042767E /* UIImage+StackBlur.h */,
+				5A169AF218201F340042767E /* UIImage+StackBlur.m */,
+				5A169AF618201F340042767E /* UserProfileViewController.h */,
+				5A169AF718201F340042767E /* UserProfileViewController.m */,
 				5A169AA318201F340042767E /* ActivityFeedCell.h */,
 				5A169AA418201F340042767E /* ActivityFeedCell.m */,
 				5A169AA518201F340042767E /* ActivityFeedCellDelegate.h */,
@@ -412,34 +436,21 @@
 				5A169AB718201F340042767E /* Comms.h */,
 				5A169AB818201F340042767E /* Comms.m */,
 				5A169AB918201F340042767E /* david_profile.jpg */,
-				5A169ABA18201F340042767E /* EditProfileViewController.h */,
-				5A169ABB18201F340042767E /* EditProfileViewController.m */,
 				5A169ABF18201F340042767E /* FakeProfileViewController.h */,
 				5A169AC018201F340042767E /* FakeProfileViewController.m */,
 				5A169AC118201F340042767E /* FeedStoryboard.storyboard */,
 				5A169AC218201F340042767E /* Images.xcassets */,
-				5A169AC318201F340042767E /* InfoCell.h */,
-				5A169AC418201F340042767E /* InfoCell.m */,
 				5A169AC518201F340042767E /* IntroChildViewController.h */,
 				5A169AC618201F340042767E /* IntroChildViewController.m */,
 				5A169AC718201F340042767E /* IntroParentViewController.h */,
 				5A169AC818201F340042767E /* IntroParentViewController.m */,
 				5A169AC918201F340042767E /* JustMovdApp-Info.plist */,
 				5A169ACA18201F340042767E /* JustMovdApp-Prefix.pch */,
-				5A169ACB18201F340042767E /* KyleMai.storyboard */,
-				5A169ACC18201F340042767E /* KyleMai@2x.jpg */,
 				5A169ACD18201F340042767E /* main.m */,
-				5A169ACE18201F340042767E /* messageButton@2x.png */,
-				5A169ACF18201F340042767E /* OtherEditCell.h */,
-				5A169AD018201F340042767E /* OtherEditCell.m */,
 				5A169AD118201F340042767E /* PFImageView+ImageHandler.h */,
 				5A169AD218201F340042767E /* PFImageView+ImageHandler.m */,
-				5A169AD318201F340042767E /* PictureCell.h */,
-				5A169AD418201F340042767E /* PictureCell.m */,
 				5A169AD518201F340042767E /* PostDetailViewController.h */,
 				5A169AD618201F340042767E /* PostDetailViewController.m */,
-				5A169AD718201F340042767E /* PostsByUserCell.h */,
-				5A169AD818201F340042767E /* PostsByUserCell.m */,
 				5A169AD918201F340042767E /* profile.jpg */,
 				5A169ADA18201F340042767E /* Questionnaire.storyboard */,
 				5A169ADB18201F340042767E /* QuestionnaireViewController.h */,
@@ -453,21 +464,15 @@
 				5A169AE318201F340042767E /* Roboto-Thin.ttf */,
 				5A169AE418201F340042767E /* Screen Shot 2013-10-23 at 9.08.02 PM.png */,
 				5A169AE518201F340042767E /* Screen Shot 2013-10-28 at 7.03.39 PM.png */,
-				5A169AE618201F340042767E /* SearchUsersViewController.h */,
-				5A169AE718201F340042767E /* SearchUsersViewController.m */,
 				5A169AE818201F340042767E /* sports_circle.png */,
 				5A169AE918201F340042767E /* stephen_profile.jpg */,
 				5A169AEA18201F340042767E /* TableViewBG@2x.png */,
 				5A169AEB18201F340042767E /* testImage.png */,
 				5A169AEF18201F340042767E /* TTTTimeIntervalFormatter.h */,
 				5A169AF018201F340042767E /* TTTTimeIntervalFormatter.m */,
-				5A169AF118201F340042767E /* UIImage+StackBlur.h */,
-				5A169AF218201F340042767E /* UIImage+StackBlur.m */,
 				5A169AF318201F340042767E /* UpdateCellHeader.h */,
 				5A169AF418201F340042767E /* UpdateCellHeader.m */,
 				5A169AF518201F340042767E /* UpdateCellHeader.xib */,
-				5A169AF618201F340042767E /* UserProfileViewController.h */,
-				5A169AF718201F340042767E /* UserProfileViewController.m */,
 				5A169AF818201F340042767E /* vidgame_circle.png */,
 				5A169AF918201F340042767E /* weightlifting_circle.png */,
 				5A169AFA18201F340042767E /* will_profile.jpg */,
@@ -643,10 +648,11 @@
 				5A169B1318201F340042767E /* IntroChildViewController.m in Sources */,
 				5A169B1D18201F340042767E /* PostDetailViewController.m in Sources */,
 				5A169B3018201F340042767E /* UIImage+StackBlur.m in Sources */,
-				5A169B2918201F340042767E /* SearchUsersViewController.m in Sources */,
+				5A169B2918201F340042767E /* ConversationViewController.m in Sources */,
 				5A169B1818201F340042767E /* main.m in Sources */,
 				5A169B0118201F340042767E /* AppDelegate.m in Sources */,
 				5A169B2F18201F340042767E /* TTTTimeIntervalFormatter.m in Sources */,
+				E56AE9BA1820C24400E12C87 /* ChatTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
