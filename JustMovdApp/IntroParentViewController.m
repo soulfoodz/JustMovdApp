@@ -131,12 +131,15 @@
              if (!user[@"birthday"]) {
                  user[@"birthday"]      = [result objectForKey:@"birthday"];
              }
+             if (!user[@"about"]){
+                 user[@"about"] = @"...";
+             }
              
              
              [user save]; // <--- Don't want to save in background, only let user in if their info are good
              
              //Getting user profile picture size LARGE
-             NSString *fbAPIForProfilePicture = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=800&height=800", [result objectForKey:@"username"]];
+             NSString *fbAPIForProfilePicture = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=320&height=400", [result objectForKey:@"username"]];
              
              NSURL *profilePictureURL = [NSURL URLWithString:fbAPIForProfilePicture];
              profilePictureData = [NSData dataWithContentsOfURL:profilePictureURL];
@@ -171,7 +174,6 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
     IntroChildViewController *childViewController = [sb instantiateViewControllerWithIdentifier:@"introChild"];
     
-    //IntroChildViewController *childViewController = [[IntroChildViewController alloc] initWithNibName:@"IntroChildViewController" bundle:nil];
     childViewController.index = index;
     
     return childViewController;
@@ -186,7 +188,6 @@
         return nil;
     }
     
-    // Decrease the index by 1 to return
     index--;
     
     return [self viewControllerAtIndex:index];

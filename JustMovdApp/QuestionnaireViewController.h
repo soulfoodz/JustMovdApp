@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QuestionViewDelegate.h"
 
-@interface QuestionnaireViewController : UIViewController
+@interface QuestionnaireViewController : UIViewController <QuestionViewDelegate>
 
 @end
