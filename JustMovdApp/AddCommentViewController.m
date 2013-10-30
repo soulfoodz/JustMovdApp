@@ -63,14 +63,15 @@
     [newPost setObject:self.textField.text forKey:@"textContent"];
     [newPost setObject:[PFUser currentUser] forKey:@"user"];
     [newPost setObject:@"JMPost" forKey:@"type"];
+    
+    // Send newPost to activityFeed
+    [self.delegate addNewlyCreatedPostToActivityFeed:newPost];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
 
     // Save the post
     [newPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error)
-        {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-        else NSLog(@"Error saving newPost: %@", error);
+        if (error) [self.delegate removePost:newPost fromActivityFeedWithError:error];
     }];
 }
 

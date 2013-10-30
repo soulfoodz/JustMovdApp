@@ -18,6 +18,8 @@
 #define contentLabelInset 6.0f
 #define avatarSpacing 6.0f
 
+#define ConnectionErrorAlertTag 1
+#define NoTextErrorAlertTag 2
 
 
 @interface PostDetailViewController ()
@@ -33,19 +35,37 @@
 {
     [super viewDidLoad];
     
-    self.commentorsArray = [NSMutableArray new];
-    
     self.tableView.contentOffset = CGPointMake(0, 0);
     
     [self setupTableHeader];
     [self queryForComments];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self queryForComments];
-}
 
+- (void)queryForComments
+{
+    PFQuery *queryForPostComments;
+    
+    queryForPostComments = [PFQuery queryWithClassName:@"Activity"];
+    [queryForPostComments whereKey:@"type" equalTo:@"JMComment"];
+    [queryForPostComments whereKey:@"post" equalTo:self.post];
+    [queryForPostComments includeKey:@"user"];
+    [queryForPostComments orderByDescending:@"createdAt"];
+    
+    queryForPostComments.limit = 10;
+    queryForPostComments.cachePolicy = kPFCachePolicyNetworkOnly;
+    
+    [queryForPostComments findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error)
+     {
+         if (!error)
+         {
+             self.commentsArray = [[NSMutableArray arrayWithArray:comments] mutableCopy];
+             [self.tableView reloadData];
+         }
+         else NSLog(@"Error fetching posts : %@", error);
+     }];
+    
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -54,11 +74,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.commentsArray.count == 0)
-    {
-        return 0;
-    }
-    else return self.commentsArray.count;
+    if (self.commentsArray.count == 0) return 0;
+    
+    return self.commentsArray.count;
 }
 
 
@@ -102,6 +120,7 @@
     }
 }
 
+
 - (void)avatarImageWasTappedForUser:(PFUser *)user
 {
     NSLog(@"Tapped");
@@ -119,26 +138,61 @@
 }
 
 
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{    
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    self.cancelButton.enabled = YES;
+    
+    // Get frame of last cell
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.commentsArray.count - 1) inSection:0];
+    CGRect lastCellRect = [[self.tableView cellForRowAtIndexPath:indexPath] frame];
+    
+    
+    // Animate the textViewContainer up
     [UIView animateWithDuration:0.3f animations:^{
-        CGFloat startingOriginY = self.tableView.frame.origin.y;
-        CGFloat newOriginY = startingOriginY - 216.0f;
-        
-        self.textViewContainer.frame = CGRectMake(self.textViewContainer.frame.origin.x,
-                                                  self.textViewContainer.frame.origin.y - 216,
-                                                  self.textViewContainer.frame.size.width,
-                                                  self.textViewContainer.frame.size.height);
+        self.textViewContainer.frame = CGRectMake(0,(self.view.frame.size.height - (216 + 48)),320, 48);
         
         // Scroll the tableview above the keyboard
-        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x,
-                                          newOriginY,
-                                          self.tableView.frame.size.width,
-                                          self.tableView.frame.size.height);
+        self.tableView.frame = CGRectMake(0,0,320,304);
+        
+        // Check where the last cell is and animate the tableview up if hidden
+        if((CGRectContainsPoint(lastCellRect, self.textViewContainer.frame.origin)) ||
+           (lastCellRect.origin.y > self.textViewContainer.frame.origin.y + self.textViewContainer.frame.size.height))
+        {
+            [self.tableView scrollToRowAtIndexPath:indexPath
+                                  atScrollPosition:UITableViewScrollPositionTop
+                                          animated:YES];
+        }
     }];
+}
+
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    self.cancelButton.enabled = NO;
+    [self.textView resignFirstResponder];
     
+    // Reset the textViews frame and content
+    self.textView.text = @"";
+    
+    [UIView animateWithDuration:0.3f animations:^{
+
+        // Scroll the tableview above the keyboard
+        self.tableView.frame = CGRectMake(0,0,320,520);
+       
+        [self.tableView scrollToRowAtIndexPath:0
+                              atScrollPosition:UITableViewScrollPositionTop
+                                      animated:YES];
+        
+        self.textViewContainer.frame = CGRectMake(self.textViewContainer.frame.origin.x,
+                                                  self.view.frame.size.height - self.textViewContainer.frame.size.height,
+                                                  self.textViewContainer.frame.size.width,
+                                                  self.textViewContainer.frame.size.height);
+    }];
     return YES;
 }
+ 
+
+#pragma mark - Keyboard Notifications
 
 
 - (IBAction)addCommentPressed:(UIButton *)sender
@@ -154,14 +208,43 @@
     [newComment setObject:[PFUser currentUser] forKey:@"user"];
     [newComment setObject:@"JMComment" forKey:@"type"];
     [newComment setObject:self.post forKey:@"post"];
-    [newComment saveEventually];
+    
+    NSTimer *timeOutTimer = [NSTimer timerWithTimeInterval:5.0f target:self selector:@selector(handleConnectionTimeOut) userInfo:nil repeats:NO];
+    
+    [newComment saveEventually:^(BOOL succeeded, NSError *error) {
+        if (error)
+        {
+            [timeOutTimer invalidate];
+            [self.commentsArray removeObject:newComment];
+        }
+            }];
     
     [self.commentsArray insertObject:newComment atIndex:0];
+    [self.textView resignFirstResponder];
     [self.tableView reloadData];
 }
 
+- (IBAction)cancelPressed:(id)sender
+{
+    [self textViewShouldEndEditing:self.textView];
+}
 
-#pragma mark - AlertView
+
+#pragma mark - AlertViews
+
+
+- (void)handleConnectionTimeOut
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to save comment"
+                                                        message:@"We're having trouble with the internet connection and were unable to save your last comment."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:nil];
+    
+    alertView.tag = ConnectionErrorAlertTag;
+    [alertView show];
+}
+
 
 - (void)displayNoTextAlert
 {
@@ -171,41 +254,14 @@
                                           cancelButtonTitle:@"Cancel"
                                           otherButtonTitles:nil];
     
+    alert.tag = NoTextErrorAlertTag;
     [alert show];
 }
 
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    [textView resignFirstResponder];
-}
-
-
-- (void)resetViewForNewComment
-{
-    // Reset the textViews frame and content
-    [self textViewDidEndEditing:self.textView];
-    self.textView.text = @"";
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        
-        // Calculate tableview originY
-        CGFloat startingOriginY = self.tableView.frame.origin.y;
-        CGFloat newOriginY = startingOriginY + 216.0f;
-        
-        // Scroll the tableview above the keyboard
-        self.tableView.frame = CGRectMake(self.tableView.frame.origin.x,
-                                          newOriginY,
-                                          self.tableView.frame.size.width,
-                                          self.tableView.frame.size.height);
-        
-        self.textViewContainer.frame = CGRectMake(self.textViewContainer.frame.origin.x,
-                                                  self.tableView.frame.size.height,
-                                                  self.textViewContainer.frame.size.width,
-                                                  self.textViewContainer.frame.size.height);
-    }];
-    
-    [self.tableView reloadData];
+    [self.textView resignFirstResponder];
 }
 
                           
@@ -285,40 +341,8 @@
 {
     CGSize size = [string sizeWithFont:font
                      constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
-                        lineBreakMode:NSLineBreakByWordWrapping];
+                         lineBreakMode:NSLineBreakByWordWrapping];
     return size;
-}
-                          
-
-- (void)queryForComments
-{
-    PFQuery *queryForPostComments;
-    
-    queryForPostComments = [PFQuery queryWithClassName:@"Activity"];
-    [queryForPostComments whereKey:@"type" equalTo:@"JMComment"];
-    [queryForPostComments whereKey:@"post" equalTo:self.post];
-    [queryForPostComments includeKey:@"user"];
-    [queryForPostComments orderByDescending:@"createdAt"];
-    
-    queryForPostComments.limit = 10;
-    queryForPostComments.cachePolicy = kPFCachePolicyCacheElseNetwork;
-    
-    [queryForPostComments findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error)
-     {
-         if (!error)
-         {
-             self.commentsArray = [[NSMutableArray arrayWithArray:comments] mutableCopy];
-             for (PFObject *activity in comments)
-             {
-                 PFUser *commentCreator = [activity objectForKey:@"user"];
-                 [self.commentorsArray addObject:commentCreator];
-             }
-             [self.tableView reloadData];
-         }
-         else NSLog(@"Error fetching posts : %@", error);
-     }];
-
-    
 }
 
 

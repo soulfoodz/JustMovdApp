@@ -30,17 +30,59 @@
                             <outlet property="delegate" destination="pXv-4c-KKs" id="VHG-CC-ThF"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rhm-5F-ppf">
-                        <barButtonItem key="rightBarButtonItem" title="Post" id="8XW-XO-W9S">
-                            <connections>
-                                <segue destination="6si-kW-0ei" kind="modal" identifier="SegueToAddNewStatusUpdate" id="P3D-IA-Pth"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="rhm-5F-ppf"/>
+                    <connections>
+                        <segue destination="6si-kW-0ei" kind="modal" identifier="SegueToAddNewStatusUpdate" id="VU4-FQ-i36"/>
+                        <segue destination="HgQ-Eh-ZCg" kind="push" identifier="SegueToVenueMap" id="OOd-EP-EJY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pS6-wz-xww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="402" y="-68"/>
+            <point key="canvasLocation" x="352" y="-48"/>
+        </scene>
+        <!--Venues Map View Controller-->
+        <scene sceneID="14a-xM-IFI">
+            <objects>
+                <tableViewController id="HgQ-Eh-ZCg" customClass="VenuesMapViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="VTh-lv-cWS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <mapView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="xtZ-g5-jH3">
+                            <rect key="frame" x="0.0" y="64" width="320" height="128"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <connections>
+                                <outlet property="delegate" destination="HgQ-Eh-ZCg" id="N73-OE-P47"/>
+                            </connections>
+                        </mapView>
+                        <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YyF-97-IVZ">
+                            <rect key="frame" x="0.0" y="258" width="320" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="0nx-sO-chr">
+                                <rect key="frame" x="0.0" y="214" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0nx-sO-chr" id="OHl-86-CDz">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="HgQ-Eh-ZCg" id="6vk-ld-Spl"/>
+                            <outlet property="delegate" destination="HgQ-Eh-ZCg" id="MTo-nW-prd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="ZiP-lm-hJr"/>
+                    <connections>
+                        <outlet property="mapView" destination="xtZ-g5-jH3" id="Rjs-dm-ewh"/>
+                        <outlet property="tableView" destination="VTh-lv-cWS" id="iMU-e1-yQY"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dLH-iJ-pWy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="830" y="-457"/>
         </scene>
         <!--Post Detail View Controller-->
         <scene sceneID="joU-if-tEP">
@@ -93,8 +135,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="4dk-aP-NaU"/>
+                    <navigationItem key="navigationItem" id="4dk-aP-NaU">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Cancel" id="NXW-pe-OG6">
+                            <connections>
+                                <action selector="cancelPressed:" destination="R5Y-KW-7O0" id="7ij-JP-nFT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="NXW-pe-OG6" id="krD-A3-Xfw"/>
                         <outlet property="tableView" destination="9WB-fw-a5N" id="Lec-7r-Gbs"/>
                         <outlet property="textView" destination="ep4-tJ-ZCH" id="7mV-9G-zjY"/>
                         <outlet property="textViewContainer" destination="okf-AF-Ckw" id="Nhd-PS-WZE"/>
@@ -121,7 +170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wJ-na-WkL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1324" y="-749"/>
+            <point key="canvasLocation" x="1665" y="-863"/>
         </scene>
         <!--Add Comment View Controller-->
         <scene sceneID="aKg-h2-zKk">
@@ -209,7 +258,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZIN-VA-Qsw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860" y="-749"/>
+            <point key="canvasLocation" x="1173" y="-863"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

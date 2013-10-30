@@ -19,10 +19,10 @@
 @property (strong, nonatomic) NSString *postString;
 @property (strong, nonatomic) NSString *dateString;
 @property (strong, nonatomic) NSMutableArray *commentsArray;
-@property (strong, nonatomic) NSMutableArray *commentorsArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIView *textViewContainer;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 
 // HeaderView
 @property (strong, nonatomic) UIView *headerContainerView;
@@ -35,5 +35,6 @@
 
 
 - (IBAction)addCommentPressed:(id)sender;
+- (IBAction)cancelPressed:(id)sender;
 
 @end

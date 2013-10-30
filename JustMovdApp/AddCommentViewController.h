@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "AddNewPostToActivityFeedDelegate.h"
+
 
 @interface AddCommentViewController : UIViewController <UIAlertViewDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) PFUser *user;
+@property (strong, nonatomic) id <AddNewPostToActivityFeedDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITextView *textField;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *postButton;
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		528AEF8418209B3A002AB658 /* VenuesMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528AEF8318209B3A002AB658 /* VenuesMapViewController.m */; };
 		52B9C40A18186ED500A875B7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40918186ED500A875B7 /* Parse.framework */; };
 		52B9C40C1818845C00A875B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40B1818845C00A875B7 /* AudioToolbox.framework */; };
 		52B9C40E1818846900A875B7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40D1818846900A875B7 /* CFNetwork.framework */; };
@@ -123,6 +124,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewPostToActivityFeedDelegate.h; sourceTree = "<group>"; };
+		528AEF8218209B3A002AB658 /* VenuesMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenuesMapViewController.h; sourceTree = "<group>"; };
+		528AEF8318209B3A002AB658 /* VenuesMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenuesMapViewController.m; sourceTree = "<group>"; };
 		52B9C40918186ED500A875B7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		52B9C40B1818845C00A875B7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		52B9C40D1818846900A875B7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -318,6 +322,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		528AEF7B18203978002AB658 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5A169AE018201F340042767E /* Roboto-Light.ttf */,
+				5A169AE118201F340042767E /* Roboto-Medium.ttf */,
+				5A169AE218201F340042767E /* Roboto-Regular.ttf */,
+				5A169AE318201F340042767E /* Roboto-Thin.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		528AEF7C182039AB002AB658 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				5A169AAC18201F340042767E /* background.png */,
+				5A169AB218201F340042767E /* BaseColor.png */,
+				5A169AA218201F340042767E /* activityfeedcell_icon_comment.png */,
+				5A169AAD18201F340042767E /* background2_size.png */,
+				5A169AAE18201F340042767E /* background3_size.png */,
+				5A169AB318201F340042767E /* beer_size@2x.png */,
+				5A169AB418201F340042767E /* bluebeer_tall.png */,
+				5A169AB518201F340042767E /* coffee_circle.png */,
+				5A169AB618201F340042767E /* coffee_tall.png */,
+				5A169AB918201F340042767E /* david_profile.jpg */,
+				5A169ACC18201F340042767E /* KyleMai@2x.jpg */,
+				5A169ACE18201F340042767E /* messageButton@2x.png */,
+				5A169AD918201F340042767E /* profile.jpg */,
+				5A169AE418201F340042767E /* Screen Shot 2013-10-23 at 9.08.02 PM.png */,
+				5A169AE518201F340042767E /* Screen Shot 2013-10-28 at 7.03.39 PM.png */,
+				5A169AE818201F340042767E /* sports_circle.png */,
+				5A169AE918201F340042767E /* stephen_profile.jpg */,
+				5A169AEA18201F340042767E /* TableViewBG@2x.png */,
+				5A169AEB18201F340042767E /* testImage.png */,
+				5A169AF818201F340042767E /* vidgame_circle.png */,
+				5A169AF918201F340042767E /* weightlifting_circle.png */,
+				5A169AFA18201F340042767E /* will_profile.jpg */,
+				5A169AFB18201F340042767E /* yoga_circle.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		528AEF7D182039BA002AB658 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				528AEF7C182039AB002AB658 /* Images */,
+				528AEF7B18203978002AB658 /* Fonts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		5A5ABB311818420D00155B8F = {
 			isa = PBXGroup;
 			children = (
@@ -388,9 +442,9 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
+				528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */,
 				5A169AA018201F340042767E /* AboutEditCell.h */,
 				5A169AA118201F340042767E /* AboutEditCell.m */,
-				5A169AA218201F340042767E /* activityfeedcell_icon_comment.png */,
 				5A169AA318201F340042767E /* ActivityFeedCell.h */,
 				5A169AA418201F340042767E /* ActivityFeedCell.m */,
 				5A169AA518201F340042767E /* ActivityFeedCellDelegate.h */,
@@ -400,23 +454,16 @@
 				5A169AA918201F340042767E /* AddCommentViewController.m */,
 				5A169AAA18201F340042767E /* AppDelegate.h */,
 				5A169AAB18201F340042767E /* AppDelegate.m */,
-				5A169AAC18201F340042767E /* background.png */,
-				5A169AAD18201F340042767E /* background2_size.png */,
-				5A169AAE18201F340042767E /* background3_size.png */,
 				5A169AB018201F340042767E /* Main.storyboard */,
-				5A169AB218201F340042767E /* BaseColor.png */,
-				5A169AB318201F340042767E /* beer_size@2x.png */,
-				5A169AB418201F340042767E /* bluebeer_tall.png */,
-				5A169AB518201F340042767E /* coffee_circle.png */,
-				5A169AB618201F340042767E /* coffee_tall.png */,
 				5A169AB718201F340042767E /* Comms.h */,
 				5A169AB818201F340042767E /* Comms.m */,
-				5A169AB918201F340042767E /* david_profile.jpg */,
 				5A169ABA18201F340042767E /* EditProfileViewController.h */,
 				5A169ABB18201F340042767E /* EditProfileViewController.m */,
 				5A169ABF18201F340042767E /* FakeProfileViewController.h */,
 				5A169AC018201F340042767E /* FakeProfileViewController.m */,
 				5A169AC118201F340042767E /* FeedStoryboard.storyboard */,
+				528AEF8218209B3A002AB658 /* VenuesMapViewController.h */,
+				528AEF8318209B3A002AB658 /* VenuesMapViewController.m */,
 				5A169AC218201F340042767E /* Images.xcassets */,
 				5A169AC318201F340042767E /* InfoCell.h */,
 				5A169AC418201F340042767E /* InfoCell.m */,
@@ -427,9 +474,7 @@
 				5A169AC918201F340042767E /* JustMovdApp-Info.plist */,
 				5A169ACA18201F340042767E /* JustMovdApp-Prefix.pch */,
 				5A169ACB18201F340042767E /* KyleMai.storyboard */,
-				5A169ACC18201F340042767E /* KyleMai@2x.jpg */,
 				5A169ACD18201F340042767E /* main.m */,
-				5A169ACE18201F340042767E /* messageButton@2x.png */,
 				5A169ACF18201F340042767E /* OtherEditCell.h */,
 				5A169AD018201F340042767E /* OtherEditCell.m */,
 				5A169AD118201F340042767E /* PFImageView+ImageHandler.h */,
@@ -440,25 +485,14 @@
 				5A169AD618201F340042767E /* PostDetailViewController.m */,
 				5A169AD718201F340042767E /* PostsByUserCell.h */,
 				5A169AD818201F340042767E /* PostsByUserCell.m */,
-				5A169AD918201F340042767E /* profile.jpg */,
 				5A169ADA18201F340042767E /* Questionnaire.storyboard */,
 				5A169ADB18201F340042767E /* QuestionnaireViewController.h */,
 				5A169ADC18201F340042767E /* QuestionnaireViewController.m */,
 				5A169ADD18201F340042767E /* QuestionView.h */,
 				5A169ADE18201F340042767E /* QuestionView.m */,
 				5A169ADF18201F340042767E /* QuestionViewDelegate.h */,
-				5A169AE018201F340042767E /* Roboto-Light.ttf */,
-				5A169AE118201F340042767E /* Roboto-Medium.ttf */,
-				5A169AE218201F340042767E /* Roboto-Regular.ttf */,
-				5A169AE318201F340042767E /* Roboto-Thin.ttf */,
-				5A169AE418201F340042767E /* Screen Shot 2013-10-23 at 9.08.02 PM.png */,
-				5A169AE518201F340042767E /* Screen Shot 2013-10-28 at 7.03.39 PM.png */,
 				5A169AE618201F340042767E /* SearchUsersViewController.h */,
 				5A169AE718201F340042767E /* SearchUsersViewController.m */,
-				5A169AE818201F340042767E /* sports_circle.png */,
-				5A169AE918201F340042767E /* stephen_profile.jpg */,
-				5A169AEA18201F340042767E /* TableViewBG@2x.png */,
-				5A169AEB18201F340042767E /* testImage.png */,
 				5A169AEF18201F340042767E /* TTTTimeIntervalFormatter.h */,
 				5A169AF018201F340042767E /* TTTTimeIntervalFormatter.m */,
 				5A169AF118201F340042767E /* UIImage+StackBlur.h */,
@@ -468,10 +502,7 @@
 				5A169AF518201F340042767E /* UpdateCellHeader.xib */,
 				5A169AF618201F340042767E /* UserProfileViewController.h */,
 				5A169AF718201F340042767E /* UserProfileViewController.m */,
-				5A169AF818201F340042767E /* vidgame_circle.png */,
-				5A169AF918201F340042767E /* weightlifting_circle.png */,
-				5A169AFA18201F340042767E /* will_profile.jpg */,
-				5A169AFB18201F340042767E /* yoga_circle.png */,
+				528AEF7D182039BA002AB658 /* Resources */,
 			);
 			path = JustMovdApp;
 			sourceTree = "<group>";
@@ -634,6 +665,7 @@
 				5A169B0D18201F340042767E /* EditProfileViewController.m in Sources */,
 				5A169B1A18201F340042767E /* OtherEditCell.m in Sources */,
 				5A169AFC18201F340042767E /* AboutEditCell.m in Sources */,
+				528AEF8418209B3A002AB658 /* VenuesMapViewController.m in Sources */,
 				5A169B2118201F340042767E /* QuestionnaireViewController.m in Sources */,
 				5A169B0B18201F340042767E /* Comms.m in Sources */,
 				5A169B1C18201F340042767E /* PictureCell.m in Sources */,
