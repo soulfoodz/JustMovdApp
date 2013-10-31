@@ -14,14 +14,20 @@
 
 @implementation IntroChildViewController
 
-@synthesize index, myLabel;
+@synthesize index, myLabel, backgroundImage;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    myLabel.text = [NSString stringWithFormat:@"%ld", (long)index];
+    //myLabel.text = [NSString stringWithFormat:@"%ld", (long)index];
+    
+    myLabel.text = nil;
+    
+    //UIImageView *
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:backgroundImage]];
 
 }
 

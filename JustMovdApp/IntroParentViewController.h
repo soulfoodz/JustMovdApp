@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Comms.h"
+#import "QuestionnaireVCDelegate.h"
 
 
-@interface IntroParentViewController : UIViewController <UIPageViewControllerDataSource, CommsDelegate>
+@interface IntroParentViewController : UIViewController <UIPageViewControllerDataSource, CommsDelegate, QuestionnaireVCDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 

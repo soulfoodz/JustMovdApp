@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionViewDelegate.h"
+#import "QuestionnaireVCDelegate.h"
 
 @interface QuestionnaireViewController : UIViewController <QuestionViewDelegate>
+
+@property (strong, nonatomic) id <QuestionnaireVCDelegate> delegate;
 
 @end

@@ -27,6 +27,7 @@
 
 @implementation QuestionnaireViewController
 
+@synthesize delegate;
 
 
 - (void)viewDidLoad
@@ -40,7 +41,20 @@
     questionViewsArray = [NSMutableArray new];
     imagesArray = [NSMutableArray new];
     
-    questions = @[@"Coffee Or Beer?", @"Lift Or Yoga?", @"Video Games or Sports?"];
+    NSMutableDictionary *firstQuest = [[NSMutableDictionary alloc] init];
+    [firstQuest setObject:@"Coffee" forKey:@"first"];
+    [firstQuest setObject:@"Beer" forKey:@"second"];
+    
+    NSMutableDictionary *secondQuest = [[NSMutableDictionary alloc] init];
+    [secondQuest setObject:@"Lift" forKey:@"first"];
+    [secondQuest setObject:@"Yoga" forKey:@"second"];
+    
+    NSMutableDictionary *thirdQuest = [[NSMutableDictionary alloc] init];
+    [thirdQuest setObject:@"Video Games" forKey:@"first"];
+    [thirdQuest setObject:@"Sports" forKey:@"second"];
+    
+    questions = [[NSArray alloc] initWithObjects:firstQuest, secondQuest, thirdQuest, nil];
+    
     
     NSMutableDictionary *firstViewDict = [[NSMutableDictionary alloc] init];
     [firstViewDict setObject:@"coffee_circle" forKey:@"first"];
@@ -62,16 +76,6 @@
     counter = 0;
     
     [self makeQuestionViews];
-    
-//    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [nextButton setTitle:@"Next View" forState:UIControlStateNormal];
-//    [nextButton sizeToFit];
-//    nextButton.center = CGPointMake(160, 500);
-//
-//    
-//    [self.view addSubview:nextButton];
-//    
-//    [nextButton addTarget:self action:@selector(moveView) forControlEvents:UIControlEventTouchUpInside];
 
 
 }
@@ -85,7 +89,7 @@
     
     for (int i = 0; i < [questions count]; i++){
         
-        QuestionView *tempView = [[QuestionView alloc] initWithFrame:CGRectMake((i*spacing),0, 260, 400) andFirstImage:[[imagesArray objectAtIndex:i] objectForKey:@"first"] andSecondImage:[[imagesArray objectAtIndex:i] objectForKey:@"second"] andQuestion:[questions objectAtIndex:i]];
+        QuestionView *tempView = [[QuestionView alloc] initWithFrame:CGRectMake((i*spacing),0, 260, 400) andFirstImage:[[imagesArray objectAtIndex:i] objectForKey:@"first"] andSecondImage:[[imagesArray objectAtIndex:i] objectForKey:@"second"] andFirstQuestion:[[questions objectAtIndex:i] objectForKey:@"first"]  andSecondQuestion:[[questions objectAtIndex:i] objectForKey:@"second"]];
         
         tempView.delegate = self;
 
@@ -122,7 +126,10 @@
         [interests save];
 
         
-        [self performSegueWithIdentifier:@"done" sender:self];
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+            [delegate viewControllerDone:self];
+        }];
     }
 
     
@@ -132,9 +139,9 @@
 -(void)passBackQuestionView:(id)view withTag:(NSInteger)tag{
     
     if (tag == 0){
-        [answers addObject:[[imagesArray objectAtIndex:counter] objectForKey:@"first"]];
+        [answers addObject:[[questions objectAtIndex:counter] objectForKey:@"first"]];
     } else {
-        [answers addObject:[[imagesArray objectAtIndex:counter] objectForKey:@"second"]];
+        [answers addObject:[[questions objectAtIndex:counter] objectForKey:@"second"]];
     }
     
     [self moveView];

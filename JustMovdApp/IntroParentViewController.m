@@ -8,12 +8,14 @@
 
 #import "IntroParentViewController.h"
 #import "IntroChildViewController.h"
+#import "QuestionnaireViewController.h"
 
 @interface IntroParentViewController ()
 {
     FBRequest *request;
     NSData *profilePictureData;
 
+    NSArray *backgroundImages;
 
 }
 
@@ -31,25 +33,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    backgroundImages = [[NSArray alloc] initWithObjects:@"login1", @"login2", @"login3", nil];
 
+    [self loadIntro];
 
 
     
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    if (![PFUser currentUser])
-    {
-        [self loadIntro];
-    }
-    else
-    {
-        [self performSegueWithIdentifier:@"toAppDirectly" sender:self];
-    }
-    
-}
+//-(void)viewDidAppear:(BOOL)animated{
+//    [super viewDidAppear:animated];
+//    
+//    if (![PFUser currentUser])
+//    {
+//        [self loadIntro];
+//    }
+//    else
+//    {
+//        [self performSegueWithIdentifier:@"toAppDirectly" sender:self];
+//    }
+//    
+//}
 
 -(void)loadIntro{
     
@@ -69,15 +74,26 @@
     [pageController didMoveToParentViewController:self];
     
     
-    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [nextButton setTitle:@"Next View" forState:UIControlStateNormal];
+    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //[nextButton setTitle:@"Next View" forState:UIControlStateNormal];
+    [nextButton setBackgroundImage:[UIImage imageNamed:@"facebooklogin"] forState:UIControlStateNormal];
     [nextButton sizeToFit];
-    nextButton.center = CGPointMake(160, 400);
+    nextButton.center = CGPointMake(160, 480);
     
     
     [self.view addSubview:nextButton];
     
     [nextButton addTarget:self action:@selector(nextView) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 200, 200, 50)];
+    
+    justMovdLabel.text = @"JustMovd";
+    justMovdLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:28];
+    justMovdLabel.textAlignment = NSTextAlignmentCenter;
+    
+    justMovdLabel.center = CGPointMake(self.view.frame.size.width/2, 100);
+    
+    [self.view addSubview:justMovdLabel];
     
     
 }
@@ -86,16 +102,25 @@
 
 
 -(void)nextView{
-    
-    // Do the login
     [Comms login:self];
 }
 
 
 - (void)commsDidLogin:(BOOL)loggedIn
 {
-	// Re-enable the Login button
-	//[self.loginButton setEnabled:YES];
+    
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width/2, 200);
+    
+    UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    coverView.backgroundColor = [UIColor grayColor];
+    coverView.alpha = 0.4;
+    
+    [self.view addSubview:coverView];
+    [self.view addSubview:activityIndicator];
+    
+    [activityIndicator startAnimating];
     
 	// Did we login successfully ?
     
@@ -103,9 +128,14 @@
     {
 		// Send out request to facebook and get information that we need
         NSString *fbInfoToRequest = @"me/?fields=username,name,gender,id,email,birthday,location";  // <--- asking for these
+        
+        
         request = [FBRequest requestForGraphPath:fbInfoToRequest];
+        
         [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error)
          {
+
+             
              PFUser *user = [PFUser currentUser];
              
              NSLog(@"RESULTS: %@", result);
@@ -134,9 +164,15 @@
              if (!user[@"about"]){
                  user[@"about"] = @"...";
              }
-             
+//             if (!user[@"location"]){
+//                 user[@"location"] = [result objectForKey:@"location"];
+//             }
              
              [user save]; // <--- Don't want to save in background, only let user in if their info are good
+             
+           //  [self performSegueWithIdentifier:@"abc" sender:self];
+
+             
              
              //Getting user profile picture size LARGE
              NSString *fbAPIForProfilePicture = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=320&height=400", [result objectForKey:@"username"]];
@@ -153,7 +189,21 @@
              [user save]; // <--- Don't want to save in bacgkground, only let user in if their pictures are good
              [[NSURLCache sharedURLCache] removeAllCachedResponses];
              
-             [self performSegueWithIdentifier:@"abc" sender:self];
+             
+             
+             PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
+             [query whereKey:@"User" equalTo:[PFUser currentUser]];
+             
+             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                 if ([objects count] == 0){
+                     [self performSegueWithIdentifier:@"abc" sender:self];
+                 } else {
+                     [self dismissViewControllerAnimated:YES completion:^{
+                         nil;
+                     }];
+                 }
+             }];
+             
              
          }];
 	}
@@ -165,8 +215,20 @@
                           cancelButtonTitle:@"Ok"
                           otherButtonTitles:nil] show];
 	}
+    
+    
+    //[activityIndicator stopAnimating];
+    coverView = nil;
+    
+
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"abc"] ){
+        QuestionnaireViewController *questVC = segue.destinationViewController;
+        questVC.delegate = self;
+    }
+}
 
 
 - (IntroChildViewController *)viewControllerAtIndex:(NSUInteger)index {
@@ -175,6 +237,7 @@
     IntroChildViewController *childViewController = [sb instantiateViewControllerWithIdentifier:@"introChild"];
     
     childViewController.index = index;
+    childViewController.backgroundImage = [backgroundImages objectAtIndex:index];
     
     return childViewController;
     
@@ -218,6 +281,12 @@
     return 0;
 }
 
+
+-(void)viewControllerDone:(id)view{
+    [self dismissViewControllerAnimated:NO completion:^{
+        nil;
+    }];
+}
 
 
 @end

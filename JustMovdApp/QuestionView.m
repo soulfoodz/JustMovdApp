@@ -10,19 +10,37 @@
 
 @implementation QuestionView
 
-@synthesize questionLabel, delegate;
+@synthesize questionLabel1, questionLabel2, delegate;
 
 
--(id)initWithFrame:(CGRect)frame andFirstImage:(NSString*)firstImage andSecondImage:(NSString*)secondImage andQuestion:(NSString*)question{
+-(id)initWithFrame:(CGRect)frame andFirstImage:(NSString*)firstImage andSecondImage:(NSString*)secondImage andFirstQuestion:(NSString*)question1 andSecondQuestion:(NSString*)question2{
     
     self = [super initWithFrame:frame];
     if (self) {
         
-        questionLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, 220, 40)];
-        questionLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:28];
-        questionLabel.text = question;
-        questionLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:questionLabel];
+        questionLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(40, 50, 180, 40)];
+        questionLabel1.font = [UIFont fontWithName:@"Roboto-Regular" size:36];
+        questionLabel1.text = question1;
+        questionLabel1.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:questionLabel1];
+        
+        questionLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(40, 295, 180, 40)];
+        questionLabel2.font = [UIFont fontWithName:@"Roboto-Regular" size:36];
+        questionLabel2.text = question2;
+        questionLabel2.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:questionLabel2];
+        
+        UILabel *or1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 135, 60, 30)];
+        or1.font = [UIFont fontWithName:@"Roboto-Regular" size:30];
+        or1.text = @"O";
+        or1.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:or1];
+        
+        UILabel *or2 = [[UILabel alloc] initWithFrame:CGRectMake(100, 235, 60, 30)];
+        or2.font = [UIFont fontWithName:@"Roboto-Regular" size:30];
+        or2.text = @"R";
+        or2.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:or2];
         
         self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.90];
         
