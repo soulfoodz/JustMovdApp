@@ -37,24 +37,9 @@
     backgroundImages = [[NSArray alloc] initWithObjects:@"login1", @"login2", @"login3", nil];
 
     [self loadIntro];
-
-
     
 }
 
-//-(void)viewDidAppear:(BOOL)animated{
-//    [super viewDidAppear:animated];
-//    
-//    if (![PFUser currentUser])
-//    {
-//        [self loadIntro];
-//    }
-//    else
-//    {
-//        [self performSegueWithIdentifier:@"toAppDirectly" sender:self];
-//    }
-//    
-//}
 
 -(void)loadIntro{
     
@@ -75,15 +60,13 @@
     
     
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //[nextButton setTitle:@"Next View" forState:UIControlStateNormal];
     [nextButton setBackgroundImage:[UIImage imageNamed:@"facebooklogin"] forState:UIControlStateNormal];
     [nextButton sizeToFit];
     nextButton.center = CGPointMake(160, 480);
     
-    
     [self.view addSubview:nextButton];
-    
     [nextButton addTarget:self action:@selector(nextView) forControlEvents:UIControlEventTouchUpInside];
+    
     
     UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 200, 200, 50)];
     
@@ -100,10 +83,10 @@
 
 
 
-
 -(void)nextView{
     [Comms login:self];
 }
+
 
 
 - (void)commsDidLogin:(BOOL)loggedIn
@@ -121,8 +104,6 @@
     [self.view addSubview:activityIndicator];
     
     [activityIndicator startAnimating];
-    
-	// Did we login successfully ?
     
 	if (loggedIn)
     {
@@ -170,7 +151,6 @@
              
              [user save]; // <--- Don't want to save in background, only let user in if their info are good
              
-           //  [self performSegueWithIdentifier:@"abc" sender:self];
 
              
              
@@ -186,7 +166,8 @@
              //Creating PFFile type
              PFFile *imageFile = [PFFile fileWithName:profilePictureName data:profilePictureData];
              [user setObject:imageFile forKey:@"profilePictureFile"];
-             [user save]; // <--- Don't want to save in bacgkground, only let user in if their pictures are good
+             
+             [user save];
              [[NSURLCache sharedURLCache] removeAllCachedResponses];
              
              
@@ -208,7 +189,6 @@
          }];
 	}
     else {
-		// Show error alert
 		[[[UIAlertView alloc] initWithTitle:@"Login Failed"
                                     message:@"Facebook Login failed. Please try again"
                                    delegate:nil
@@ -217,7 +197,6 @@
 	}
     
     
-    //[activityIndicator stopAnimating];
     coverView = nil;
     
 

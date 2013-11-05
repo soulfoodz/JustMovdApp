@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TestViewController : UIViewController
+@interface TestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *myTableView;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
 
 @end
