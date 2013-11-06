@@ -23,5 +23,6 @@
 @property (strong, nonatomic) UIImageView *secondInterest;
 @property (strong, nonatomic) UIImageView *thirdInterest;
 @property (strong, nonatomic) UIImageView *fourthInterest;
+@property (strong, nonatomic) UILabel *distanceLabel;
 
 @end
