@@ -11,10 +11,11 @@
 
 @interface QuestionView : UIView
 
-@property (strong, nonatomic) UILabel *questionLabel;
+@property (strong, nonatomic) UILabel *questionLabel1;
+@property (strong, nonatomic) UILabel *questionLabel2;
 
 @property (strong, nonatomic) id <QuestionViewDelegate> delegate;
 
--(id)initWithFrame:(CGRect)frame andFirstImage:(NSString*)firstImage andSecondImage:(NSString*)secondImage andQuestion:(NSString*)question;
+-(id)initWithFrame:(CGRect)frame andFirstImage:(NSString*)firstImage andSecondImage:(NSString*)secondImage andFirstQuestion:(NSString*)question1 andSecondQuestion:(NSString*)question2;
 
 @end

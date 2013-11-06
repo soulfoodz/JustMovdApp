@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionViewDelegate.h"
+#import "QuestionnaireVCDelegate.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface QuestionnaireViewController : UIViewController <QuestionViewDelegate>
+@interface QuestionnaireViewController : UIViewController <QuestionViewDelegate, CLLocationManagerDelegate>
+
+@property (strong, nonatomic) id <QuestionnaireVCDelegate> delegate;
 
 @end
