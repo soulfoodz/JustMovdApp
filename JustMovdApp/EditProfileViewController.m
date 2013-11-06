@@ -29,7 +29,6 @@
 	// Do any additional setup after loading the view.
     
     [self createKeyboardToolbar];
-    
 }
 
 - (void)createKeyboardToolbar
@@ -64,6 +63,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+    {
+        return 160.0;
+    }
+    else {
+        return 75.0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,13 +113,41 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     textField.inputAccessoryView = keyboardToolbar;
+    [textField setReturnKeyType:UIReturnKeyDone];
+    
+    CGRect tableViewFrame = editProfileTableView.frame;
+    tableViewFrame.size.height -= 260;
+    [editProfileTableView setFrame:tableViewFrame];
+    
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    CGRect tableViewFrame = editProfileTableView.frame;
+    tableViewFrame.size.height += 260;
+    [editProfileTableView setFrame:tableViewFrame];
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [textView scrollRangeToVisible:NSMakeRange([textView.text length]-1, 1)];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     textView.inputAccessoryView = keyboardToolbar;
+    CGRect tableViewFrame = editProfileTableView.frame;
+    tableViewFrame.size.height -= 260;
+    [editProfileTableView setFrame:tableViewFrame];
     return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    CGRect tableViewFrame = editProfileTableView.frame;
+    tableViewFrame.size.height += 260;
+    [editProfileTableView setFrame:tableViewFrame];
 }
 
 

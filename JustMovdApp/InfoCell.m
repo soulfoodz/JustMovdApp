@@ -17,8 +17,9 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        descriptionLabel = [[UILabel alloc] init];
+        backgroundView = [[UIView alloc] init];
         titleLabel = [[UILabel alloc] init];
+        descriptionLabel = [[UILabel alloc] init];
         //self.layer.cornerRadius = 5;
         //self.layer.masksToBounds = YES;
     }
@@ -32,23 +33,27 @@
     // Configure the view for the selected state
 }
 
-- (void)setFrame:(CGRect)frame
-{
-    frame.origin.x = 10;
-    frame.size.width = 300.0;
-    [super setFrame:frame];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
+    self.backgroundColor = [UIColor clearColor];
+    [backgroundView setFrame:CGRectMake(10, 1, 300, self.frame.size.height - 1)];
+    backgroundView.backgroundColor = [UIColor whiteColor];
+    backgroundView.layer.cornerRadius = 3;
+    [self addSubview:backgroundView];
+
+    
     [descriptionLabel setFrame:CGRectMake(88, 12, 200, self.frame.size.height - 15)];
+    descriptionLabel.contentMode = UIViewContentModeTop;
     descriptionLabel.textColor = [UIColor darkGrayColor];
-    [self addSubview:descriptionLabel];
+    descriptionLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
+    [backgroundView addSubview:descriptionLabel];
+    
     [titleLabel setFrame:CGRectMake(20, 17, 60, 20)];
     titleLabel.textColor = [UIColor orangeColor];
-    [self addSubview:titleLabel];
+    titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
+    [backgroundView addSubview:titleLabel];
 }
 
 @end

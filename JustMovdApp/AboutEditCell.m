@@ -9,6 +9,8 @@
 #import "AboutEditCell.h"
 
 @implementation AboutEditCell
+@synthesize detailTextView;
+@synthesize titleLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -30,9 +32,19 @@
 {
     frame.origin.x = 10;
     frame.size.width = 300;
-    frame.size.height = 120;
+    frame.size.height = 160;
     
     [super setFrame:frame];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    detailTextView.editable = YES;
+    detailTextView.userInteractionEnabled = YES;
+    detailTextView.scrollEnabled = YES;
+    //[detailTextView scrollRangeToVisible:NSMakeRange([detailTextView.text length] -1, 1)];
 }
 
 @end

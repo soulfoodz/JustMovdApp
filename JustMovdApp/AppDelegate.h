@@ -10,8 +10,16 @@
 #import <Parse/Parse.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    UILabel *hudView;
+    UIWindow *hudWindow;
+    id presentingMessagingOn;
+    id presentingMessagingOff;
+    BOOL isMessagingPresented;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) PFUser *user;
+@property (strong, nonatomic) NSData *deviceTokenForPush;
 
 @end

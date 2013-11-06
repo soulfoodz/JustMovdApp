@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fromTownLabel;
 @property (weak, nonatomic) IBOutlet UIButton *messageButton;
+@property (weak, nonatomic) IBOutlet UIButton *logOutButton;
+@property (weak, nonatomic) IBOutlet UIView *pictureMaskView;
+@property (strong, nonatomic) CALayer *maskLayer;
 
 
 //Actions, methods
