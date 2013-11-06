@@ -1,5 +1,5 @@
 //
-//  PostDetailViewController.h
+//  CommentViewController.h
 //  JustMovdApp
 //
 //  Created by MacBook Pro on 10/25/13.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ActivityFeedCellDelegate.h"
 
-@interface PostDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ActivityFeedCellDelegate, UITextViewDelegate, UIAlertViewDelegate>
+@interface CommentViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ActivityFeedCellDelegate, UITextViewDelegate, UIAlertViewDelegate>
 
 @property CGSize headerSize;
 @property (strong, nonatomic) NSString *posterID;
@@ -23,14 +23,12 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIView *textViewContainer;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *postButton;
+
 
 // HeaderView
-@property (strong, nonatomic) UIView *headerContainerView;
-@property (strong, nonatomic) UILabel *contentLabel;
-@property (strong, nonatomic) UILabel *nameLabel;
-@property (strong, nonatomic) UILabel *dateLabel;
-@property (strong, nonatomic) PFImageView *avatarImageView;
-@property (strong, nonatomic) UIButton *avatarButton;
+@property (strong, nonatomic) UILabel *commentsLabel;
+
 
 
 

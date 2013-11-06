@@ -35,6 +35,7 @@
     [super viewDidLoad];
     
     backgroundImages = [[NSArray alloc] initWithObjects:@"login1", @"login2", @"login3", nil];
+    self.view.backgroundColor = [UIColor colorWithRed:80/255.0 green:177/255.0 blue:246/255.0 alpha:1.0];
 
     [self loadIntro];
     

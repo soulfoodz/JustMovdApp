@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 #import "ActivityFeedCellDelegate.h"
 #import "AddNewPostToActivityFeedDelegate.h"
-#import "VenuesMapViewController.h"
+//#import "CheckInViewController.h"
 
 
 @class UpdateCellHeader;
@@ -18,6 +18,8 @@
 @interface ActivityFeedViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, ActivityFeedCellDelegate, AddNewPostToActivityFeedDelegate>
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+
+- (IBAction)unwindFromCheckInVC:(UIStoryboardSegue *)unwindSegue;
 
 
 

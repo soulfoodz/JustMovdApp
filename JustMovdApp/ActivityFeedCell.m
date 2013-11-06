@@ -7,7 +7,6 @@
 //
 
 #import "ActivityFeedCell.h"
-#import "FakeProfileViewController.h"
 #import "PFImageView+ImageHandler.h"
 
 
@@ -129,15 +128,15 @@
 }
 
 
-+ (CGFloat)heightForCellWithContentString:(NSString *)contentString
-{
-    CGSize contentSize = [contentString sizeWithFont:contentFontWithSize
-                                   constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
-                                       lineBreakMode:NSLineBreakByWordWrapping];
-
-    CGFloat cellHeight = (contentSize.height + headerViewHeight + footerViewHeight);
-    return cellHeight;
-}
+//+ (CGFloat)heightForCellWithContentString:(NSString *)contentString
+//{
+//    CGSize contentSize = [contentString sizeWithFont:contentFontWithSize
+//                                   constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
+//                                       lineBreakMode:NSLineBreakByWordWrapping];
+//
+//    CGFloat cellHeight = (contentSize.height + headerViewHeight + footerViewHeight);
+//    return cellHeight;
+//}
 
 
 - (void)setUser:(PFUser *)user
@@ -175,6 +174,9 @@
 
 - (void)setDate:(NSDate *)date
 {
+    if (!date) {
+        date = [NSDate date];
+    }
     NSString *dateString = [self.timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:date];
 
     CGSize dateSize = [self sizeForString:dateString withFont:self.dateLabel.font];

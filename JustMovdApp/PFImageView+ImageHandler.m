@@ -14,6 +14,7 @@
 - (void)setFile:(PFFile *)file forImageView:(PFImageView *)imageView
 {
     if (!file) {
+        NSLog(@"Couldn't find a file!");
         return;
     }
     

@@ -39,11 +39,13 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Roboto-Medium.ttf</string>
 		<string>Roboto-Light.ttf</string>
+		<string>Roboto-Thin.ttf</string>
 		<string>Roboto-Regular.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
-	<string>Questionnaire</string>
+	<string>FeedStoryboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
