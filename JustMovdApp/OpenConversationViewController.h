@@ -13,6 +13,7 @@
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *openConversationTableView;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
 
 //Properties
 @property (strong, nonatomic) NSMutableArray *openConversationArray;

@@ -13,6 +13,7 @@
 #import "StatusUpdateViewController.h"
 #import "NavViewController.h"
 #import "PFImageView+ImageHandler.h"
+#import "SWRevealViewController.h"
 
 
 #define kLoadingCellTag 7
@@ -27,6 +28,8 @@
 @end
 
 @implementation ActivityFeedViewController
+
+@synthesize sideBarButton;
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -46,6 +49,11 @@
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
+    
+    sideBarButton.target = self.revealViewController;
+    sideBarButton.action = @selector(revealToggle:);
+    
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
     self.isAll = NO;
     

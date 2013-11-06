@@ -19,6 +19,7 @@
 #import "MessagingViewController.h"
 #import "ProfileInterestCell.h"
 #import "SpinnerViewController.h"
+#import "SWRevealViewController.h"
 
 @interface UserProfileViewController ()
 {
@@ -44,6 +45,7 @@
 @synthesize userProfileTableView;
 @synthesize facebookUsername;
 @synthesize editButton;
+@synthesize sideBarButton;
 
 - (void)viewDidLoad
 {
@@ -71,6 +73,11 @@
     [self.view bringSubviewToFront:spinner.view];
     
     commentCount = [[NSMutableArray alloc] init];
+    
+    sideBarButton.target = self.revealViewController;
+    sideBarButton.action = @selector(revealToggle:);
+    
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
     userInfoDictionary = [[NSMutableDictionary alloc] init];
     userInfoDictionary[@"name"]             = @"";

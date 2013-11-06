@@ -11,6 +11,7 @@
 #import "MessagingViewController.h"
 #import "TTTTimeIntervalFormatter.h"
 #import "SpinnerViewController.h"
+#import "SWRevealViewController.h"
 
 @interface OpenConversationViewController ()
 {
@@ -27,11 +28,17 @@
 @implementation OpenConversationViewController
 @synthesize openConversationTableView;
 @synthesize openConversationArray;
+@synthesize  sideBarButton;
 
 
 - (void)viewDidLoad
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConversation) name:@"NewMessageNotification" object:nil];
+    
+    sideBarButton.target = self.revealViewController;
+    sideBarButton.action = @selector(revealToggle:);
+    
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
     [super viewDidLoad];
     [self initializeStuffing];

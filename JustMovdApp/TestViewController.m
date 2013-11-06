@@ -12,6 +12,7 @@
 #import "SWRevealViewController.h"
 #import "MatchTableViewCell.h"
 #import <CoreLocation/CoreLocation.h>
+#import "UserProfileViewController.h"
 
 
 @interface TestViewController ()
@@ -313,6 +314,22 @@
         return @"book";
     }
 }
+
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
+    UserProfileViewController *profileVC = [messagesSB instantiateViewControllerWithIdentifier:@"profile"];
+    
+    profileVC.facebookUsername = ((PFUser*)[matches objectAtIndex:indexPath.row]).username;
+    
+    [self.navigationController pushViewController:profileVC animated:YES];
+    
+    
+    
+}
+
 
 
 

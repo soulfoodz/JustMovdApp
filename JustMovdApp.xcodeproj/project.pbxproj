@@ -64,6 +64,7 @@
 		5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF418201F340042767E /* UpdateCellHeader.m */; };
 		5A2F2B06182ACDE40050A227 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957B1821643F008F7832 /* UserProfileViewController.m */; };
 		5A2F2B07182ACDE40050A227 /* UsersWithinRadiusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0B0182498CB000BF87B /* UsersWithinRadiusViewController.m */; };
+		5A2F2B0A182AE1900050A227 /* FeedConnectorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2F2B09182AE1900050A227 /* FeedConnectorVC.m */; };
 		5A4F5CEA1821661400CA6F17 /* activityfeedcell_icon_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CE91821661400CA6F17 /* activityfeedcell_icon_comment.png */; };
 		5A4F5D151821666600CA6F17 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CEE1821666600CA6F17 /* background.png */; };
 		5A4F5D161821666600CA6F17 /* background2_size.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CEF1821666600CA6F17 /* background2_size.png */; };
@@ -199,6 +200,8 @@
 		5A169AF318201F340042767E /* UpdateCellHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateCellHeader.h; sourceTree = "<group>"; };
 		5A169AF418201F340042767E /* UpdateCellHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateCellHeader.m; sourceTree = "<group>"; };
 		5A169AF518201F340042767E /* UpdateCellHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateCellHeader.xib; sourceTree = "<group>"; };
+		5A2F2B08182AE1900050A227 /* FeedConnectorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedConnectorVC.h; sourceTree = "<group>"; };
+		5A2F2B09182AE1900050A227 /* FeedConnectorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedConnectorVC.m; sourceTree = "<group>"; };
 		5A4F5CE91821661400CA6F17 /* activityfeedcell_icon_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activityfeedcell_icon_comment.png; sourceTree = "<group>"; };
 		5A4F5CEE1821666600CA6F17 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		5A4F5CEF1821666600CA6F17 /* background2_size.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background2_size.png; sourceTree = "<group>"; };
@@ -491,7 +494,6 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
-				5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */,
 				5AB695831821656A008F7832 /* AboutEditCell.h */,
 				5AB695841821656A008F7832 /* AboutEditCell.m */,
 				52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */,
@@ -542,6 +544,7 @@
 				5AB6957318215EFB008F7832 /* IntroParentViewController.m */,
 				52ED7E991825BA6600BFD440 /* JMCache.h */,
 				52ED7E9A1825BA6600BFD440 /* JMCache.m */,
+				5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */,
 				5AC9DC34182ACA140051EF9A /* JustMovdApp-Prefix.pch */,
 				E5AAC0AB1821F9F9000BF87B /* KyleLoginViewController.h */,
 				E5AAC0AC1821F9F9000BF87B /* KyleLoginViewController.m */,
@@ -585,6 +588,8 @@
 				E5DB80CE18287F7500C0DA0C /* ProfileInterestCell.h */,
 				E5DB80CF18287F7500C0DA0C /* ProfileInterestCell.m */,
 				5AC9DC42182ACAC00051EF9A /* Questionnaire.storyboard */,
+				5A2F2B08182AE1900050A227 /* FeedConnectorVC.h */,
+				5A2F2B09182AE1900050A227 /* FeedConnectorVC.m */,
 				5A4F5D4E1821A8DE00CA6F17 /* QuestionnaireVCDelegate.h */,
 				5AC9DC3F182ACAB20051EF9A /* QuestionnaireViewController.h */,
 				5AC9DC40182ACAB20051EF9A /* QuestionnaireViewController.m */,
@@ -839,6 +844,7 @@
 				5A2F2B00182ACDE40050A227 /* StatusUpdateViewController.m in Sources */,
 				5A2F2B01182ACDE40050A227 /* SWRevealViewController.m in Sources */,
 				5A2F2B02182ACDE40050A227 /* TestViewController.m in Sources */,
+				5A2F2B0A182AE1900050A227 /* FeedConnectorVC.m in Sources */,
 				5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */,
 				5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */,
 				5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */,

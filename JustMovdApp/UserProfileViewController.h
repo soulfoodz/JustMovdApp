@@ -18,6 +18,7 @@
 //Properties
 @property (strong, nonatomic) NSMutableArray *userInfosArray;
 @property (strong, nonatomic) NSString *facebookUsername;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
 
 
 //Actions, methods

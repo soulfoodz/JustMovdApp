@@ -28,8 +28,9 @@
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
 #import "SWRevealViewController.h"
-
 #import "SideBarViewController.h"
+
+#import "ActivityFeedViewController.h"
 
 #define EASY (float)0.5
 #define MEDIUM (float)0.25
@@ -533,13 +534,13 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
         {
         }
         
-        @try
-        {
-            [self performSegueWithIdentifier:SWSegueRightIdentifier sender:nil];
-        }
-        @catch(NSException *exception)
-        {
-        }
+//        @try
+//        {
+//            [self performSegueWithIdentifier:SWSegueRightIdentifier sender:nil];
+//        }
+//        @catch(NSException *exception)
+//        {
+//        }
     }
     
     // Apple also tells us to do this:

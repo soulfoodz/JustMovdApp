@@ -21,6 +21,7 @@
 
 - (IBAction)unwindFromCheckInVC:(UIStoryboardSegue *)unwindSegue;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
 
 
 @end
