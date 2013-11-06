@@ -1,18 +1,19 @@
 //
-//  FakeProfileViewController.m
+//  NavViewController.m
 //  JustMovdApp
 //
-//  Created by MacBook Pro on 10/26/13.
+//  Created by MacBook Pro on 10/31/13.
 //  Copyright (c) 2013 Kabir Mahal. All rights reserved.
 //
 
-#import "FakeProfileViewController.h"
+#import "NavViewController.h"
+#import "StatusUpdateViewController.h"
 
-@interface FakeProfileViewController ()
+@interface NavViewController ()
 
 @end
 
-@implementation FakeProfileViewController
+@implementation NavViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -34,5 +37,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    StatusUpdateViewController *statusVC = segue.destinationViewController;
+//    if (self.presenting) {
+//        <#statements#>
+//    }
+//}
 
 @end

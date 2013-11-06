@@ -29,7 +29,6 @@
 @property (strong, nonatomic) TTTTimeIntervalFormatter *timeFormatter;
 
 
-+ (CGFloat)heightForCellWithContentString:(NSString *)contentString;
 - (void)setContentLabelTextWith:(NSString *)contentString;
 - (void)setUser:(PFUser *)user;
 - (void)setDate:(NSDate *)date;

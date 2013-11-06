@@ -7,14 +7,16 @@
 //
 
 #import "ActivityFeedViewController.h"
-#import "ActivityFeedCell.h"
+#import "PostCell.h"
 #import "TTTTimeIntervalFormatter.h"
-#import "PostDetailViewController.h"
-#import "FakeProfileViewController.h"
-#import "AddCommentViewController.h"
+#import "CommentViewController.h"
+#import "StatusUpdateViewController.h"
+#import "NavViewController.h"
+#import "PFImageView+ImageHandler.h"
 
 
 #define kLoadingCellTag 7
+#define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:14.0]
 
 @interface ActivityFeedViewController ()
 
@@ -41,6 +43,10 @@
 {
     [super viewDidLoad];
     
+    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
+    
     self.isAll = NO;
     
     UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
@@ -54,101 +60,179 @@
 
 - (void)queryForTable
 {
-    PFQuery *queryForAllPosts;
-    queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
-    [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
+    if (self.postsArray.count == 0){
+        PFQuery *queryForAllPosts;
+        queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
+        [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
+        [queryForAllPosts includeKey:@"user"];
+        [queryForAllPosts includeKey:@"checkIn"];
+        queryForAllPosts.limit = 10;
+        queryForAllPosts.cachePolicy = kPFCachePolicyNetworkOnly;
+        [queryForAllPosts orderByDescending:@"createdAt"];
+        
+        [queryForAllPosts findObjectsInBackgroundWithBlock:
+         ^(NSArray *queryResults, NSError *error){
+             if (!error)
+             {
+                 // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
+                 if (queryResults.count < 6)
+                     self.isAll = YES;
+                 else
+                     self.isAll = NO;
+                 
+                 
+                 // If postsArray doesn't exist, create it.
+                 if (!self.postsArray) self.postsArray = [NSMutableArray new];
+                 
+                 // Add queryResults to postsArray
+                 [self.postsArray addObjectsFromArray:queryResults];
+                 
+                 // Sort the array into descending order
+                 [self.postsArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                     int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
+                     return dateOrder;
+                 }];
+                 [self.tableView reloadData];
+             }
+             else NSLog(@"Error fetching posts : %@", error);
+         }];
+
+    }
     
-    // Check for any objects older than the last (oldest) object in self.postsArray
-    // Check for any objects newer than the first (most recent) object in self.postsArray
-    if (self.postsArray.count > 0)
-    {
+    if (self.postsArray.count > 0){
+        PFQuery *queryForAllPosts;
+        queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
+        [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
         [queryForAllPosts whereKey:@"createdAt"
                           lessThan:[[self.postsArray lastObject] createdAt]];
-        [queryForAllPosts whereKey:@"createdAt"
-                          greaterThan:[[self.postsArray firstObject] createdAt]];
-    }
-    [queryForAllPosts includeKey:@"user"];
-    queryForAllPosts.limit = 20;
-    queryForAllPosts.cachePolicy = kPFCachePolicyNetworkOnly;
-    [queryForAllPosts orderByDescending:@"createdAt"];
+        
+        PFQuery *greaterThanQuery;
+        greaterThanQuery = [PFQuery queryWithClassName:@"Activity"];
+        [greaterThanQuery whereKey:@"type" equalTo:@"JMPost"];
+        [greaterThanQuery whereKey:@"createdAt"
+                       greaterThan:[[self.postsArray firstObject] createdAt]];
 
-    [queryForAllPosts findObjectsInBackgroundWithBlock:
-     ^(NSArray *queryResults, NSError *error){
-        if (!error)
-        {
-            // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
-            if (queryResults.count < 20)
-                self.isAll = YES;
-            else
-                self.isAll = NO;
-            
-            // If postsArray doesn't exist, create it.
-            if (!self.postsArray)
-                self.postsArray = [NSMutableArray new];
-            
-            [self.postsArray addObjectsFromArray:queryResults];
-            
-            // Sort the array into descending order
-            [self.postsArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
-                return dateOrder;
-            }];
-            [self.tableView reloadData];
-        }
-        else NSLog(@"Error fetching posts : %@", error);
-    }];
+        PFQuery *bigQuery;
+        bigQuery = [PFQuery orQueryWithSubqueries:@[queryForAllPosts, greaterThanQuery]];
+        [bigQuery includeKey:@"user"];
+        [bigQuery includeKey:@"checkIn"];
+        bigQuery.limit = 10;
+        bigQuery.cachePolicy = kPFCachePolicyNetworkOnly;
+        [bigQuery orderByDescending:@"createdAt"];
+        
+        [bigQuery findObjectsInBackgroundWithBlock:
+         ^(NSArray *queryResults, NSError *error){
+             if (!error)
+             {
+                 // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
+                 if (queryResults.count < 10)
+                     self.isAll = YES;
+                 else
+                     self.isAll = NO;
+                 
+                 // Add queryResults to postsArray
+                 [self.postsArray addObjectsFromArray:queryResults];
+                 
+                 // Sort the array into descending order
+                 [self.postsArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                     int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
+                     return dateOrder;
+                 }];
+                 [self.tableView reloadData];
+             }
+             else NSLog(@"Error fetching posts : %@", error);
+         }];
+    }
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PostCell *cell;
+    PFUser   *postCreator;
+    PFObject *checkIn;
+    NSString *contentString;
+    NSDate   *createdDate;
+    PFFile   *avatarFile;
+    NSNumber *commentCount;
+    NSString *placeName;
+    
+    checkIn = [PFObject objectWithClassName:@"CheckIn"];
+    
+    // Configure cell at end of TableView based on whether or not all posts in DB are being shown
     if (indexPath.row == self.postsArray.count && self.isAll == NO)
         return [self loadingCell];
     else if (indexPath.row == self.postsArray.count && self.isAll == YES)
         return [self isAllCell];
+    
+    // Configure standard cell
+    cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    [cell resetContents];
 
-    ActivityFeedCell *cell;
-     
-    cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    if (!cell)
-    {
-    cell = [[ActivityFeedCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                   reuseIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[PostCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
-     
-    PFUser *postCreator     = [self.postsArray[indexPath.row] objectForKey:@"user"];
-    NSString *contentString = [self.postsArray[indexPath.row] objectForKey:@"textContent"];
-    NSDate *createdDate     = [self.postsArray[indexPath.row] createdAt];
-     
-    cell.delegate = self;
-     
-    [cell setUser:postCreator];
-    [cell setDate:createdDate];
-    [cell setContentLabelTextWith:contentString];
-     
+    
+    postCreator   = [self.postsArray[indexPath.row] objectForKey:@"user"];
+    contentString = [self.postsArray[indexPath.row] objectForKey:@"textContent"];
+    commentCount  = [self.postsArray[indexPath.row] objectForKey:@"postCommentCounter"];
+    createdDate   = [self.postsArray[indexPath.row] createdAt];
+    avatarFile    = [postCreator objectForKey:@"profilePictureFile"];
+    checkIn       = [self.postsArray[indexPath.row] objectForKey:@"checkIn"];
+    
+    if (checkIn) {
+        cell.hasCheckIn        = YES;
+        placeName              = [NSString stringWithFormat:@"at %@", [checkIn objectForKey:@"placeName"]];
+        cell.checkInLabel.text = placeName;
+        [cell.checkInImage setFile:(PFFile *)checkIn[@"mapImage"] forImageView:cell.checkInImage];
+        NSLog(@"Setting the file: %@ in background", checkIn[@"mapImage"]);
+        
+//        if (![cell.checkInImage.file isDataAvailable]) {
+//            [cell.checkInImage loadInBackground];
+//        }else {
+//            [cell.checkInImage.file isDataAvailable];
+//        }
+    }
+    
+    [cell.profilePicture setFile:avatarFile forImageView:cell.profilePicture];
+    cell.nameLabel.text         = postCreator[@"firstName"];
+    cell.detailLabel.text       = contentString;
+    cell.timeLabel.text         = [self setTimeSincePostDate:createdDate];
+    cell.commentCountLabel.text = [self setCommentCount:commentCount];
+    NSLog(@"cell.checkInImage : %@", cell.checkInImage.image);
+    
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"SegueToPostDVC" sender:indexPath];
+    [self performSegueWithIdentifier:@"SegueToCommentViewController" sender:indexPath];
 }
 
  
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *textString;
+    CGRect textRect;
+    int checkInHeight;
+    
+    // CheckinHeight is equal to the check in label and image views on the cell
+    checkInHeight = 190;
+    
     if (indexPath.row == self.postsArray.count)
         return 40.0f;
-    else
-    {
-        NSString *contentString;
-        CGFloat cellHeight;
-
-        contentString = [self.postsArray[indexPath.row] objectForKey:@"textContent"];
-        cellHeight    = [ActivityFeedCell heightForCellWithContentString:contentString];
+    else {
+        textString = [self.postsArray[indexPath.row] objectForKey:@"textContent"];
+        textRect = [textString boundingRectWithSize:CGSizeMake(200.0, 0)
+                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                         attributes:@{NSFontAttributeName:CONTENT_FONT}
+                                            context:nil];
         
-        return cellHeight;
+        if ([self.postsArray[indexPath.row] objectForKey:@"checkIn"] != nil) {
+            return (textRect.size.height + checkInHeight + 110);
+        }
+        else return (textRect.size.height + 110);
     }
 }
 
@@ -172,45 +256,81 @@
 }
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSIndexPath *)sender
+- (NSString *)setTimeSincePostDate:(NSDate *)date
 {
-    if ([segue.identifier isEqualToString:@"SegueToPostDVC"])
+    TTTTimeIntervalFormatter *timeFormatter;
+    NSString *timeString;
+    
+    if (!date) date = [NSDate date];
+    timeFormatter   = [TTTTimeIntervalFormatter new];
+    timeString      = [timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:date];
+                       
+    return timeString;
+}
+
+- (NSString *)setCommentCount:(NSNumber *)commentCount
+{
+    int x = [commentCount intValue];
+    
+    if (x == 0)
+        return @"Add Comment";
+    else if (x == 1)
+        return [NSString stringWithFormat:@"%@ Comment", commentCount];
+    else
+        return [NSString stringWithFormat:@"%@ Comments", commentCount];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"SegueToCommentViewController"])
     {
-        ActivityFeedCell *cell = (ActivityFeedCell *)[self.tableView cellForRowAtIndexPath:sender];
+        CommentViewController *dvc;
+        NSIndexPath *indexPath;
+        PostCell *cell;
+    
+        dvc       = segue.destinationViewController;
+        indexPath = sender;
+        cell      = (PostCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
-        PostDetailViewController *dvc = segue.destinationViewController;
-        dvc.avatarImage = cell.profileImageView.image;
+        dvc.post = self.postsArray[indexPath.row];
+        dvc.avatarImage = cell.profilePicture.image;
         dvc.userName    = cell.nameLabel.text;
-        dvc.dateString  = cell.dateLabel.text;
-        dvc.postString  = cell.contentLabel.text;
-        dvc.post        = self.postsArray[sender.row];
+        dvc.dateString  = cell.timeLabel.text;
+        dvc.postString  = cell.detailLabel.text;
     }
     
     if ([segue.identifier isEqualToString:@"SegueToAddNewStatusUpdate"])
     {
-        AddCommentViewController *addVC = segue.destinationViewController;
-        addVC.user = [PFUser currentUser];
-        addVC.navigationItem.title = @"New Post";
-        addVC.delegate = self;
+        StatusUpdateViewController *statusVC;
+        
+        statusVC = segue.destinationViewController;
+        statusVC.navigationItem.title = @"New Post";
+        statusVC.user = [PFUser currentUser];
+        statusVC.delegate = self;
+        
+        if ([sender isKindOfClass:[UIButton class]])
+        {
+            UIButton *button = sender;
+            if ([button.titleLabel.text isEqualToString:@"Check in"])
+            {
+                statusVC.presentingCheckIn = YES;
+            }
+            else statusVC.presentingCheckIn = NO;
+        }
     }
-    
-    if ([segue.identifier isEqualToString:@"SegueToVenueMap"])
-    {
-        VenuesMapViewController *venueVC = segue.destinationViewController;
-    }
-
 }
 
 
-- (void)avatarImageWasTappedForUser:(PFUser *)user
-{
-    NSLog(@"Tapped");
-    
-    FakeProfileViewController *destVC;
-    destVC = [FakeProfileViewController new];
-    
-    [self presentViewController:destVC animated:YES completion:nil];
-}
+//- (void)avatarImageWasTappedForUser:(PFUser *)user
+//{
+//    NSLog(@"Tapped");
+//    
+//    FakeProfileViewController *destVC;
+//    destVC = [FakeProfileViewController new];
+//    
+//    [self presentViewController:destVC animated:YES completion:nil];
+//}
 
 
 - (UITableViewCell *)loadingCell
@@ -231,6 +351,8 @@
     cell.tag = kLoadingCellTag;
     cell.userInteractionEnabled = NO;
     
+    [self queryForTable];
+
     return cell;
 }
 
@@ -257,14 +379,12 @@
 }
                              
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell
-                                         forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (cell.tag == kLoadingCellTag && self.isAll == NO)
-        [self queryForTable];
-
-    return;
-}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell
+//                                         forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (cell.tag == kLoadingCellTag && self.isAll == NO)
+//        [self queryForTable];
+//}
 
 
 #pragma mark - AddNewPostToFeedDelegate Methods
@@ -292,7 +412,7 @@
 
 - (void)goToCheckIn:(UIButton *)sender
 {
-    [self performSegueWithIdentifier:@"SegueToVenueMap" sender:sender];
+    [self performSegueWithIdentifier:@"SegueToAddNewStatusUpdate" sender:sender];
 }
 
 
@@ -312,11 +432,17 @@
     
     [toolBar addSubview:checkInBtn];
     [toolBar addSubview:statusBtn];
-    toolBar.backgroundColor = [UIColor cyanColor];
+    toolBar.backgroundColor = [UIColor lightGrayColor];
     
     self.tableView.tableHeaderView = toolBar;
 }
 
 
-                             
+- (IBAction)unwindFromCheckInVC:(UIStoryboardSegue *)unwindSegue
+{
+    
+}
+
+
+
 @end
