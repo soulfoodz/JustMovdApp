@@ -127,6 +127,10 @@
              if (!user[@"name"]) {
                  user[@"name"]          = [result objectForKey:@"name"];
              }
+             if (!user[@"firstName"]) {
+                 user[@"firstName"]          = [self getFirstName:[result objectForKey:@"name"]];
+             }
+             
              if (!user[@"FBUsername"]) {
                  user[@"FBUsername"]    = [result objectForKey:@"username"];
              }
@@ -145,9 +149,16 @@
              if (!user[@"about"]){
                  user[@"about"] = @"...";
              }
-//             if (!user[@"location"]){
-//                 user[@"location"] = [result objectForKey:@"location"];
-//             }
+             
+             if ([[result objectForKey:@"location"] objectForKey:@"name"]){
+                 if (!user[@"location"]){
+                     user[@"location"] = [[result objectForKey:@"location"] objectForKey:@"name"];
+                 }
+             } else {
+                 if (!user[@"location"]){
+                     user[@"location"] = @"...";
+                 }
+             }
              
              [user save]; // <--- Don't want to save in background, only let user in if their info are good
              
@@ -265,6 +276,17 @@
     [self dismissViewControllerAnimated:NO completion:^{
         nil;
     }];
+}
+
+
+-(NSString*)getFirstName:(NSString*)fullName{
+    
+    NSArray *array = [fullName componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+    NSString *firstName = [array objectAtIndex:0];
+    
+    return firstName;
+    
 }
 
 
