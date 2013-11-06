@@ -13,6 +13,7 @@
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *userProfileTableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageMeButton;
 
 //Properties
 @property (strong, nonatomic) NSMutableArray *userInfosArray;
@@ -20,5 +21,6 @@
 
 
 //Actions, methods
+- (IBAction)actionLogOut:(id)sender;
 
 @end

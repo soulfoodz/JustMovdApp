@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>Mahal.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>com.JustMovd.JustMovd</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -41,9 +41,11 @@
 	<array>
 		<string>Roboto-Light.ttf</string>
 		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Medium.ttf</string>
+		<string>Roboto-Thin.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
-	<string>Questionnaire</string>
+	<string>KyleMai</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -52,5 +54,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

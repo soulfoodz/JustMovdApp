@@ -15,6 +15,9 @@
 @synthesize profilePictureOriginal;
 @synthesize fromTownLabel;
 @synthesize messageButton;
+@synthesize logOutButton;
+@synthesize pictureMaskView;
+@synthesize maskLayer;
 
 
 
@@ -44,8 +47,12 @@
 
 - (void)layoutSubviews
 {
-
-    
+    maskLayer = [CALayer layer];
+    [maskLayer setFrame:CGRectMake(0, 240, 320, 80)];
+    maskLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    //maskLayer.contents = (id)profilePictureOriginal.image.CGImage;
+    profilePictureBlur.layer.mask = maskLayer;
+    //profilePictureBlur.layer.masksToBounds = YES;
 }
 
 
