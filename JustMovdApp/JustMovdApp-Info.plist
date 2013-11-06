@@ -47,11 +47,7 @@
 		<string>Roboto-Thin.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
-<<<<<<< HEAD
-	<string>FeedStoryboard</string>
-=======
-	<string>KyleMai</string>
->>>>>>> 65e98f96d5b0cc817c0bae9a29ae19338628cbaf
+	<string>Questionnaire</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

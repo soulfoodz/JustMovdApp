@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		528AEF8618216D2E002AB658 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528AEF8518216D2E002AB658 /* MapKit.framework */; };
 		528AEF991821CF50002AB658 /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 528AEF981821CF50002AB658 /* location.png */; };
-		528AEFEC1822D466002AB658 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528AEFEB1822D466002AB658 /* NavViewController.m */; };
-		528AEFF51823776C002AB658 /* FBCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528AEFF41823776C002AB658 /* FBCheckInViewController.m */; };
-		528AEFF8182481C6002AB658 /* FBLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 528AEFF7182481C6002AB658 /* FBLoginVC.m */; };
 		52B9C40A18186ED500A875B7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40918186ED500A875B7 /* Parse.framework */; };
 		52B9C40C1818845C00A875B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40B1818845C00A875B7 /* AudioToolbox.framework */; };
 		52B9C40E1818846900A875B7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40D1818846900A875B7 /* CFNetwork.framework */; };
@@ -22,18 +19,51 @@
 		52B9C418181884BA00A875B7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C417181884BA00A875B7 /* Security.framework */; };
 		52B9C41A181884C700A875B7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C419181884C700A875B7 /* StoreKit.framework */; };
 		52B9C41C181884D000A875B7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C41B181884D000A875B7 /* SystemConfiguration.framework */; };
-		52ED7E9B1825BA6600BFD440 /* JMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED7E9A1825BA6600BFD440 /* JMCache.m */; };
-		52ED7E9E1827357A00BFD440 /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED7E9D1827357A00BFD440 /* PostCell.m */; };
 		52ED7EB21829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png in Resources */ = {isa = PBXBuildFile; fileRef = 52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */; };
-		5A169AFE18201F340042767E /* ActivityFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AA418201F340042767E /* ActivityFeedCell.m */; };
-		5A169AFF18201F340042767E /* ActivityFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AA718201F340042767E /* ActivityFeedViewController.m */; };
-		5A169B0118201F340042767E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AAB18201F340042767E /* AppDelegate.m */; };
 		5A169B1018201F340042767E /* FeedStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AC118201F340042767E /* FeedStoryboard.storyboard */; };
 		5A169B1118201F340042767E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AC218201F340042767E /* Images.xcassets */; };
-		5A169B2F18201F340042767E /* TTTTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF018201F340042767E /* TTTTimeIntervalFormatter.m */; };
-		5A169B3018201F340042767E /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF218201F340042767E /* UIImage+StackBlur.m */; };
-		5A169B3118201F340042767E /* UpdateCellHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF418201F340042767E /* UpdateCellHeader.m */; };
 		5A169B3218201F340042767E /* UpdateCellHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A169AF518201F340042767E /* UpdateCellHeader.xib */; };
+		5A2F2ADF182ACDE40050A227 /* AboutEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB695841821656A008F7832 /* AboutEditCell.m */; };
+		5A2F2AE0182ACDE40050A227 /* ActivityFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AA418201F340042767E /* ActivityFeedCell.m */; };
+		5A2F2AE1182ACDE40050A227 /* ActivityFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AA718201F340042767E /* ActivityFeedViewController.m */; };
+		5A2F2AE2182ACDE40050A227 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AAB18201F340042767E /* AppDelegate.m */; };
+		5A2F2AE3182ACDE40050A227 /* ChatTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E56AE9B91820C24400E12C87 /* ChatTextView.m */; };
+		5A2F2AE4182ACDE40050A227 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC32182AC9F20051EF9A /* CommentViewController.m */; };
+		5A2F2AE5182ACDE40050A227 /* Comms.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC4D182ACB520051EF9A /* Comms.m */; };
+		5A2F2AE6182ACDE40050A227 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6958618216596008F7832 /* EditProfileViewController.m */; };
+		5A2F2AE7182ACDE40050A227 /* FBCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528AEFF41823776C002AB658 /* FBCheckInViewController.m */; };
+		5A2F2AE8182ACDE40050A227 /* FBLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 528AEFF7182481C6002AB658 /* FBLoginVC.m */; };
+		5A2F2AE9182ACDE40050A227 /* InfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB695811821649D008F7832 /* InfoCell.m */; };
+		5A2F2AEA182ACDE40050A227 /* IntroChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957618216389008F7832 /* IntroChildViewController.m */; };
+		5A2F2AEB182ACDE40050A227 /* IntroParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957318215EFB008F7832 /* IntroParentViewController.m */; };
+		5A2F2AEC182ACDE40050A227 /* JMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED7E9A1825BA6600BFD440 /* JMCache.m */; };
+		5A2F2AED182ACDE40050A227 /* KyleLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0AC1821F9F9000BF87B /* KyleLoginViewController.m */; };
+		5A2F2AEE182ACDE40050A227 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC21182AC8460051EF9A /* main.m */; };
+		5A2F2AEF182ACDE40050A227 /* MatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC1D18287DF70051EF9A /* MatchTableViewCell.m */; };
+		5A2F2AF0182ACDE40050A227 /* MessageBubbleLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0A91821C70F000BF87B /* MessageBubbleLeftCell.m */; };
+		5A2F2AF1182ACDE40050A227 /* MessageBubbleRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0A61821C6F7000BF87B /* MessageBubbleRightCell.m */; };
+		5A2F2AF2182ACDE40050A227 /* MessagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC50182ACB680051EF9A /* MessagingViewController.m */; };
+		5A2F2AF3182ACDE40050A227 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528AEFEB1822D466002AB658 /* NavViewController.m */; };
+		5A2F2AF4182ACDE40050A227 /* OpenConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A5E2021825B5A2000DD2DE /* OpenConversationCell.m */; };
+		5A2F2AF5182ACDE40050A227 /* OpenConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A5E1FF1825B538000DD2DE /* OpenConversationViewController.m */; };
+		5A2F2AF6182ACDE40050A227 /* OtherEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC23182AC8BD0051EF9A /* OtherEditCell.m */; };
+		5A2F2AF7182ACDE40050A227 /* PFImageView+ImageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC3A182ACA840051EF9A /* PFImageView+ImageHandler.m */; };
+		5A2F2AF8182ACDE40050A227 /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC29182AC9770051EF9A /* PictureCell.m */; };
+		5A2F2AF9182ACDE40050A227 /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52ED7E9D1827357A00BFD440 /* PostCell.m */; };
+		5A2F2AFA182ACDE40050A227 /* PostsByUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC2F182AC9DE0051EF9A /* PostsByUserCell.m */; };
+		5A2F2AFB182ACDE40050A227 /* ProfileInterestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DB80CF18287F7500C0DA0C /* ProfileInterestCell.m */; };
+		5A2F2AFC182ACDE40050A227 /* QuestionnaireViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC40182ACAB20051EF9A /* QuestionnaireViewController.m */; };
+		5A2F2AFD182ACDE40050A227 /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC3D182ACAA20051EF9A /* QuestionView.m */; };
+		5A2F2AFE182ACDE40050A227 /* SideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC18182859BF0051EF9A /* SideBarViewController.m */; };
+		5A2F2AFF182ACDE40050A227 /* SpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DB80D41829765100C0DA0C /* SpinnerViewController.m */; };
+		5A2F2B00182ACDE40050A227 /* StatusUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC46182ACAEE0051EF9A /* StatusUpdateViewController.m */; };
+		5A2F2B01182ACDE40050A227 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC15182859A10051EF9A /* SWRevealViewController.m */; };
+		5A2F2B02182ACDE40050A227 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4F5D3618216FE700CA6F17 /* TestViewController.m */; };
+		5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF018201F340042767E /* TTTTimeIntervalFormatter.m */; };
+		5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF218201F340042767E /* UIImage+StackBlur.m */; };
+		5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF418201F340042767E /* UpdateCellHeader.m */; };
+		5A2F2B06182ACDE40050A227 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957B1821643F008F7832 /* UserProfileViewController.m */; };
+		5A2F2B07182ACDE40050A227 /* UsersWithinRadiusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0B0182498CB000BF87B /* UsersWithinRadiusViewController.m */; };
 		5A4F5CEA1821661400CA6F17 /* activityfeedcell_icon_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CE91821661400CA6F17 /* activityfeedcell_icon_comment.png */; };
 		5A4F5D151821666600CA6F17 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CEE1821666600CA6F17 /* background.png */; };
 		5A4F5D161821666600CA6F17 /* background2_size.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CEF1821666600CA6F17 /* background2_size.png */; };
@@ -56,7 +86,6 @@
 		5A4F5D321821666600CA6F17 /* weightlifting_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5D121821666600CA6F17 /* weightlifting_circle.png */; };
 		5A4F5D331821666600CA6F17 /* will_profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5D131821666600CA6F17 /* will_profile.jpg */; };
 		5A4F5D341821666600CA6F17 /* yoga_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5D141821666600CA6F17 /* yoga_circle.png */; };
-		5A4F5D3718216FE700CA6F17 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4F5D3618216FE700CA6F17 /* TestViewController.m */; };
 		5A4F5D4718217B0000CA6F17 /* facebooklogin.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5D4618217B0000CA6F17 /* facebooklogin.png */; };
 		5A4F5D4B18217BFC00CA6F17 /* login1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5D4818217BFC00CA6F17 /* login1@2x.png */; };
 		5A4F5D4C18217BFC00CA6F17 /* login2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5D4918217BFC00CA6F17 /* login2@2x.png */; };
@@ -84,38 +113,18 @@
 		5A5ABB671818420D00155B8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB651818420D00155B8F /* InfoPlist.strings */; };
 		5A5ABB691818420D00155B8F /* JustMovdAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABB681818420D00155B8F /* JustMovdAppTests.m */; };
 		5A5ABB7B1818723800155B8F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB7A1818723800155B8F /* Parse.framework */; };
-		5AB6957418215EFB008F7832 /* IntroParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957318215EFB008F7832 /* IntroParentViewController.m */; };
-		5AB6957718216389008F7832 /* IntroChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957618216389008F7832 /* IntroChildViewController.m */; };
-		5AB6957C1821643F008F7832 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957B1821643F008F7832 /* UserProfileViewController.m */; };
-		5AB695821821649D008F7832 /* InfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB695811821649D008F7832 /* InfoCell.m */; };
-		5AB695851821656A008F7832 /* AboutEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB695841821656A008F7832 /* AboutEditCell.m */; };
-		5AB6958818216596008F7832 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6958618216596008F7832 /* EditProfileViewController.m */; };
 		5AC9DC0F1822FAD40051EF9A /* letsplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC0E1822FAD40051EF9A /* letsplay.png */; };
 		5AC9DC121825AE580051EF9A /* book.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC101825AE580051EF9A /* book.png */; };
 		5AC9DC131825AE580051EF9A /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC111825AE580051EF9A /* tv.png */; };
-		5AC9DC16182859A10051EF9A /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC15182859A10051EF9A /* SWRevealViewController.m */; };
-		5AC9DC19182859BF0051EF9A /* SideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC18182859BF0051EF9A /* SideBarViewController.m */; };
 		5AC9DC1B182861F20051EF9A /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC1A182861F20051EF9A /* menu@2x.png */; };
-		5AC9DC1E18287DF70051EF9A /* MatchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC1D18287DF70051EF9A /* MatchTableViewCell.m */; };
 		5AC9DC20182AC7F90051EF9A /* KyleMai.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC1F182AC7F90051EF9A /* KyleMai.storyboard */; };
-		5AC9DC22182AC8460051EF9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC21182AC8460051EF9A /* main.m */; };
-		5AC9DC24182AC8BD0051EF9A /* OtherEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC23182AC8BD0051EF9A /* OtherEditCell.m */; };
 		5AC9DC27182AC95E0051EF9A /* KyleMai@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC26182AC95E0051EF9A /* KyleMai@2x.jpg */; };
-		5AC9DC2A182AC9770051EF9A /* PictureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC29182AC9770051EF9A /* PictureCell.m */; };
 		5AC9DC2D182AC9CC0051EF9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC2B182AC9CC0051EF9A /* Main.storyboard */; };
-		5AC9DC30182AC9DE0051EF9A /* PostsByUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC2F182AC9DE0051EF9A /* PostsByUserCell.m */; };
-		5AC9DC33182AC9F20051EF9A /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC32182AC9F20051EF9A /* CommentViewController.m */; };
 		5AC9DC36182ACA4A0051EF9A /* messageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC35182ACA4A0051EF9A /* messageButton@2x.png */; };
 		5AC9DC38182ACA5F0051EF9A /* profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC37182ACA5F0051EF9A /* profile.jpg */; };
-		5AC9DC3B182ACA840051EF9A /* PFImageView+ImageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC3A182ACA840051EF9A /* PFImageView+ImageHandler.m */; };
-		5AC9DC3E182ACAA20051EF9A /* QuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC3D182ACAA20051EF9A /* QuestionView.m */; };
-		5AC9DC41182ACAB20051EF9A /* QuestionnaireViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC40182ACAB20051EF9A /* QuestionnaireViewController.m */; };
 		5AC9DC43182ACAC00051EF9A /* Questionnaire.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC42182ACAC00051EF9A /* Questionnaire.storyboard */; };
-		5AC9DC47182ACAEE0051EF9A /* StatusUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC46182ACAEE0051EF9A /* StatusUpdateViewController.m */; };
 		5AC9DC49182ACB090051EF9A /* stephen_profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC48182ACB090051EF9A /* stephen_profile.jpg */; };
 		5AC9DC4B182ACB1E0051EF9A /* TableViewBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC4A182ACB1E0051EF9A /* TableViewBG@2x.png */; };
-		5AC9DC4E182ACB520051EF9A /* Comms.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC4D182ACB520051EF9A /* Comms.m */; };
-		5AC9DC51182ACB680051EF9A /* MessagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9DC50182ACB680051EF9A /* MessagingViewController.m */; };
 		5AC9DC53182ACBE90051EF9A /* JustMovdApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */; };
 		E564657C181873E500E2C4A1 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E564657B181873E500E2C4A1 /* FacebookSDK.framework */; };
 		E564657D1818750B00E2C4A1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56465791818708700E2C4A1 /* Parse.framework */; };
@@ -129,13 +138,6 @@
 		E564658D181884E300E2C4A1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E564658C181884E300E2C4A1 /* StoreKit.framework */; };
 		E564658F181884EF00E2C4A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E564658E181884EF00E2C4A1 /* SystemConfiguration.framework */; };
 		E56AE9A7181F49B200E12C87 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56AE9A6181F49B100E12C87 /* Accelerate.framework */; };
-		E56AE9BA1820C24400E12C87 /* ChatTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E56AE9B91820C24400E12C87 /* ChatTextView.m */; };
-		E5A5E2001825B538000DD2DE /* OpenConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A5E1FF1825B538000DD2DE /* OpenConversationViewController.m */; };
-		E5A5E2031825B5A2000DD2DE /* OpenConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A5E2021825B5A2000DD2DE /* OpenConversationCell.m */; };
-		E5AAC0A71821C6F7000BF87B /* MessageBubbleRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0A61821C6F7000BF87B /* MessageBubbleRightCell.m */; };
-		E5AAC0AA1821C70F000BF87B /* MessageBubbleLeftCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0A91821C70F000BF87B /* MessageBubbleLeftCell.m */; };
-		E5AAC0AD1821F9F9000BF87B /* KyleLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0AC1821F9F9000BF87B /* KyleLoginViewController.m */; };
-		E5AAC0B1182498CB000BF87B /* UsersWithinRadiusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AAC0B0182498CB000BF87B /* UsersWithinRadiusViewController.m */; };
 		E5DB80C618286F3500C0DA0C /* beer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80BE18286F3500C0DA0C /* beer@2x.png */; };
 		E5DB80C718286F3500C0DA0C /* book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80BF18286F3500C0DA0C /* book@2x.png */; };
 		E5DB80C818286F3500C0DA0C /* coffee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80C018286F3500C0DA0C /* coffee@2x.png */; };
@@ -144,9 +146,7 @@
 		E5DB80CB18286F3500C0DA0C /* tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80C318286F3500C0DA0C /* tv@2x.png */; };
 		E5DB80CC18286F3500C0DA0C /* weights@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80C418286F3500C0DA0C /* weights@2x.png */; };
 		E5DB80CD18286F3500C0DA0C /* yoga@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80C518286F3500C0DA0C /* yoga@2x.png */; };
-		E5DB80D018287F7500C0DA0C /* ProfileInterestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DB80CF18287F7500C0DA0C /* ProfileInterestCell.m */; };
 		E5DB80D2182972FC00C0DA0C /* messageicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80D1182972FC00C0DA0C /* messageicon@2x.png */; };
-		E5DB80D51829765100C0DA0C /* SpinnerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DB80D41829765100C0DA0C /* SpinnerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,7 +306,7 @@
 		5AC9DC4D182ACB520051EF9A /* Comms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comms.m; sourceTree = "<group>"; };
 		5AC9DC4F182ACB680051EF9A /* MessagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagingViewController.h; sourceTree = "<group>"; };
 		5AC9DC50182ACB680051EF9A /* MessagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagingViewController.m; sourceTree = "<group>"; };
-		5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "JustMovdApp-Info.plist"; path = "JustMovdApp/JustMovdApp-Info.plist"; sourceTree = "<group>"; };
+		5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "JustMovdApp-Info.plist"; sourceTree = "<group>"; };
 		E56465791818708700E2C4A1 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		E564657B181873E500E2C4A1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		E564657E1818846900E2C4A1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -423,7 +423,6 @@
 		5A5ABB311818420D00155B8F = {
 			isa = PBXGroup;
 			children = (
-				5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */,
 				5A5ABB431818420D00155B8F /* JustMovdApp */,
 				5A5ABB621818420D00155B8F /* JustMovdAppTests */,
 				5A5ABB3C1818420D00155B8F /* Frameworks */,
@@ -492,6 +491,7 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
+				5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */,
 				5AB695831821656A008F7832 /* AboutEditCell.h */,
 				5AB695841821656A008F7832 /* AboutEditCell.m */,
 				52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */,
@@ -803,50 +803,47 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AC9DC24182AC8BD0051EF9A /* OtherEditCell.m in Sources */,
-				5AC9DC51182ACB680051EF9A /* MessagingViewController.m in Sources */,
-				5AC9DC2A182AC9770051EF9A /* PictureCell.m in Sources */,
-				5A169B3118201F340042767E /* UpdateCellHeader.m in Sources */,
-				528AEFEC1822D466002AB658 /* NavViewController.m in Sources */,
-				5AC9DC22182AC8460051EF9A /* main.m in Sources */,
-				52ED7E9B1825BA6600BFD440 /* JMCache.m in Sources */,
-				5AC9DC3E182ACAA20051EF9A /* QuestionView.m in Sources */,
-				5AB695851821656A008F7832 /* AboutEditCell.m in Sources */,
-				E5AAC0A71821C6F7000BF87B /* MessageBubbleRightCell.m in Sources */,
-				5A169AFE18201F340042767E /* ActivityFeedCell.m in Sources */,
-				5AC9DC16182859A10051EF9A /* SWRevealViewController.m in Sources */,
-				E5AAC0B1182498CB000BF87B /* UsersWithinRadiusViewController.m in Sources */,
-				E5AAC0AD1821F9F9000BF87B /* KyleLoginViewController.m in Sources */,
-				E5A5E2031825B5A2000DD2DE /* OpenConversationCell.m in Sources */,
-				E5DB80D018287F7500C0DA0C /* ProfileInterestCell.m in Sources */,
-				5AC9DC30182AC9DE0051EF9A /* PostsByUserCell.m in Sources */,
-				5AC9DC4E182ACB520051EF9A /* Comms.m in Sources */,
-				E5A5E2001825B538000DD2DE /* OpenConversationViewController.m in Sources */,
-				528AEFF51823776C002AB658 /* FBCheckInViewController.m in Sources */,
-				528AEFF8182481C6002AB658 /* FBLoginVC.m in Sources */,
-				5A169AFF18201F340042767E /* ActivityFeedViewController.m in Sources */,
-				E5AAC0AA1821C70F000BF87B /* MessageBubbleLeftCell.m in Sources */,
-				5AC9DC33182AC9F20051EF9A /* CommentViewController.m in Sources */,
-				5A169B3018201F340042767E /* UIImage+StackBlur.m in Sources */,
-				5AB695821821649D008F7832 /* InfoCell.m in Sources */,
-				5A169B0118201F340042767E /* AppDelegate.m in Sources */,
-				5AC9DC19182859BF0051EF9A /* SideBarViewController.m in Sources */,
-				5AB6957718216389008F7832 /* IntroChildViewController.m in Sources */,
-				5AC9DC1E18287DF70051EF9A /* MatchTableViewCell.m in Sources */,
-				5AC9DC47182ACAEE0051EF9A /* StatusUpdateViewController.m in Sources */,
-				5AB6957418215EFB008F7832 /* IntroParentViewController.m in Sources */,
-				5AB6958818216596008F7832 /* EditProfileViewController.m in Sources */,
-				5AC9DC3B182ACA840051EF9A /* PFImageView+ImageHandler.m in Sources */,
-				5AB6957C1821643F008F7832 /* UserProfileViewController.m in Sources */,
-				5A4F5D3718216FE700CA6F17 /* TestViewController.m in Sources */,
-				5AB6957418215EFB008F7832 /* IntroParentViewController.m in Sources */,
-				5AB6958818216596008F7832 /* EditProfileViewController.m in Sources */,
-				5AB6957C1821643F008F7832 /* UserProfileViewController.m in Sources */,
-				E5DB80D51829765100C0DA0C /* SpinnerViewController.m in Sources */,
-				5A169B2F18201F340042767E /* TTTTimeIntervalFormatter.m in Sources */,
-				E56AE9BA1820C24400E12C87 /* ChatTextView.m in Sources */,
-				5AC9DC41182ACAB20051EF9A /* QuestionnaireViewController.m in Sources */,
-				52ED7E9E1827357A00BFD440 /* PostCell.m in Sources */,
+				5A2F2ADF182ACDE40050A227 /* AboutEditCell.m in Sources */,
+				5A2F2AE0182ACDE40050A227 /* ActivityFeedCell.m in Sources */,
+				5A2F2AE1182ACDE40050A227 /* ActivityFeedViewController.m in Sources */,
+				5A2F2AE2182ACDE40050A227 /* AppDelegate.m in Sources */,
+				5A2F2AE3182ACDE40050A227 /* ChatTextView.m in Sources */,
+				5A2F2AE4182ACDE40050A227 /* CommentViewController.m in Sources */,
+				5A2F2AE5182ACDE40050A227 /* Comms.m in Sources */,
+				5A2F2AE6182ACDE40050A227 /* EditProfileViewController.m in Sources */,
+				5A2F2AE7182ACDE40050A227 /* FBCheckInViewController.m in Sources */,
+				5A2F2AE8182ACDE40050A227 /* FBLoginVC.m in Sources */,
+				5A2F2AE9182ACDE40050A227 /* InfoCell.m in Sources */,
+				5A2F2AEA182ACDE40050A227 /* IntroChildViewController.m in Sources */,
+				5A2F2AEB182ACDE40050A227 /* IntroParentViewController.m in Sources */,
+				5A2F2AEC182ACDE40050A227 /* JMCache.m in Sources */,
+				5A2F2AED182ACDE40050A227 /* KyleLoginViewController.m in Sources */,
+				5A2F2AEE182ACDE40050A227 /* main.m in Sources */,
+				5A2F2AEF182ACDE40050A227 /* MatchTableViewCell.m in Sources */,
+				5A2F2AF0182ACDE40050A227 /* MessageBubbleLeftCell.m in Sources */,
+				5A2F2AF1182ACDE40050A227 /* MessageBubbleRightCell.m in Sources */,
+				5A2F2AF2182ACDE40050A227 /* MessagingViewController.m in Sources */,
+				5A2F2AF3182ACDE40050A227 /* NavViewController.m in Sources */,
+				5A2F2AF4182ACDE40050A227 /* OpenConversationCell.m in Sources */,
+				5A2F2AF5182ACDE40050A227 /* OpenConversationViewController.m in Sources */,
+				5A2F2AF6182ACDE40050A227 /* OtherEditCell.m in Sources */,
+				5A2F2AF7182ACDE40050A227 /* PFImageView+ImageHandler.m in Sources */,
+				5A2F2AF8182ACDE40050A227 /* PictureCell.m in Sources */,
+				5A2F2AF9182ACDE40050A227 /* PostCell.m in Sources */,
+				5A2F2AFA182ACDE40050A227 /* PostsByUserCell.m in Sources */,
+				5A2F2AFB182ACDE40050A227 /* ProfileInterestCell.m in Sources */,
+				5A2F2AFC182ACDE40050A227 /* QuestionnaireViewController.m in Sources */,
+				5A2F2AFD182ACDE40050A227 /* QuestionView.m in Sources */,
+				5A2F2AFE182ACDE40050A227 /* SideBarViewController.m in Sources */,
+				5A2F2AFF182ACDE40050A227 /* SpinnerViewController.m in Sources */,
+				5A2F2B00182ACDE40050A227 /* StatusUpdateViewController.m in Sources */,
+				5A2F2B01182ACDE40050A227 /* SWRevealViewController.m in Sources */,
+				5A2F2B02182ACDE40050A227 /* TestViewController.m in Sources */,
+				5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */,
+				5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */,
+				5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */,
+				5A2F2B06182ACDE40050A227 /* UserProfileViewController.m in Sources */,
+				5A2F2B07182ACDE40050A227 /* UsersWithinRadiusViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

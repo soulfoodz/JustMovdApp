@@ -16,11 +16,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO" clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
-<<<<<<< HEAD
 
-    [PFFacebookUtils initializeFacebook];
-    return YES;
-=======
     [PFFacebookUtils initializeFacebook];
     
     //Register for push Notification
@@ -70,7 +66,6 @@
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
     NSLog(@"Failed to Register for Push: %@", error);
->>>>>>> 65e98f96d5b0cc817c0bae9a29ae19338628cbaf
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
