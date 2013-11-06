@@ -19,7 +19,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u2L-Qj-Kqi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2739" y="896"/>
+            <point key="canvasLocation" x="1123" y="-732"/>
         </scene>
         <!--Side Bar View Controller-->
         <scene sceneID="IKe-zG-gbE">
@@ -156,7 +156,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mzb-I1-mxi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2221" y="228"/>
+            <point key="canvasLocation" x="333" y="-732"/>
         </scene>
         <!--Questionnaire View Controller-->
         <scene sceneID="GjM-FT-sEh">
@@ -170,7 +170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTl-45-pwW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3542" y="884"/>
+            <point key="canvasLocation" x="1926" y="-744"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="eo8-lr-ZWb">
