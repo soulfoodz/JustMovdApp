@@ -42,7 +42,7 @@
         or1.textAlignment = NSTextAlignmentCenter;
         [self addSubview:or1];
         
-        self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.90];
+        self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.80];
         
         UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [button1 setBackgroundImage:[UIImage imageNamed:firstImage] forState:UIControlStateNormal];

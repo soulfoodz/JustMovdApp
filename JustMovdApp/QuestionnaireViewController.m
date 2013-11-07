@@ -50,9 +50,9 @@
     [self getUserLocation];
     
     
-    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background3_size.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"couple_blur"]];
     
-    self.view.backgroundColor = [UIColor colorWithRed:26/255.0 green:158/255.0 blue:151/255.0 alpha:1.0];
+    //self.view.backgroundColor = [UIColor colorWithRed:26/255.0 green:158/255.0 blue:151/255.0 alpha:1.0];
     
     answers = [NSMutableArray new];
     questionViewsArray = [NSMutableArray new];
@@ -133,7 +133,7 @@
 
 -(void)makeQuestionViews{
     
-    questionsHolder = [[UIView alloc] initWithFrame:CGRectMake(30, 60, 320*([questions count]+1), 400)];
+    questionsHolder = [[UIView alloc] initWithFrame:CGRectMake(30, 84, 320*([questions count]+1), 400)];
     [self.view addSubview:questionsHolder];
     
     int spacing = 320;

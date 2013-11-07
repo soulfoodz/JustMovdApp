@@ -37,8 +37,9 @@
 {
     [super viewDidLoad];
     
-    backgroundImages = [[NSArray alloc] initWithObjects:@"redfrontdoor_blur", @"skyline_blur", @"login2", nil];
-    self.view.backgroundColor = [UIColor colorWithRed:80/255.0 green:177/255.0 blue:246/255.0 alpha:1.0];
+    backgroundImages = [[NSArray alloc] initWithObjects:@"chicago_skyline_blur", @"skyline_blur", @"boston_skyline_blur", nil];
+    //self.view.backgroundColor = [UIColor colorWithRed:80/255.0 green:177/255.0 blue:246/255.0 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"skyline_blur"]];
 
     [self loadIntro];
     
@@ -50,6 +51,7 @@
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     
     pageController.dataSource = self;
+    pageController.delegate = self;
     [[pageController view] setFrame:[[self view] bounds]];
     
     CGRect frame = pageController.view.frame;
@@ -68,7 +70,7 @@
     
     
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [nextButton setBackgroundImage:[UIImage imageNamed:@"facebooklogin"] forState:UIControlStateNormal];
+    [nextButton setBackgroundImage:[UIImage imageNamed:@"FacebookLoginButton"] forState:UIControlStateNormal];
     [nextButton sizeToFit];
     nextButton.center = CGPointMake(160, 480);
     
@@ -79,13 +81,25 @@
     UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 200, 200, 50)];
     
     justMovdLabel.text = @"JustMovd";
-    justMovdLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:28];
+    justMovdLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:32];
     justMovdLabel.textAlignment = NSTextAlignmentCenter;
     
     justMovdLabel.center = CGPointMake(self.view.frame.size.width/2, 100);
     justMovdLabel.textColor = [UIColor whiteColor];
     
     [self.view addSubview:justMovdLabel];
+    
+    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 400, 300, 50)];
+
+    descriptionLabel.text = @"The App For People New To A City";
+    descriptionLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:15];
+    descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    
+    descriptionLabel.center = CGPointMake(self.view.frame.size.width/2, 250);
+    descriptionLabel.textColor = [UIColor whiteColor];
+
+    [self.view addSubview:descriptionLabel];
+    
     
     pageControl = [[UIPageControl alloc] init];
     pageControl.numberOfPages = 3;
@@ -272,6 +286,7 @@
     }
     
     index--;
+    pageControl.currentPage--;
     
     return [self viewControllerAtIndex:index];
     
@@ -282,6 +297,7 @@
     NSUInteger index = [(IntroChildViewController *)viewController index];
     
     index++;
+    pageControl.currentPage++;
     
     
     if (index == 3) {
@@ -319,6 +335,7 @@
     return firstName;
     
 }
+
 
 
 @end
