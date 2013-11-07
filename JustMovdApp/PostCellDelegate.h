@@ -1,5 +1,5 @@
 //
-//  ActivityFeedCellDelegate.h
+//  PostCellDelegate.h
 //  JustMovdApp
 //
 //  Created by MacBook Pro on 10/26/13.
@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@protocol ActivityFeedCellDelegate <NSObject>
+@class PostCell;
 
-- (void)avatarImageWasTappedForUser:(PFUser *)user;
+@protocol PostCellDelegate <NSObject>
+
+- (void)avatarImageWasTappedInCell:(PostCell *)cell;
+- (void)checkInMapImageWasTappedInCell:(PostCell *)cell;
 
 @end

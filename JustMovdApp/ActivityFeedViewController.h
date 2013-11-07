@@ -8,20 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-#import "ActivityFeedCellDelegate.h"
+#import "PostCellDelegate.h"
 #import "AddNewPostToActivityFeedDelegate.h"
-//#import "CheckInViewController.h"
 
 
 @class UpdateCellHeader;
 
-@interface ActivityFeedViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, ActivityFeedCellDelegate, AddNewPostToActivityFeedDelegate>
+@interface ActivityFeedViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PostCellDelegate, AddNewPostToActivityFeedDelegate>
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
 
 - (IBAction)unwindFromCheckInVC:(UIStoryboardSegue *)unwindSegue;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
 
 
 @end

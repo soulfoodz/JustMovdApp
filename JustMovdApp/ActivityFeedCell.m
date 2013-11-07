@@ -187,10 +187,10 @@
 }
 
 
-- (void)didTapUserButtonAction:(UIButton *)sender
-{
-    [self.delegate avatarImageWasTappedForUser:self.user];
-}
+//- (void)didTapUserButtonAction:(UIButton *)sender
+//{
+//    [self.delegate avatarImageWasTappedForUser:self.user];
+//}
 
 
 - (void)setFrame:(CGRect)frame
