@@ -39,7 +39,7 @@
     [super viewDidLoad];
     
     backgroundImages = [[NSArray alloc] initWithObjects:@"chicago_skyline_blur", @"skyline_blur", @"boston_skyline_blur", nil];
-    backgroundViews = [[NSArray alloc] initWithObjects:@"walkthrough_david", @"walkthrough_sarah", @"walkthrough_sarah", nil];
+    backgroundViews = [[NSArray alloc] initWithObjects:@"walkthrough_david", @"walkthrough_sarah", @"walkthrough_ashley", nil];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"skyline_blur"]];
 
