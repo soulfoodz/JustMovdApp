@@ -15,9 +15,10 @@
 #import "PFImageView+ImageHandler.h"
 #import "SWRevealViewController.h"
 #import "IntroParentViewController.h"
+#import "UserProfileViewController.h"
 
 #define kLoadingCellTag 7
-#define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:14.0]
+#define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
 
 @interface ActivityFeedViewController ()
 
@@ -64,9 +65,9 @@
         }];
     } else {
         
-        self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
+        self.tableView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
+        //self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+
         
         sideBarButton.target = self.revealViewController;
         sideBarButton.action = @selector(revealToggle:);
@@ -199,6 +200,7 @@
 
     if (!cell) {
         cell = [[PostCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell.delegate = self;
     }
     
     postCreator   = [self.postsArray[indexPath.row] objectForKey:@"user"];
@@ -213,21 +215,13 @@
         placeName              = [NSString stringWithFormat:@"at %@", [checkIn objectForKey:@"placeName"]];
         cell.checkInLabel.text = placeName;
         [cell.checkInImage setFile:(PFFile *)checkIn[@"mapImage"] forImageView:cell.checkInImage];
-        NSLog(@"Setting the file: %@ in background", checkIn[@"mapImage"]);
-        
-//        if (![cell.checkInImage.file isDataAvailable]) {
-//            [cell.checkInImage loadInBackground];
-//        }else {
-//            [cell.checkInImage.file isDataAvailable];
-//        }
     }
     
-    [cell.profilePicture setFile:avatarFile forImageView:cell.profilePicture];
+    [cell.profilePicture setFile:avatarFile forAvatarImageView:cell.profilePicture];
     cell.nameLabel.text         = postCreator[@"firstName"];
     cell.detailLabel.text       = contentString;
     cell.timeLabel.text         = [self setTimeSincePostDate:createdDate];
     cell.commentCountLabel.text = [self setCommentCount:commentCount];
-    NSLog(@"cell.checkInImage : %@", cell.checkInImage.image);
     
     return cell;
 }
@@ -235,8 +229,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PostCell *cell = (PostCell *)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"Cell is : %@", cell);
     [self performSegueWithIdentifier:@"SegueToCommentViewController" sender:indexPath];
 }
 
@@ -298,6 +290,7 @@
     return timeString;
 }
 
+
 - (NSString *)setCommentCount:(NSNumber *)commentCount
 {
     int x = [commentCount intValue];
@@ -315,19 +308,15 @@
 {
     if ([segue.identifier isEqualToString:@"SegueToCommentViewController"])
     {
-        CommentViewController *dvc;
-        NSIndexPath *indexPath;
-        PostCell *cell;
-    
-        dvc       = segue.destinationViewController;
-        indexPath = sender;
-        cell      = (PostCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        if ([sender isKindOfClass:[NSIndexPath class]]) {
+            CommentViewController *dvc;
+            NSIndexPath *indexPath;
         
-        dvc.post = self.postsArray[indexPath.row];
-        dvc.avatarImage = cell.profilePicture.image;
-        dvc.userName    = cell.nameLabel.text;
-        dvc.dateString  = cell.timeLabel.text;
-        dvc.postString  = cell.detailLabel.text;
+            indexPath = (NSIndexPath *)sender;
+            dvc       = segue.destinationViewController;
+            dvc.post  = self.postsArray[indexPath.row];
+        }
+        else return;
     }
     
     if ([segue.identifier isEqualToString:@"SegueToAddNewStatusUpdate"])
@@ -350,17 +339,6 @@
         }
     }
 }
-
-
-//- (void)avatarImageWasTappedForUser:(PFUser *)user
-//{
-//    NSLog(@"Tapped");
-//    
-//    FakeProfileViewController *destVC;
-//    destVC = [FakeProfileViewController new];
-//    
-//    [self presentViewController:destVC animated:YES completion:nil];
-//}
 
 
 - (UITableViewCell *)loadingCell
@@ -409,15 +387,8 @@
 }
                              
 
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell
-//                                         forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (cell.tag == kLoadingCellTag && self.isAll == NO)
-//        [self queryForTable];
-//}
-
-
 #pragma mark - AddNewPostToFeedDelegate Methods
+
 - (void)addNewlyCreatedPostToActivityFeed:(PFObject *)post
 {
     [self.postsArray insertObject:post atIndex:0];
@@ -434,6 +405,34 @@
 }
 
 
+#pragma mark - PostCell Delegate Methods
+
+-(void)avatarImageWasTappedInCell:(PostCell *)cell
+{
+    NSIndexPath  *indexPath;
+    PFUser       *postCreator;
+    UIStoryboard *storyboard;
+    UserProfileViewController *profileVC;
+    NSString     *username;
+    
+    storyboard  = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
+    profileVC   = [storyboard instantiateViewControllerWithIdentifier:@"profile"];
+    indexPath   = [self.tableView indexPathForCell:cell];
+    postCreator = [self.postsArray[indexPath.row] objectForKey:@"user"];
+    username    = [postCreator objectForKey:@"username"];
+    
+    profileVC.facebookUsername = username;
+    [self.navigationController pushViewController:profileVC animated:YES];
+}
+
+
+- (void)checkInMapImageWasTappedInCell:(PostCell *)cell
+{
+    //
+}
+
+
+
 - (void)goToStatusUpdate:(UIButton *)sender
 {
     [self performSegueWithIdentifier:@"SegueToAddNewStatusUpdate" sender:sender];
@@ -448,9 +447,14 @@
 
 - (void)setupTableViewHeader
 {
-    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
+    //UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
+    UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
+    
     UIButton *checkInBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];
     UIButton *statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 160, 44)];
+    
+    statusBtn.backgroundColor = [UIColor colorWithRed:80.0/255.0 green:187.0/255.0 blue:182.0/255.0 alpha:1.0];
+    checkInBtn.backgroundColor = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
     
     [checkInBtn setTitle:@"Check in" forState:UIControlStateNormal];
     [checkInBtn setTitle:@"Check in" forState:UIControlStateSelected];
@@ -462,7 +466,7 @@
     
     [toolBar addSubview:checkInBtn];
     [toolBar addSubview:statusBtn];
-    toolBar.backgroundColor = [UIColor lightGrayColor];
+    toolBar.backgroundColor = [UIColor whiteColor];//[UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
     
     self.tableView.tableHeaderView = toolBar;
 }

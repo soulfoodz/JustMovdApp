@@ -10,20 +10,21 @@
 #import "PostCell.h"
 #import "JMCache.h"
 #import "TTTTimeIntervalFormatter.h"
+#import "PFImageView+ImageHandler.h"
+#import "UserProfileViewController.h"
 
 
-#define maxContentWidth 290.0f
+#define maxContentWidth 300.0f
 #define nameOriginX (avatarSpacing + avatarImageView.frame.size.width + 10.0f)
 #define dateOriginX (avatarSpacing + avatarImageView.frame.size.width + 10.0f)
 #define headerInsetY 6.0f
 #define contentLabelInset 6.0f
 #define avatarSpacing 6.0f
-#define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:13.0]
+#define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
 
 @interface CommentViewController ()
 
 @end
-
 
 @implementation CommentViewController
 
@@ -36,12 +37,14 @@
     
     self.tableView.contentOffset = CGPointMake(0, 0);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
     
-    [self setupTableHeader];
+    self.textView.layer.cornerRadius = 3.0f;
+    self.textView.font = CONTENT_FONT;
+    self.textView.textColor = [UIColor darkGrayColor];
+    
     [self queryForComments];
     
-    UIControl *touchControl;
-    touchControl.frame = self.tableView.bounds;
     self.postButton.enabled = NO;
 }
 
@@ -74,13 +77,15 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.commentsArray.count == 0) return 0;
-    else return self.commentsArray.count;
+    if (section == 0)
+        return 1;
+    else
+        return (self.commentsArray.count);
 }
 
 
@@ -93,49 +98,76 @@
     PFFile   *imageFile;
 
     cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    [cell resetContents];
+    
     if (!cell) {
         cell = [[PostCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell.delegate = self;
+        [self styleCell:cell];
     }
     
-    [self styleCell:cell];
+    // If it's the initial cell, it should display the post as shown in the Activity Feed
+    if (indexPath.section == 0)
+    {
+        PFObject *checkIn;
+        
+        postCreator   = [self.post objectForKey:@"user"];
+        contentString = [self.post objectForKey:@"textContent"];
+        checkIn       = [self.post objectForKey:@"checkIn"];
+        imageFile     = [postCreator objectForKey:@"profilePictureFile"];
+        createdDate   = [self.post createdAt];
+        
+        if (checkIn) {
+            cell.hasCheckIn        = YES;
+            cell.checkInLabel.text = [NSString stringWithFormat:@"at %@", [checkIn objectForKey:@"placeName"]];
+            [cell.checkInImage setFile:(PFFile *)checkIn[@"mapImage"]
+                          forImageView:cell.checkInImage];
+        }
+        
+        cell.nameLabel.text         = postCreator[@"firstName"];
+        cell.detailLabel.text       = contentString;
+        cell.timeLabel.text         = [self setTimeSincePostDate:createdDate];
+        [cell.profilePicture setFile:imageFile forAvatarImageView:cell.profilePicture];
+        
+        return cell;
+        
+    }else
+        
+        // If not the initial cell, display any comments
+        postCreator   = [self.commentsArray[indexPath.row] objectForKey:@"user"];
+        contentString = [self.commentsArray[indexPath.row] objectForKey:@"textContent"];
+        createdDate   = [self.commentsArray[indexPath.row] createdAt];
+        imageFile     = [postCreator objectForKey:@"profilePictureFile"];
 
-    postCreator   = [self.commentsArray[indexPath.row] objectForKey:@"user"];
-    contentString = [self.commentsArray[indexPath.row] objectForKey:@"textContent"];
-    createdDate   = [self.commentsArray[indexPath.row] createdAt];
-    imageFile     = [postCreator objectForKey:@"profilePictureFile"];
+        cell.nameLabel.text   = postCreator[@"name"];
+        cell.detailLabel.text = contentString;
+        cell.timeLabel.text   = [self setTimeSincePostDate:createdDate];
+        [cell.profilePicture setFile:imageFile forAvatarImageView:cell.profilePicture];
 
-    // Set the profile picture to a default image while fetching the user image in background
-    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        if (!error) {
-            cell.profilePicture.image = [UIImage imageWithData:data];
-        }else
-            NSLog(@"ERROR getting profile pic for user: %@", postCreator);
-    }];
 
-    cell.nameLabel.text   = postCreator[@"name"];
-    cell.detailLabel.text = contentString;
-    cell.timeLabel.text   = [self setTimeSincePostDate:createdDate];
-
-    return cell;
+        return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *contentString;
-    CGRect textRect;
+    CGFloat textHeight;
+    int addCheckIn = 190;
+
     
-    if (!self.commentsArray) return 100.0f;
-    else
-    {
-        contentString = [self.commentsArray[indexPath.row] objectForKey:@"textContent"];
-        textRect = [contentString boundingRectWithSize:CGSizeMake(200.0, 0)
-                                            options:NSStringDrawingUsesLineFragmentOrigin
-                                         attributes:@{NSFontAttributeName:CONTENT_FONT}
-                                            context:nil];
-        
-        return (textRect.size.height + 80);
+    if (indexPath.section == 0){
+        contentString = [self.post objectForKey:@"textContent"];
+        textHeight    = [self sizeForString:contentString withFont:CONTENT_FONT];
+        if (self.post[@"checkIn"])
+            return textHeight + addCheckIn + 80;
+        else
+            return textHeight + 88;
     }
+    else
+        contentString = [self.commentsArray[indexPath.row] objectForKey:@"textContent"];
+        textHeight = [self sizeForString:contentString withFont:CONTENT_FONT];
+        return textHeight + 88;
 }
 
 
@@ -154,27 +186,11 @@
 
 - (void)styleCell:(PostCell *)cell
 {
-    cell.backgroundColor = [UIColor whiteColor];
-    cell.commentCountLabel = nil;
-    cell.commentCountLabel = nil;
-    cell.userInteractionEnabled = NO;
+    cell.backgroundColor        = [UIColor whiteColor];
+    cell.commentCountLabel      = nil;
+    cell.commentView            = nil;
+    cell.userInteractionEnabled = YES;
 }
-
-//- (void)avatarImageWasTappedForUser:(PFUser *)user
-//{
-//    NSLog(@"Tapped");
-//    UIStoryboardSegue *segue;
-//    
-//    FakeProfileViewController *destVC;
-//    destVC = [FakeProfileViewController new];
-//    
-//    segue = [UIStoryboardSegue segueWithIdentifier:@"SegueToProfileVC"
-//                                            source:self
-//                                       destination: destVC
-//                                    performHandler:^{
-//                                        destVC.user = user;
-//                                    }];
-//}
 
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
@@ -216,7 +232,7 @@
         if (self.commentsArray.count > 0){
             [UIView animateWithDuration:0.3f animations:^{
                 
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.commentsArray.count - 1) inSection:0];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.commentsArray.count - 1) inSection:1];
 
                 // Shorten the tableviews frame
                 self.tableView.frame = CGRectMake(0,0,320,(self.view.frame.size.height - 264));
@@ -264,6 +280,7 @@
         return;
     }
 
+    // Create a newComment object
     PFObject *newComment = [PFObject objectWithClassName:@"Activity"];
     [newComment setObject:self.textView.text forKey:@"textContent"];
     [newComment setObject:[PFUser currentUser] forKey:@"user"];
@@ -293,6 +310,12 @@
 - (IBAction)cancelPressed:(id)sender
 {
     [self textViewShouldEndEditing:self.textView];
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.post = nil;
 }
 
 
@@ -328,115 +351,94 @@
     [self.textView resignFirstResponder];
 }
 
-                          
-- (void)setupTableHeader
-{
-    // Setup the containerView
-    UIView *headerContainerView = [UIView new];
-    headerContainerView.backgroundColor = [UIColor whiteColor];
-    
-    // Setup the nameLabel
-    UILabel *nameLabel = [UILabel new];
-    nameLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:15.0];
-    nameLabel.textColor = [UIColor blackColor];
-    nameLabel.numberOfLines = 1;
-    [headerContainerView addSubview:nameLabel];
-    
-    // Setup the dateLabel
-    UILabel *dateLabel = [UILabel new];
-    dateLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:11.0];
-    dateLabel.textColor = [UIColor blackColor];
-    dateLabel.numberOfLines = 1;
-    [headerContainerView addSubview:dateLabel];
-    
-    // Setup the contentLabel
-    UILabel *contentLabel = [UILabel new];
-    contentLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
-    contentLabel.textColor = [UIColor blackColor];
-    contentLabel.numberOfLines = 0;
-    [headerContainerView addSubview:contentLabel];
-    
-    // Setup the profileImage
-    PFImageView *avatarImageView = [PFImageView new];
-    avatarImageView.backgroundColor = [UIColor clearColor];
-    avatarImageView.layer.cornerRadius = 22.0f;
-    avatarImageView.clipsToBounds = YES;
-    [headerContainerView addSubview:avatarImageView];
-    
-    // Setup the profileImageButton
-    UIButton *avatarButton = [UIButton new];
-    avatarButton.backgroundColor = [UIColor clearColor];
-    avatarButton.userInteractionEnabled = NO;
-    [avatarButton addTarget:self action:@selector(didTapUserButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [headerContainerView addSubview:avatarButton];
 
-    
-    // Set text and images for labels/images
-    contentLabel.text = self.post[@"textContent"];
-    dateLabel.text = self.dateString;
-    nameLabel.text = self.userName;
-    avatarImageView.image = self.avatarImage;
-    
-    //* Set profileImageView
-    avatarImageView.frame = CGRectMake(6, headerInsetY, 44, 44);
-    avatarButton.frame = CGRectMake(6, headerInsetY, 44, 44);
-    
-    //* Set nameLabel
-    CGSize nameSize = [self sizeForString:nameLabel.text withFont:nameLabel.font];
-    nameLabel.frame = CGRectMake(nameOriginX, headerInsetY, nameSize.width, nameSize.height);
-    
-    //* Set dateLabel
-    CGSize dateSize = [self sizeForString:dateLabel.text withFont:dateLabel.font];
-    dateLabel.frame = CGRectMake(nameOriginX, headerInsetY + nameSize.height + 4, dateSize.width, dateSize.height);
-    
-    //* Set contentLabel
-    CGSize contentSize = [self sizeForString:contentLabel.text withFont:contentLabel.font];
-    contentLabel.frame = CGRectMake(10, contentLabelInset + (avatarImageView.frame.origin.y + avatarImageView.frame.size.height), contentSize.width, contentSize.height);
-    
-    // Set commentsLabel
-    commentsLabel = [UILabel new];
-    CGRect contentFrame = contentLabel.frame;
-    [commentsLabel setFrame:CGRectMake(0, (contentFrame.origin.y + contentFrame.size.height + 8), 320, 30.0)];
-    commentsLabel.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
-    commentsLabel.font = [UIFont fontWithName:@"Roboto-Light" size:12.0];
-    commentsLabel.textColor = [UIColor darkGrayColor];
-    commentsLabel.textAlignment = NSTextAlignmentCenter;
-    commentsLabel.layer.borderWidth = 0.5;
-    commentsLabel.layer.borderColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor;
-    [headerContainerView addSubview:commentsLabel];
-    
-    CGFloat height = contentLabel.frame.origin.y + contentLabel.frame.size.height + commentsLabel.frame.size.height;
-
-    // Setup the headerView
-    headerContainerView.frame = CGRectMake(0, 0, 320, height);
-    
-    self.tableView.tableHeaderView = headerContainerView;
-}
-                          
-                          
-- (CGSize)sizeForString:(NSString *)string withFont:(UIFont *)font
+- (CGFloat)sizeForString:(NSString *)string withFont:(UIFont *)font
 {
-    CGSize size = [string sizeWithFont:font
-                     constrainedToSize:CGSizeMake(280, CGFLOAT_MAX)
-                         lineBreakMode:NSLineBreakByWordWrapping];
-    return size;
+    CGRect textRect = [string boundingRectWithSize:CGSizeMake(maxContentWidth, 0)
+                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                        attributes:@{NSFontAttributeName:CONTENT_FONT}
+                                           context:nil];
+    
+    int height = textRect.size.height + 1;
+    
+    return (float)height;
 }
 
 
-- (void)updateCommentCount
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    int commentCount = (int)self.commentsArray.count;
-    NSString *count;
-    
-    if (commentCount == 0)
-        count = @"Add Comment";
-    if (commentCount == 1)
-        count = [NSString stringWithFormat:@"%d Comment", commentCount];
+    if (section == 1) return 30.0f;
+    else return 0;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section != 1) return nil;
     else
-        count = [NSString stringWithFormat:@"%d Comments", commentCount];
-    
-    commentsLabel.text = count;
+        return [self updateCommentCount];
 }
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) return nil;
+   
+    UIView *head;
+    
+    head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    head.layer.borderWidth = 0.5;
+    head.layer.borderColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor;
+    head.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
+
+    CGRect rect                 = head.bounds;
+    commentsLabel               = [UILabel new];
+    commentsLabel.frame         = CGRectMake(rect.origin.x, rect.origin.y +8, rect.size.width -10, rect.size.height /2);
+    commentsLabel.font          = [UIFont fontWithName:@"Roboto-Regular" size:12.0];
+    commentsLabel.textColor     = [UIColor darkGrayColor];
+    commentsLabel.textAlignment = NSTextAlignmentCenter;
+    commentsLabel.text = [self tableView:self.tableView titleForHeaderInSection:1];
+    
+    [head addSubview:commentsLabel];
+    
+    return head;
+}
+
+
+- (NSString *)updateCommentCount
+{
+    NSString *count;
+    int commentCount = (int)self.commentsArray.count;
+
+    if (commentCount == 1)
+        return count = [NSString stringWithFormat:@"%d Comment", commentCount];
+    else
+        return count = [NSString stringWithFormat:@"%d Comments", commentCount];
+}
+
+
+-(void)avatarImageWasTappedInCell:(PostCell *)cell
+{
+    NSIndexPath  *indexPath;
+    PFUser       *postCreator;
+    UIStoryboard *storyboard;
+    UserProfileViewController *profileVC;
+    NSString     *fbUsername;
+    
+    storyboard  = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
+    profileVC   = [storyboard instantiateViewControllerWithIdentifier:@"profile"];
+    indexPath   = [self.tableView indexPathForCell:cell];
+    
+    if (indexPath.section == 0)
+        postCreator = self.post[@"user"];
+    else
+        postCreator = [self.commentsArray[indexPath.row] objectForKey:@"user"];
+    
+    fbUsername  = [postCreator objectForKey:@"FBUsername"];
+    
+    profileVC.facebookUsername = fbUsername;
+    [self.navigationController pushViewController:profileVC animated:YES];
+}
+
 
 
 

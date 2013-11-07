@@ -7,17 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ActivityFeedCellDelegate.h"
+#import "PostCellDelegate.h"
+#import "UserProfileViewController.h"
 
-@interface CommentViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ActivityFeedCellDelegate, UITextViewDelegate, UIAlertViewDelegate>
+@interface CommentViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PostCellDelegate, UITextViewDelegate, UIAlertViewDelegate>
 
-@property CGSize headerSize;
-@property (strong, nonatomic) NSString *posterID;
 @property (strong, nonatomic) PFObject *post;
-@property (strong, nonatomic) UIImage  *avatarImage;
-@property (strong, nonatomic) NSString *userName;
-@property (strong, nonatomic) NSString *postString;
-@property (strong, nonatomic) NSString *dateString;
 @property (strong, nonatomic) NSMutableArray *commentsArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
@@ -28,9 +23,6 @@
 
 // HeaderView
 @property (strong, nonatomic) UILabel *commentsLabel;
-
-
-
 
 - (IBAction)addCommentPressed:(id)sender;
 - (IBAction)cancelPressed:(id)sender;

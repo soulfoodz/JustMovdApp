@@ -11,6 +11,19 @@
 @implementation PFImageView (ImageHandler)
 
 
+- (void)setFile:(PFFile *)file forAvatarImageView:(PFImageView *)imageView
+{
+    if (!file) {
+        NSLog(@"Couldn't find a file!");
+        return;
+    }
+    
+    imageView.image = [UIImage imageNamed:@"avatar_placeholder.png"];
+    imageView.file = file;
+    [imageView loadInBackground];
+}
+
+
 - (void)setFile:(PFFile *)file forImageView:(PFImageView *)imageView
 {
     if (!file) {
@@ -18,7 +31,7 @@
         return;
     }
     
-    imageView.image = [UIImage imageNamed:@"yoga_circle"];
+    imageView.image = [UIImage imageNamed:@"avatar_placeholder.png"];
     imageView.file = file;
     [imageView loadInBackground];
 }

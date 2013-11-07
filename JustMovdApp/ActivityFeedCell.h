@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "TTTTimeIntervalFormatter.h"
 #import <Parse/Parse.h>
-#import "ActivityFeedCellDelegate.h"
+#import "PostCellDelegate.h"
 
 @interface ActivityFeedCell : UITableViewCell
 
-@property (strong, nonatomic) id <ActivityFeedCellDelegate> delegate;
+@property (strong, nonatomic) id <PostCellDelegate> delegate;
 @property (strong, nonatomic) PFUser *user;
 
 @property (strong, nonatomic) UIFont *font;

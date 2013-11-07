@@ -10,6 +10,7 @@
 
 @interface PFImageView (ImageHandler)
 
+- (void)setFile:(PFFile *)file forAvatarImageView:(PFImageView *)imageView;
 - (void)setFile:(PFFile *)file forImageView:(PFImageView *)imageView;
 
 
