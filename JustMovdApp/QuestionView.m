@@ -18,37 +18,31 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 240, 30)];
+        UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, 240, 30)];
         topLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:25];
         topLabel.text = @"Would You Rather...";
         topLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:topLabel];
         
-        questionLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(5, 260, 125, 40)];
+        questionLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(5, 280, 125, 40)];
         questionLabel1.font = [UIFont fontWithName:@"Roboto-Regular" size:20];
         questionLabel1.text = question1;
         questionLabel1.textAlignment = NSTextAlignmentCenter;
         [self addSubview:questionLabel1];
         
-        questionLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(130, 260, 125, 40)];
+        questionLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(130, 280, 125, 40)];
         questionLabel2.font = [UIFont fontWithName:@"Roboto-Regular" size:20];
         questionLabel2.text = question2;
         questionLabel2.textAlignment = NSTextAlignmentCenter;
         [self addSubview:questionLabel2];
         
-        UILabel *or1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 235, 60, 30)];
+        UILabel *or1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 250, 60, 30)];
         or1.font = [UIFont fontWithName:@"Roboto-Regular" size:15];
         or1.text = @"OR";
         or1.textAlignment = NSTextAlignmentCenter;
         [self addSubview:or1];
         
-//        UILabel *or2 = [[UILabel alloc] initWithFrame:CGRectMake(100, 235, 60, 30)];
-//        or2.font = [UIFont fontWithName:@"Roboto-Regular" size:30];
-//        or2.text = @"R";
-//        or2.textAlignment = NSTextAlignmentCenter;
-//        [self addSubview:or2];
-        
-        self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.90];
+        self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.80];
         
         UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
         [button1 setBackgroundImage:[UIImage imageNamed:firstImage] forState:UIControlStateNormal];

@@ -9,6 +9,8 @@
 #import "IntroParentViewController.h"
 #import "IntroChildViewController.h"
 #import "QuestionnaireViewController.h"
+#import "SpinnerViewController.h"
+#import "AppDelegate.h"
 
 @interface IntroParentViewController ()
 {
@@ -16,6 +18,7 @@
     NSData *profilePictureData;
 
     NSArray *backgroundImages;
+    UIPageControl *pageControl;
 
 }
 
@@ -34,8 +37,9 @@
 {
     [super viewDidLoad];
     
-    backgroundImages = [[NSArray alloc] initWithObjects:@"login1", @"login2", @"login3", nil];
-    self.view.backgroundColor = [UIColor colorWithRed:80/255.0 green:177/255.0 blue:246/255.0 alpha:1.0];
+    backgroundImages = [[NSArray alloc] initWithObjects:@"chicago_skyline_blur", @"skyline_blur", @"boston_skyline_blur", nil];
+    //self.view.backgroundColor = [UIColor colorWithRed:80/255.0 green:177/255.0 blue:246/255.0 alpha:1.0];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"skyline_blur"]];
 
     [self loadIntro];
     
@@ -47,7 +51,12 @@
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     
     pageController.dataSource = self;
+    pageController.delegate = self;
     [[pageController view] setFrame:[[self view] bounds]];
+    
+    CGRect frame = pageController.view.frame;
+    frame.size.height = frame.size.height+37;
+    pageController.view.frame = frame;
     
     IntroChildViewController *initialViewController = [self viewControllerAtIndex:0];
     
@@ -61,7 +70,7 @@
     
     
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [nextButton setBackgroundImage:[UIImage imageNamed:@"facebooklogin"] forState:UIControlStateNormal];
+    [nextButton setBackgroundImage:[UIImage imageNamed:@"FacebookLoginButton"] forState:UIControlStateNormal];
     [nextButton sizeToFit];
     nextButton.center = CGPointMake(160, 480);
     
@@ -72,12 +81,32 @@
     UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 200, 200, 50)];
     
     justMovdLabel.text = @"JustMovd";
-    justMovdLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:28];
+    justMovdLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:32];
     justMovdLabel.textAlignment = NSTextAlignmentCenter;
     
     justMovdLabel.center = CGPointMake(self.view.frame.size.width/2, 100);
+    justMovdLabel.textColor = [UIColor whiteColor];
     
     [self.view addSubview:justMovdLabel];
+    
+    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 400, 300, 50)];
+
+    descriptionLabel.text = @"The App For People New To A City";
+    descriptionLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:15];
+    descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    
+    descriptionLabel.center = CGPointMake(self.view.frame.size.width/2, 250);
+    descriptionLabel.textColor = [UIColor whiteColor];
+
+    [self.view addSubview:descriptionLabel];
+    
+    
+    pageControl = [[UIPageControl alloc] init];
+    pageControl.numberOfPages = 3;
+    pageControl.currentPage = 0;
+    pageControl.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height - 20);
+    
+    [self.view addSubview:pageControl];
     
     
 }
@@ -93,18 +122,23 @@
 - (void)commsDidLogin:(BOOL)loggedIn
 {
     
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicator.center = CGPointMake(self.view.frame.size.width/2, 200);
+    SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSize];
+    spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
+    
+//    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    activityIndicator.center = CGPointMake(self.view.frame.size.width/2, 200);
     
     UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
     coverView.backgroundColor = [UIColor grayColor];
-    coverView.alpha = 0.4;
-    
+    coverView.alpha = 0.1;
+//    
     [self.view addSubview:coverView];
-    [self.view addSubview:activityIndicator];
+//    [self.view addSubview:activityIndicator];
     
-    [activityIndicator startAnimating];
+//    [activityIndicator startAnimating];
+    [self.view addSubview:spinner.view];
+
     
 	if (loggedIn)
     {
@@ -161,9 +195,7 @@
                  }
              }
              
-             [user save]; // <--- Don't want to save in background, only let user in if their info are good
-             
-
+             [user save];
              
              
              //Getting user profile picture size LARGE
@@ -182,6 +214,15 @@
              [user save];
              [[NSURLCache sharedURLCache] removeAllCachedResponses];
              
+             if ([PFUser currentUser]) {
+                 AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                 PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+                 [currentInstallation setDeviceTokenFromData:appDelegate.deviceTokenForPush];
+                 [currentInstallation deviceType];
+                 [currentInstallation setObject:[PFUser currentUser] forKey:@"owner"];
+                 [currentInstallation setBadge:0];
+                 [currentInstallation saveInBackground];
+             }
              
              
              PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
@@ -192,7 +233,7 @@
                      [self performSegueWithIdentifier:@"abc" sender:self];
                  } else {
                      [self dismissViewControllerAnimated:YES completion:^{
-                         nil;
+                         [[NSNotificationCenter defaultCenter] postNotificationName:@"gotofeed" object:nil];
                      }];
                  }
              }];
@@ -209,8 +250,7 @@
 	}
     
     
-    coverView = nil;
-    
+    spinner = nil;
 
 }
 
@@ -229,6 +269,9 @@
     
     childViewController.index = index;
     childViewController.backgroundImage = [backgroundImages objectAtIndex:index];
+    NSLog(@"%@", [backgroundImages objectAtIndex:index]);
+
+    NSLog(@"index: %i", index);
     
     return childViewController;
     
@@ -243,6 +286,7 @@
     }
     
     index--;
+    pageControl.currentPage--;
     
     return [self viewControllerAtIndex:index];
     
@@ -253,6 +297,8 @@
     NSUInteger index = [(IntroChildViewController *)viewController index];
     
     index++;
+    pageControl.currentPage++;
+    
     
     if (index == 3) {
         return nil;
@@ -289,6 +335,7 @@
     return firstName;
     
 }
+
 
 
 @end
