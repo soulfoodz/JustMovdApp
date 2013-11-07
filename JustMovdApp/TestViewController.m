@@ -13,6 +13,8 @@
 #import "MatchTableViewCell.h"
 #import <CoreLocation/CoreLocation.h>
 #import "UserProfileViewController.h"
+#import "SpinnerViewController.h"
+
 
 
 @interface TestViewController ()
@@ -26,6 +28,8 @@
     PFObject *currentUserInterests;
     PFObject *tempInterests;
 
+    SpinnerViewController *spinner;
+    
 }
 
 @end
@@ -38,49 +42,40 @@
 {
     [super viewDidLoad];
     
+    spinner = [[SpinnerViewController alloc] initWithDefaultSize];
+    spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
+    [self.view addSubview:spinner.view];
+    
+    
+    isReady = NO;
+    
+    myTableView.delegate = self;
+    myTableView.dataSource = self;
+    matches = [[NSMutableArray alloc] init];
+    profilePics = [[NSMutableArray alloc] init];
+    distances = [[NSMutableArray alloc] init];
+    sharedInterests = [[NSMutableArray alloc] init];
+    
+    sideBarButton.target = self.revealViewController;
+    sideBarButton.action = @selector(revealToggle:);
+    
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    
+    [self findUsersWithinMiles:20.0];
+    
+    self.view.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1.0];
+    //self.view.backgroundColor = [UIColor grayColor];
+    
+    myTableView.backgroundColor = [UIColor clearColor];
+    myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
+    
 
 
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-//    [super viewDidAppear:animated];
-//    
-//    if (![PFUser currentUser]){
-//        
-//        IntroParentViewController *signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IntroParentViewController"];
-//        
-//        [self presentViewController:signupVC animated:NO completion:^{
-//            nil;
-//        }];
-//    } else {
-    
-        isReady = NO;
-        
-        myTableView.delegate = self;
-        myTableView.dataSource = self;
-        matches = [[NSMutableArray alloc] init];
-        profilePics = [[NSMutableArray alloc] init];
-        distances = [[NSMutableArray alloc] init];
-        sharedInterests = [[NSMutableArray alloc] init];
-        
-        sideBarButton.target = self.revealViewController;
-        sideBarButton.action = @selector(revealToggle:);
-        
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-        
-        [self findUsersWithinMiles:20.0];
-        
-        self.view.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1.0];
-        //self.view.backgroundColor = [UIColor grayColor];
-        
-        myTableView.backgroundColor = [UIColor clearColor];
-        myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-//    }
-    
-    
-}
+
 
 - (void)findUsersWithinMiles:(double)miles
 {
@@ -96,52 +91,60 @@
          [self sortMatchesByDistance:matches];
          //PFUser *currentUser = [PFUser currentUser];
          
+         
          PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
          [query whereKey:@"User" equalTo:[PFUser currentUser]];
+         
          [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
              currentUserInterests = object;
              
              
              for (PFUser *temp in matches){
                  
-                 PFQuery *tempQuery = [PFQuery queryWithClassName:@"Interests"];
-                 [tempQuery whereKey:@"User" equalTo:temp];
-                 [tempQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                     tempInterests = object;
+                 
+                 PFFile *imageFile = [temp objectForKey:@"profilePictureFile"];
+                 [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                      
+                     UIImage *tempImage = [UIImage imageWithData:data];
+                     [profilePics addObject:tempImage];
                      
-                     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
-                     
-                     if ([tempInterests[@"first"] isEqualToString:currentUserInterests[@"first"]]){
-                         [tempArray addObject:[self getImageNameFromString:tempInterests[@"first"]]];
-                     }
-                     if ([tempInterests[@"second"] isEqualToString:currentUserInterests[@"second"]]){
-                         [tempArray addObject:[self getImageNameFromString:tempInterests[@"second"]]];
-                     }
-                     if ([tempInterests[@"third"] isEqualToString:currentUserInterests[@"third"]]){
-                         [tempArray addObject:[self getImageNameFromString:tempInterests[@"third"]]];
-                     }
-                     if ([tempInterests[@"fourth"] isEqualToString:currentUserInterests[@"fourth"]]){
-                         [tempArray addObject:[self getImageNameFromString:tempInterests[@"fourth"]]];
-                     }
-                     [sharedInterests addObject:tempArray];
-                     
-                     
-                     PFFile *imageFile = [temp objectForKey:@"profilePictureFile"];
-                     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                     PFQuery *tempQuery = [PFQuery queryWithClassName:@"Interests"];
+                     [tempQuery whereKey:@"User" equalTo:temp];
+                                          
+                     [tempQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                         tempInterests = object;
                          
-                         UIImage *tempImage = [UIImage imageWithData:data];
-                         [profilePics addObject:tempImage];
                          
-                         if ([profilePics count] == [matches count]){
+                         NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+                         
+                         if ([tempInterests[@"first"] isEqualToString:currentUserInterests[@"first"]]){
+                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"first"]]];
+                         }
+                         if ([tempInterests[@"second"] isEqualToString:currentUserInterests[@"second"]]){
+                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"second"]]];
+                         }
+                         if ([tempInterests[@"third"] isEqualToString:currentUserInterests[@"third"]]){
+                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"third"]]];
+                         }
+                         if ([tempInterests[@"fourth"] isEqualToString:currentUserInterests[@"fourth"]]){
+                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"fourth"]]];
+                         }
+                         [sharedInterests addObject:tempArray];
+                         
+                         if ([sharedInterests count] == [matches count]){
+                             spinner.view = nil;
+                             
                              isReady = YES;
                              [myTableView reloadData];
                          }
                          
+                         
                      }];
                      
                      
+                     
                  }];
+                 
                  
 
              }
@@ -208,7 +211,6 @@
        [cell.profilePicture setImage:[profilePics objectAtIndex:row]];
         
         PFUser *tempUser = [matches objectAtIndex:row];
-        cell.nameLabel.text = tempUser[@"name"];
         
         NSMutableArray *interestObject = [sharedInterests objectAtIndex:row];
         int len = [interestObject count];
@@ -245,12 +247,15 @@
         NSString *gender;
         
         if ([tempUser[@"gender"] isEqualToString:@"male"]){
-            gender = @"M";
+            gender = @"m";
         } else {
-            gender = @"F";
+            gender = @"f";
         }
         
-        cell.ageLabel.text = [NSString stringWithFormat:@"%d/%@", age, gender];
+        //cell.ageLabel.text = [NSString stringWithFormat:@"%d/%@", age, gender];
+        
+        cell.nameLabel.text = [NSString stringWithFormat:@"%@, %d/%@", tempUser[@"firstName"], age, gender];
+
         cell.distanceLabel.text = [NSString stringWithFormat:@"%.1fmi", [[distances objectAtIndex:row] floatValue] ];
         
         return cell;

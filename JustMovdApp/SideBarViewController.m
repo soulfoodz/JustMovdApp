@@ -39,8 +39,16 @@
     [super viewDidLoad];
 
     titlesForRows = @[@"justmovd", @"feed", @"around", @"messages", @"profile", @"empty", @"empty", @"empty", @"empty", @"empty", @"sign"];
+    self.tableView.scrollEnabled = NO;
     
-   // [self setupSegues];
+    self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
+    
+    self.tableView.backgroundColor = [UIColor grayColor];
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserverForName:@"gotofeed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [self performSegueWithIdentifier:@"feed" sender:self];
+    }];
     
 }
 
@@ -110,9 +118,14 @@
                 [navController setViewControllers: @[profileVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
                 
-            } else if (indexPath.row == 10){
+            } else{
                 
-                [self logout];
+                UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
+                activityVC = [feedSB instantiateViewControllerWithIdentifier:@"recentActivityVC"];
+                
+                UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+                [navController setViewControllers: @[activityVC] animated: NO ];
+                [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
                 
             }
     
@@ -133,12 +146,23 @@
     
     if (indexPath.row == 10){
         
-        [self logout];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you sure you want to log out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+        [alert show];
+        
+       // [self logout];
         
     }
     
     
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+    if (buttonIndex == 1) {
+        [self logout];
+    }
+}
+
 
 
 -(void)logout{
@@ -150,21 +174,6 @@
         nil;
     }];
 }
-
-
-
--(void)setupSegues{
-    
-    UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
-    //activityVC = [feedSB instantiateViewControllerWithIdentifier:@"recentActivityVC"];
-    activityVC = [feedSB instantiateInitialViewController];
-    
-    feedSegue = [[SWRevealViewControllerSegue alloc] initWithIdentifier:@"segueToRecentActivity" source:self destination:activityVC];
-    
-    
-    
-}
-
 
 
 

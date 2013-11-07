@@ -8,6 +8,8 @@
 
 #import "QuestionnaireViewController.h"
 #import "QuestionView.h"
+#import "SpinnerViewController.h"
+
 
 @interface QuestionnaireViewController ()
 {
@@ -21,6 +23,14 @@
     int counter;
     
     CLLocationManager *locationManager;
+    
+    UIImageView *firstImage;
+    UIImageView *secondImage;
+    UIImageView *thirdImage;
+    UIImageView *fourthImage;
+    NSMutableArray *bottomHolder;
+    
+    UIImageView *temp;
 }
 
 @end
@@ -40,9 +50,9 @@
     [self getUserLocation];
     
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background3_size.png"]];
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background3_size.png"]];
     
-    //self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithRed:26/255.0 green:158/255.0 blue:151/255.0 alpha:1.0];
     
     answers = [NSMutableArray new];
     questionViewsArray = [NSMutableArray new];
@@ -96,7 +106,22 @@
     counter = 0;
     
     [self makeQuestionViews];
-
+    
+    firstImage = [[UIImageView alloc] initWithFrame:CGRectMake(60, self.view.frame.size.height, 40, 40)];
+    secondImage = [[UIImageView alloc] initWithFrame:CGRectMake(120, self.view.frame.size.height, 40, 40)];
+    thirdImage = [[UIImageView alloc] initWithFrame:CGRectMake(180, self.view.frame.size.height, 40, 40)];
+    fourthImage = [[UIImageView alloc] initWithFrame:CGRectMake(240, self.view.frame.size.height, 40, 40)];
+    
+    [self.view addSubview:firstImage];
+    [self.view addSubview:secondImage];
+    [self.view addSubview:thirdImage];
+    [self.view addSubview:fourthImage];
+    
+    bottomHolder = [[NSMutableArray alloc] init];
+    [bottomHolder addObject:firstImage];
+    [bottomHolder addObject:secondImage];
+    [bottomHolder addObject:thirdImage];
+    [bottomHolder addObject:fourthImage];
 
 }
 
@@ -131,7 +156,17 @@
 }
 
 
--(void)moveView{
+-(void)moveView:(int)tag{
+    
+    temp = [bottomHolder objectAtIndex:counter];
+    UIImage *image;
+    
+    if (tag == 0){
+        image = [UIImage imageNamed:[[imagesArray objectAtIndex:counter] objectForKey:@"first"]];
+    } else {
+        image = [UIImage imageNamed:[[imagesArray objectAtIndex:counter] objectForKey:@"second"]];
+    }
+    [temp setImage:image];
     
     [UIView animateWithDuration:0.1 animations:^{
         questionsHolder.transform = CGAffineTransformTranslate(questionsHolder.transform, 20, 0);
@@ -139,23 +174,29 @@
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.6 animations:^{
             questionsHolder.transform = CGAffineTransformTranslate(questionsHolder.transform, -340, 0);
+            temp.transform = CGAffineTransformMakeTranslation(0, -60);
             
         } completion:^(BOOL finished) {
             counter++;
             
             if (counter == [questions count]){
                 
+                SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSize];
                 
-                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-                activityIndicator.center = CGPointMake(self.view.frame.size.width/2, 200);
+                spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
                 
+//                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//                activityIndicator.center = CGPointMake(self.view.frame.size.width/2, 200);
+//                
                 UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
                 
                 coverView.backgroundColor = [UIColor grayColor];
-                coverView.alpha = 0.4;
-                
+                coverView.alpha = 0.1;
+//                
                 [self.view addSubview:coverView];
-                [self.view addSubview:activityIndicator];
+//                [self.view addSubview:activityIndicator];
+                [self.view addSubview:spinner.view];
+
                 
                 PFObject *interests = [PFObject objectWithClassName:@"Interests"];
                 interests[@"User"] = [PFUser currentUser];
@@ -169,9 +210,10 @@
                     if (succeeded){
                         
                         [self dismissViewControllerAnimated:YES completion:^{
-                            
                             [delegate viewControllerDone:self];
                         }];
+                        
+                        spinner.view = nil;
                         
                     }
                 }];
@@ -180,9 +222,7 @@
             }
         }];
     }];
-    
 
-    
     
 }
 
@@ -204,10 +244,12 @@
     
     if (tag == 0){
         [answers addObject:[[questions objectAtIndex:counter] objectForKey:@"first"]];
-        [self moveView];
+        //[self popupInterests:tag];
+        [self moveView:tag];
     } else if(tag == 1){
         [answers addObject:[[questions objectAtIndex:counter] objectForKey:@"second"]];
-        [self moveView];
+        //[self popupInterests:tag];
+        [self moveView:tag];
     } else if (tag == 3) {
         [self startMove];
         NSLog(@"test");
@@ -215,6 +257,27 @@
     
 }
 
+
+-(void)popupInterests:(int)tag{
+    
+    UIImageView *temp = [bottomHolder objectAtIndex:counter];
+    UIImage *image;
+    
+    if (tag == 0){
+        image = [UIImage imageNamed:[[imagesArray objectAtIndex:counter] objectForKey:@"first"]];
+    } else {
+        image = [UIImage imageNamed:[[imagesArray objectAtIndex:counter] objectForKey:@"second"]];
+    }
+    [temp setImage:image];
+    
+    [UIView animateWithDuration:0.6 animations:^{
+        temp.transform = CGAffineTransformMakeTranslation(0, -40);
+
+    }];
+
+    
+    
+}
 
 #pragma mark - CLLocationManagerDelegate
 

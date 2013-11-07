@@ -34,18 +34,22 @@
         profilePicture.clipsToBounds = YES;
         
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 170, 100, 30)];
-        nameLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:20];
+        nameLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:18];
+        nameLabel.textColor = [UIColor orangeColor];
+        
+        
         [containerView addSubview:nameLabel];
         
-        UILabel *matchedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, 150, 30)];
+        
+        UILabel *matchedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, 120, 30)];
         matchedLabel.text = @"Matched Interests:";
-        matchedLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:15];
+        matchedLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:12];
         [containerView addSubview:matchedLabel];
         
-        firstInterest = [[UIImageView alloc] initWithFrame:CGRectMake(150, 200, 22, 22)];
-        secondInterest = [[UIImageView alloc] initWithFrame:CGRectMake(180, 200, 22, 22)];
-        thirdInterest = [[UIImageView alloc] initWithFrame:CGRectMake(210, 200, 22, 22)];
-        fourthInterest = [[UIImageView alloc] initWithFrame:CGRectMake(240, 200, 22, 22)];
+        firstInterest = [[UIImageView alloc] initWithFrame:CGRectMake(120, 200, 22, 22)];
+        secondInterest = [[UIImageView alloc] initWithFrame:CGRectMake(150, 200, 22, 22)];
+        thirdInterest = [[UIImageView alloc] initWithFrame:CGRectMake(180, 200, 22, 22)];
+        fourthInterest = [[UIImageView alloc] initWithFrame:CGRectMake(210, 200, 22, 22)];
         
         [containerView addSubview:firstInterest];
         [containerView addSubview:secondInterest];
@@ -53,13 +57,14 @@
         [containerView addSubview:fourthInterest];
         
         ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 170, 80, 30)];
-        ageLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:20];
+        ageLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:14];
         [containerView addSubview:ageLabel];
         
         distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 170, 50, 30)];
-        distanceLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:15];
+        distanceLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:14];
         [containerView addSubview:distanceLabel];
-
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
     }
     return self;

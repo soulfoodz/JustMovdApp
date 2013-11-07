@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SideBarViewController : UITableViewController
+@interface SideBarViewController : UITableViewController <UIAlertViewDelegate>
 
 @end
