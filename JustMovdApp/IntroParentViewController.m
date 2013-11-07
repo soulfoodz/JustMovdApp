@@ -108,12 +108,12 @@
     
     [self.view addSubview:pageControl];
     
-    
+
 }
 
 
 
--(void)nextView{
+-(void)nextView {
     [Comms login:self];
 }
 
@@ -122,7 +122,7 @@
 - (void)commsDidLogin:(BOOL)loggedIn
 {
     
-    SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSize];
+    SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
     spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     
 //    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];

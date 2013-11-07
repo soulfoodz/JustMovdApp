@@ -22,7 +22,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
-        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(10, 5, 300, 80)];
+        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(2, 2, 316, 88)];
         backgroundView.backgroundColor = [UIColor whiteColor];
         backgroundView.layer.cornerRadius = 3;
         [self addSubview:backgroundView];
@@ -34,7 +34,7 @@
         detailLabel.numberOfLines = 2;
         [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
         
-        newBadgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(270, 0, 30, 15)];
+        newBadgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285, 1, 30, 15)];
         newBadgeLabel.backgroundColor = [UIColor orangeColor];
         newBadgeLabel.layer.cornerRadius = 3;
         newBadgeLabel.textAlignment = NSTextAlignmentCenter;

@@ -10,7 +10,7 @@
 
 @interface SpinnerViewController : UIViewController
 
-- (id)initWithSize:(float)size andCornerRadius:(float)radius;
-- (id)initWithDefaultSize;
+- (id)initWithSize:(float)size andCornerRadius:(float)radius andView:(UIView *)view;
+- (id)initWithDefaultSizeWithView:(UIView *)view;
 
 @end

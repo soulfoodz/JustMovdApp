@@ -10,6 +10,9 @@
 #import <Parse/Parse.h>
 #import "OpenConversationViewController.h"
 #import "MessagingViewController.h"
+#import "OpenConversationViewController.h"
+#import "SWRevealViewController.h"
+#import "SideBarViewController.h"
 
 @implementation AppDelegate
 
@@ -70,14 +73,14 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    NSLog(@"userInfo: %@", userInfo);
+    
     if (application.applicationState == UIApplicationStateActive)
     {
-        //NSLog(@"Active");
+        NSLog(@"Active");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewMessageNotification" object:nil];
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         
-        //UIViewController *currentVC = self.window.rootViewController;
-        //messageVC.isBeingPresented;
         //Showing HUD
         if (!isMessagingPresented)
         {
@@ -87,13 +90,22 @@
                 hudWindow.alpha = 1.0;
             }];
             
-            [self performSelector:@selector(hideHUDView) withObject:nil afterDelay:5.0];
+            [self performSelector:@selector(hideHUDView) withObject:nil afterDelay:10.0];
         }
     }
     else
     {
-        //NSLog(@"Background");
-        [PFPush handlePush:userInfo];
+        NSLog(@"Background");
+        //[PFPush handlePush:userInfo];
+//        UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
+//            OpenConversationViewController *conversationVC = [messagesSB instantiateViewControllerWithIdentifier:@"conversation"];
+//        UINavigationController *navigationForConversationVC = [[UINavigationController alloc] initWithRootViewController:conversationVC];
+//        
+//        UIStoryboard *questionSB = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
+//        SideBarViewController *sideBarVC = [questionSB instantiateViewControllerWithIdentifier:@"sidebarVC"];
+//        
+//        SWRevealViewController *revealVC = [[SWRevealViewController alloc] initWithRearViewController:sideBarVC frontViewController:navigationForConversationVC];
+//        [self.window setRootViewController:revealVC];
     }
 }
 

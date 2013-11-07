@@ -181,7 +181,7 @@
             
             if (counter == [questions count]){
                 
-                SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSize];
+                SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
                 
                 spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
                 
