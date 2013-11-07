@@ -36,7 +36,6 @@
         self.selectionStyle  = UITableViewCellSelectionStyleNone;
 
         profilePicture    = [[PFImageView alloc] initWithFrame:CGRectMake(10, 10, 64, 64)];
-        //avatarButton      = [[UIButton alloc] initWithFrame:profilePicture.bounds];
         avatarButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
         
@@ -91,12 +90,10 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setFrame:CGRectMake(20, 15, profilePicture.frame.size.width, profilePicture.frame.size.height)];
     [button addTarget:self action:@selector(profilePictureTapped) forControlEvents:UIControlEventTouchUpInside];
-    //button.backgroundColor = [UIColor redColor];
     [self addSubview:button];
     [self.backgroundView addSubview:profilePicture];
     
     nameLabel.font      = [UIFont fontWithName:@"Roboto-Medium" size:17.0];
-    //nameLabel.textColor = [UIColor orangeColor];
     nameLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:171.0/255.0 blue:40.0/255.0 alpha:1.0];
     [self.backgroundView addSubview:nameLabel];
     

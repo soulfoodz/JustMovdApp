@@ -21,48 +21,48 @@
         //[self layoutSubviews];
         
         self.backgroundColor = [UIColor clearColor];
-        containerView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 230)];
-        containerView.backgroundColor = [UIColor whiteColor];
-        containerView.layer.cornerRadius = 3;
-        containerView.layer.masksToBounds = YES;
+        cellBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 230)];
+        cellBackgroundView.backgroundColor = [UIColor whiteColor];
+        cellBackgroundView.layer.cornerRadius = 3;
+        cellBackgroundView.layer.masksToBounds = YES;
         
-        [self addSubview:containerView];
+        [self addSubview:cellBackgroundView];
         
         profilePicture = [[UIImageView alloc] init];
-        [containerView addSubview:profilePicture];
-        [profilePicture setContentMode:UIViewContentModeScaleAspectFill];
+        profilePicture.layer.masksToBounds = YES;
+        [cellBackgroundView addSubview:profilePicture];
+        
         profilePicture.clipsToBounds = YES;
         
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 170, 100, 30)];
         nameLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:18];
         nameLabel.textColor = [UIColor orangeColor];
         
-        
-        [containerView addSubview:nameLabel];
+        [cellBackgroundView addSubview:nameLabel];
         
         
         UILabel *matchedLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, 120, 30)];
         matchedLabel.text = @"Matched Interests:";
         matchedLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:12];
-        [containerView addSubview:matchedLabel];
+        [cellBackgroundView addSubview:matchedLabel];
         
         firstInterest = [[UIImageView alloc] initWithFrame:CGRectMake(120, 200, 22, 22)];
         secondInterest = [[UIImageView alloc] initWithFrame:CGRectMake(150, 200, 22, 22)];
         thirdInterest = [[UIImageView alloc] initWithFrame:CGRectMake(180, 200, 22, 22)];
         fourthInterest = [[UIImageView alloc] initWithFrame:CGRectMake(210, 200, 22, 22)];
         
-        [containerView addSubview:firstInterest];
-        [containerView addSubview:secondInterest];
-        [containerView addSubview:thirdInterest];
-        [containerView addSubview:fourthInterest];
+        [cellBackgroundView addSubview:firstInterest];
+        [cellBackgroundView addSubview:secondInterest];
+        [cellBackgroundView addSubview:thirdInterest];
+        [cellBackgroundView addSubview:fourthInterest];
         
         ageLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 170, 80, 30)];
         ageLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:14];
-        [containerView addSubview:ageLabel];
+        [cellBackgroundView addSubview:ageLabel];
         
         distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 170, 50, 30)];
         distanceLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:14];
-        [containerView addSubview:distanceLabel];
+        [cellBackgroundView addSubview:distanceLabel];
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -70,12 +70,13 @@
     return self;
 }
 
--(void)layoutSubviews{
-    
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
 
     CGRect subviewFrame = CGRectMake(0, 0, 300, 170);
-    profilePicture.frame = subviewFrame;
-    
+    [profilePicture setFrame:subviewFrame];
+    [profilePicture setContentMode:UIViewContentModeScaleAspectFill];
 
 }
 

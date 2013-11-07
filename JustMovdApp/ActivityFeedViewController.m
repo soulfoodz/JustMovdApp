@@ -327,6 +327,9 @@
         statusVC.navigationItem.title = @"New Post";
         statusVC.user = [PFUser currentUser];
         statusVC.delegate = self;
+        statusVC.reloadTVBlock = ^(){
+            [self queryForTable];
+        };
         
         if ([sender isKindOfClass:[UIButton class]])
         {
@@ -347,6 +350,11 @@
     UITableViewCell *cell;
     
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    
+    cell.backgroundColor = [UIColor colorWithRed:220.0/255.0
+                                           green:220.0/255.0
+                                            blue:220.0/255.0
+                                           alpha:1.0];
     
     activityIndicator = [UIActivityIndicatorView new];
     activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
@@ -380,7 +388,11 @@
     label.textColor     = [UIColor blackColor];
     label.numberOfLines = 1;
     label.text          = @"That's all!";
-
+    
+    cell.backgroundColor = [UIColor colorWithRed:220.0/255.0
+                                           green:220.0/255.0
+                                            blue:220.0/255.0
+                                           alpha:1.0];
     [cell addSubview:label];
     
     return cell;
@@ -447,7 +459,6 @@
 
 - (void)setupTableViewHeader
 {
-    //UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
     UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
     
     UIButton *checkInBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];

@@ -31,7 +31,7 @@
         return;
     }
     
-    imageView.image = [UIImage imageNamed:@"avatar_placeholder.png"];
+    imageView.image = [UIImage imageNamed:@"checkin_placeholder.png"];
     imageView.file = file;
     [imageView loadInBackground];
 }

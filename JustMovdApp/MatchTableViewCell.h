@@ -10,7 +10,7 @@
 
 @interface MatchTableViewCell : UITableViewCell
 {
-    UIView *containerView;
+    UIView *cellBackgroundView;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;

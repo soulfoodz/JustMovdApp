@@ -12,7 +12,7 @@
 #import "NavViewController.h"
 #import "JMCache.h"
 
-#define FONT [UIFont fontWithName:@"Roboto-Medium" size:14.0]
+#define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
 
 @interface StatusUpdateViewController ()
 
@@ -30,6 +30,8 @@
     [super viewDidLoad];
     
     self.user = [PFUser currentUser];
+    self.textView.font = CONTENT_FONT;
+    self.textView.textColor = [UIColor darkGrayColor];
     
     // Check to see if view should go straight to "CheckInVC"
     if (self.presentingCheckIn == YES) self.view.alpha = 0;
@@ -42,7 +44,7 @@
        [self performSegueWithIdentifier:@"SegueToCheckIn" sender:self];
     else
     {
-        [self.textField becomeFirstResponder];
+        [self.textView becomeFirstResponder];
         [self checkForFBPlaceAddedToUpdate];
     }
 }
@@ -79,7 +81,7 @@
 
 - (IBAction)postPressed:(id)sender
 {
-    if (self.textField.text.length == 0){
+    if (self.textView.text.length == 0){
         [self displayNoTextAlert];
         return;
     }
@@ -87,7 +89,7 @@
     //Create a new post object
     PFObject *newPost = [PFObject objectWithClassName:@"Activity"];
 
-    [newPost setObject:self.textField.text forKey:@"textContent"];
+    [newPost setObject:self.textView.text forKey:@"textContent"];
     [newPost setObject:[PFUser currentUser] forKey:@"user"];
     [newPost setObject:@"JMPost" forKey:@"type"];
     [newPost setObject:[NSNumber numberWithInt:0] forKey:@"postCommentCounter"];
@@ -104,7 +106,7 @@
         
         UIImage *checkInImage = [self getMapImageWithAnnotation];
         NSData *imageData = UIImagePNGRepresentation(checkInImage);
-        NSString *fileName = [NSString stringWithFormat:@"%@.png",self.selectedPlace[@"name"]];
+        NSString *fileName = [NSString stringWithFormat:@"image.png"];
         PFFile *imageFile = [PFFile fileWithName:fileName data:imageData];
         
         NSString *placeID = self.selectedPlace[@"id"];
@@ -118,7 +120,7 @@
     }
     
     // Add post to JMCache
-    //[[JMCache sharedCache] addNewPost:newPost];
+    [[JMCache sharedCache] addNewPost:newPost];
     
     // Send newPost to activityFeed
     [self.delegate addNewlyCreatedPostToActivityFeed:newPost];
@@ -130,8 +132,12 @@
             [self.delegate removePost:newPost fromActivityFeedWithError:error];
             [[JMCache sharedCache]removePost:newPost];
             NSLog(@"New post was NOT saved! : %@", newPost);
+        } else {
+            
+            // Call the block that will reload the tableView to display the new checkIn
+            self.reloadTVBlock();
+            NSLog(@"New post was saved! : %@", newPost);
         }
-        NSLog(@"New post was saved! : %@", newPost);
     }];
 }
 
