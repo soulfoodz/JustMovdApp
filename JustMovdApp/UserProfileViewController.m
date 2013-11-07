@@ -56,6 +56,10 @@
     
     [self intializeNeededStuff];
     
+    if (facebookUsername) {
+        [self.navigationItem setLeftBarButtonItem:nil];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -44,17 +44,17 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    [super viewDidAppear:animated];
+//    [super viewDidAppear:animated];
+//    
+//    if (![PFUser currentUser]){
+//        
+//        IntroParentViewController *signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IntroParentViewController"];
+//        
+//        [self presentViewController:signupVC animated:NO completion:^{
+//            nil;
+//        }];
+//    } else {
     
-    if (![PFUser currentUser]){
-        
-        IntroParentViewController *signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IntroParentViewController"];
-        
-        [self presentViewController:signupVC animated:NO completion:^{
-            nil;
-        }];
-    } else {
-        
         isReady = NO;
         
         myTableView.delegate = self;
@@ -77,7 +77,7 @@
         myTableView.backgroundColor = [UIColor clearColor];
         myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
-    }
+//    }
     
     
 }

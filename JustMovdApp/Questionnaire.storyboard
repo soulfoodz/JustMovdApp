@@ -253,8 +253,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="ajA-Jh-JJt" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="9bw-FG-sdB"/>
                         <segue destination="rVT-bB-le7" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="H8I-UF-GOR"/>
+                        <segue destination="4Ji-G1-zaV" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="5kP-TG-Bhc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XyI-av-FI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -288,6 +288,20 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEx-bi-JCt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1854" y="1892"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8pz-Td-r2w">
+            <objects>
+                <viewController id="4Ji-G1-zaV" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wiM-DC-LM5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OIG-kp-xvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="715" y="1905"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TOq-QF-7Ob">

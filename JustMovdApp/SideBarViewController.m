@@ -82,8 +82,7 @@
             if (indexPath.row == 1){
                 
                 UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
-                //activityVC = [feedSB instantiateViewControllerWithIdentifier:@"recentActivityVC"];
-                activityVC = [feedSB instantiateInitialViewController];
+                activityVC = [feedSB instantiateViewControllerWithIdentifier:@"recentActivityVC"];
                 
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[activityVC] animated: NO ];

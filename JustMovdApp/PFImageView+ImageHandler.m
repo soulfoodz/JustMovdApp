@@ -18,7 +18,7 @@
         return;
     }
     
-    imageView.image = [UIImage imageNamed:@"AvatarPlaceholder.png"];
+    imageView.image = [UIImage imageNamed:@"yoga_circle"];
     imageView.file = file;
     [imageView loadInBackground];
 }

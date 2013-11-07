@@ -148,6 +148,10 @@ typedef enum
 // Delegate
 @property (weak, nonatomic) id<SWRevealViewControllerDelegate> delegate;
 
+
+
+@property (nonatomic) BOOL isFirstLoad;
+
 @end
 
 #pragma mark - SWRevealViewControllerDelegate Protocol

@@ -14,7 +14,7 @@
 #import "NavViewController.h"
 #import "PFImageView+ImageHandler.h"
 #import "SWRevealViewController.h"
-
+#import "IntroParentViewController.h"
 
 #define kLoadingCellTag 7
 #define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:14.0]
@@ -46,23 +46,41 @@
 {
     [super viewDidLoad];
     
-    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
+}
+
+
+-(void)viewDidAppear:(BOOL)animated{
     
-    sideBarButton.target = self.revealViewController;
-    sideBarButton.action = @selector(revealToggle:);
+    [super viewDidAppear:animated];
     
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-    self.isAll = NO;
-    
-    UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
-    [refresh addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
-    
-    [self setupTableViewHeader];
-    self.refreshControl = refresh;
+    if (![PFUser currentUser]){
+        
+        IntroParentViewController *signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IntroParentViewController"];
+        
+        [self presentViewController:signupVC animated:NO completion:^{
+            nil;
+        }];
+    } else {
+        
+        self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
+        
+        sideBarButton.target = self.revealViewController;
+        sideBarButton.action = @selector(revealToggle:);
+        
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        
+        self.isAll = NO;
+        
+        UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+        refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+        [refresh addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+        
+        [self setupTableViewHeader];
+        self.refreshControl = refresh;
+        
+    }
 }
 
 
@@ -159,12 +177,12 @@
     PostCell *cell;
     PFUser   *postCreator;
     PFObject *checkIn;
-    NSString *contentString;
-    NSDate   *createdDate;
     PFFile   *avatarFile;
-    NSNumber *commentCount;
+    NSString *contentString;
     NSString *placeName;
-    
+    NSDate   *createdDate;
+    NSNumber *commentCount;
+
     checkIn = [PFObject objectWithClassName:@"CheckIn"];
     
     // Configure cell at end of TableView based on whether or not all posts in DB are being shown
@@ -215,6 +233,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PostCell *cell = (PostCell *)[self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"Cell is : %@", cell);
     [self performSegueWithIdentifier:@"SegueToCommentViewController" sender:indexPath];
 }
 

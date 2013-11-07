@@ -119,7 +119,7 @@
     }
     
     // Add post to JMCache
-    [[JMCache sharedCache] addNewPost:newPost];
+    //[[JMCache sharedCache] addNewPost:newPost];
     
     // Send newPost to activityFeed
     [self.delegate addNewlyCreatedPostToActivityFeed:newPost];
@@ -130,7 +130,9 @@
         if (error){
             [self.delegate removePost:newPost fromActivityFeedWithError:error];
             [[JMCache sharedCache]removePost:newPost];
+            NSLog(@"New post was NOT saved! : %@", newPost);
         }
+        NSLog(@"New post was saved! : %@", newPost);
     }];
 }
 

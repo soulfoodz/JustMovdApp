@@ -433,6 +433,7 @@ const int FrontViewPositionNone = 0xff;
     _frontViewShadowOpacity = 1.0f;
     _userInteractionStore = YES;
     _animationQueue = [NSMutableArray array];
+    _isFirstLoad = YES;
 }
 
 
@@ -471,7 +472,22 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
         {
             segue.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc)
             {
-                [self _setFrontViewController:dvc];
+                if (_isFirstLoad){
+                    
+                    UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
+                    ActivityFeedViewController *activityVC = [feedSB instantiateInitialViewController];
+                    
+                    [self _setFrontViewController:activityVC];
+                    
+                    _isFirstLoad = NO;
+                    
+                } else {
+                    
+                    [self _setFrontViewController:dvc];
+
+                }
+                
+
             };
             
 

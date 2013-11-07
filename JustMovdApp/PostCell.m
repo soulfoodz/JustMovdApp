@@ -81,8 +81,7 @@
     
     // Check for checkIn image
     if (!hasCheckIn){
-        checkInImage = nil;
-        checkInLabel = nil;
+
         timeLabel.frame = CGRectMake(86, 30, 200, 16);
     } else {
         // Move the timeLabel frame down.
@@ -106,8 +105,8 @@
     
     if (hasCheckIn){
         CGFloat yOrigin = (detailLabel.frame.size.height + detailLabel.frame.origin.y);
-        checkInImage      = [[PFImageView alloc] initWithFrame:CGRectMake(5, yOrigin + 2, 288, 180)];
-        //checkInImage.frame               = CGRectMake(6, yOrigin + 2, 288, 180);
+        //checkInImage      = [[PFImageView alloc] initWithFrame:CGRectMake(5, yOrigin + 2, 288, 180)];
+        checkInImage.frame               = CGRectMake(6, yOrigin + 2, 288, 180);
         checkInImage.layer.shadowColor   = [UIColor blackColor].CGColor;
         checkInImage.layer.shadowOpacity = 0.2;
         checkInImage.layer.shadowRadius  = 1.5;
