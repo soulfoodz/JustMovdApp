@@ -55,7 +55,9 @@
     
     if (![PFUser currentUser]){
         
-        IntroParentViewController *signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"IntroParentViewController"];
+        UIStoryboard *signupSB = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
+        
+        IntroParentViewController *signupVC = [signupSB instantiateViewControllerWithIdentifier:@"IntroParentViewController"];
         
         [self presentViewController:signupVC animated:NO completion:^{
             nil;
