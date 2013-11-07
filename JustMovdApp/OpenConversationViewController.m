@@ -43,6 +43,13 @@
     [super viewDidLoad];
     [self initializeStuffing];
     [self removeApplicationBadge];
+    
+    for (UIView *notiView in self.navigationController.navigationBar.subviews) {
+        if (notiView.tag == 1) {
+            [notiView removeFromSuperview];
+            [self.navigationController.navigationBar setNeedsDisplay];
+        }
+    }
 }
 
 - (void)refreshConversation
@@ -56,10 +63,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self refreshConversation];
-    spinner = [[SpinnerViewController alloc] initWithDefaultSize];
-    [self.view addSubview:spinner.view];
-    spinner.view.center = self.view.center;
-    [self.view bringSubviewToFront:spinner.view];
+    spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
 }
 
 - (void)removeApplicationBadge
@@ -73,6 +77,9 @@
 
 - (void)initializeStuffing
 {
+    self.view.layer.shouldRasterize = YES;
+    self.view.layer.rasterizationScale = 2.0;
+    
     noConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     noConversationLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:20.0];
     noConversationLabel.textColor = [UIColor lightGrayColor];
@@ -119,7 +126,14 @@
             {
                 PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
                 NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
-                [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
+                if (![conversationObject objectForKey:@"isShowBadge"]) {
+                    [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
+                }
+                else
+                {
+                    [userInfoDictionary setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
+                }
+                
                 [userInfoDictionary setObject:toUserObject forKey:@"user"];
                 PFFile *imageFile = [toUserObject objectForKey:@"profilePictureFile"];
                 [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)

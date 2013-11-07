@@ -78,13 +78,11 @@
     justMovdLabel.center = CGPointMake(self.view.frame.size.width/2, 100);
     
     [self.view addSubview:justMovdLabel];
-    
-    
 }
 
 
 
--(void)nextView{
+-(void)nextView {
     [Comms login:self];
 }
 

@@ -332,7 +332,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Umz-14-OAD"/>
         <segue reference="KDp-AQ-elr"/>
+        <segue reference="uBY-w4-MgE"/>
     </inferredMetricsTieBreakers>
 </document>

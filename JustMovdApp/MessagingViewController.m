@@ -41,6 +41,9 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PresentingMessagingOn" object:nil];
     
+    self.view.layer.shouldRasterize = YES;
+    self.view.layer.rasterizationScale = 2.0;
+    
     [self setupChatAccessoriesView];
     [self retrieveMessagesFromParse];
     [self removeBadgeForConversation];

@@ -24,7 +24,7 @@
 //    return self;
 //}
 
-- (id)initWithSize:(float)size andCornerRadius:(float)radius;
+- (id)initWithSize:(float)size andCornerRadius:(float)radius andView:(UIView *)view;
 {
     self = [super init];
     
@@ -37,12 +37,15 @@
         [spinner startAnimating];
         [self.view addSubview:spinner];
         spinner.center = self.view.center;
+        [view addSubview:self.view];
+        self.view.center = view.center;
+        [view bringSubviewToFront:self.view];
     }
     
     return self;
 }
 
-- (id)initWithDefaultSize
+- (id)initWithDefaultSizeWithView:(UIView *)view
 {
     self = [super init];
     
@@ -55,6 +58,9 @@
         [spinner startAnimating];
         [self.view addSubview:spinner];
         spinner.center = self.view.center;
+        [view addSubview:self.view];
+        self.view.center = view.center;
+        [view bringSubviewToFront:self.view];
     }
     
     return self;

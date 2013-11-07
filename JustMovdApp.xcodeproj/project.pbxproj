@@ -139,6 +139,8 @@
 		E564658D181884E300E2C4A1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E564658C181884E300E2C4A1 /* StoreKit.framework */; };
 		E564658F181884EF00E2C4A1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E564658E181884EF00E2C4A1 /* SystemConfiguration.framework */; };
 		E56AE9A7181F49B200E12C87 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56AE9A6181F49B100E12C87 /* Accelerate.framework */; };
+		E5A942B8182B855A00064BD0 /* NotificationIndicatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A942B7182B855A00064BD0 /* NotificationIndicatorViewController.m */; };
+		E5A942BA182B8E9300064BD0 /* newmessageindicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5A942B9182B8E9300064BD0 /* newmessageindicator@2x.png */; };
 		E5DB80C618286F3500C0DA0C /* beer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80BE18286F3500C0DA0C /* beer@2x.png */; };
 		E5DB80C718286F3500C0DA0C /* book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80BF18286F3500C0DA0C /* book@2x.png */; };
 		E5DB80C818286F3500C0DA0C /* coffee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5DB80C018286F3500C0DA0C /* coffee@2x.png */; };
@@ -328,6 +330,9 @@
 		E5A5E1FF1825B538000DD2DE /* OpenConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenConversationViewController.m; sourceTree = "<group>"; };
 		E5A5E2011825B5A2000DD2DE /* OpenConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenConversationCell.h; sourceTree = "<group>"; };
 		E5A5E2021825B5A2000DD2DE /* OpenConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenConversationCell.m; sourceTree = "<group>"; };
+		E5A942B6182B855A00064BD0 /* NotificationIndicatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationIndicatorViewController.h; sourceTree = "<group>"; };
+		E5A942B7182B855A00064BD0 /* NotificationIndicatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationIndicatorViewController.m; sourceTree = "<group>"; };
+		E5A942B9182B8E9300064BD0 /* newmessageindicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newmessageindicator@2x.png"; sourceTree = "<group>"; };
 		E5AAC0A51821C6F7000BF87B /* MessageBubbleRightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBubbleRightCell.h; sourceTree = "<group>"; };
 		E5AAC0A61821C6F7000BF87B /* MessageBubbleRightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBubbleRightCell.m; sourceTree = "<group>"; };
 		E5AAC0A81821C70F000BF87B /* MessageBubbleLeftCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBubbleLeftCell.h; sourceTree = "<group>"; };
@@ -542,6 +547,8 @@
 				5AB6957618216389008F7832 /* IntroChildViewController.m */,
 				5AB6957218215EFB008F7832 /* IntroParentViewController.h */,
 				5AB6957318215EFB008F7832 /* IntroParentViewController.m */,
+				E5A942B6182B855A00064BD0 /* NotificationIndicatorViewController.h */,
+				E5A942B7182B855A00064BD0 /* NotificationIndicatorViewController.m */,
 				52ED7E991825BA6600BFD440 /* JMCache.h */,
 				52ED7E9A1825BA6600BFD440 /* JMCache.m */,
 				5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */,
@@ -551,6 +558,7 @@
 				5AC9DC1F182AC7F90051EF9A /* KyleMai.storyboard */,
 				5AC9DC26182AC95E0051EF9A /* KyleMai@2x.jpg */,
 				5AC9DC0E1822FAD40051EF9A /* letsplay.png */,
+				E5A942B9182B8E9300064BD0 /* newmessageindicator@2x.png */,
 				528AEF981821CF50002AB658 /* location.png */,
 				5A4F5D4818217BFC00CA6F17 /* login1@2x.png */,
 				5A4F5D4918217BFC00CA6F17 /* login2@2x.png */,
@@ -755,6 +763,7 @@
 				E5DB80C618286F3500C0DA0C /* beer@2x.png in Resources */,
 				5A4F5D4B18217BFC00CA6F17 /* login1@2x.png in Resources */,
 				5AC9DC131825AE580051EF9A /* tv.png in Resources */,
+				E5A942BA182B8E9300064BD0 /* newmessageindicator@2x.png in Resources */,
 				5AC9DC2D182AC9CC0051EF9A /* Main.storyboard in Resources */,
 				5A4F5D2C1821666600CA6F17 /* Screen Shot 2013-10-28 at 7.03.39 PM.png in Resources */,
 				5A4F5D281821666600CA6F17 /* Roboto-Medium.ttf in Resources */,
@@ -837,6 +846,7 @@
 				5A2F2AF9182ACDE40050A227 /* PostCell.m in Sources */,
 				5A2F2AFA182ACDE40050A227 /* PostsByUserCell.m in Sources */,
 				5A2F2AFB182ACDE40050A227 /* ProfileInterestCell.m in Sources */,
+				E5A942B8182B855A00064BD0 /* NotificationIndicatorViewController.m in Sources */,
 				5A2F2AFC182ACDE40050A227 /* QuestionnaireViewController.m in Sources */,
 				5A2F2AFD182ACDE40050A227 /* QuestionView.m in Sources */,
 				5A2F2AFE182ACDE40050A227 /* SideBarViewController.m in Sources */,
