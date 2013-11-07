@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
     </dependencies>
     <scenes>
-        <!--Activity Feed View Controller-->
+        <!--Activity Feed View Controller - Recent Activity-->
         <scene sceneID="36a-kg-Ug8">
             <objects>
                 <tableViewController storyboardIdentifier="recentActivityVC" id="pXv-4c-KKs" customClass="ActivityFeedViewController" sceneMemberID="viewController">
@@ -17,8 +17,10 @@
                             <outlet property="delegate" destination="pXv-4c-KKs" id="VHG-CC-ThF"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rhm-5F-ppf">
-                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="Jm4-ly-WWt"/>
+                    <navigationItem key="navigationItem" title="Recent Activity" id="rhm-5F-ppf">
+                        <barButtonItem key="leftBarButtonItem" image="menu.png" id="Jm4-ly-WWt">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -270,6 +272,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GbD-xf-PQa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -283,7 +286,7 @@
     </scenes>
     <resources>
         <image name="location.png" width="32" height="32"/>
-        <image name="menu.png" width="28" height="20"/>
+        <image name="menu.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

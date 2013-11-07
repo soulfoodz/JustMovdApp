@@ -311,6 +311,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="z2A-SP-TcA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -323,7 +324,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="menu.png" width="28" height="20"/>
+        <image name="menu.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
