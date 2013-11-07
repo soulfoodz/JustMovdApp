@@ -59,7 +59,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ep4-tJ-ZCH">
-                                        <rect key="frame" x="10" y="9" width="258" height="30"/>
+                                        <rect key="frame" x="10" y="9" width="245" height="30"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -69,10 +69,12 @@
                                         </connections>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2aA-L2-aF0">
-                                        <rect key="frame" x="269" y="9" width="51" height="30"/>
+                                        <rect key="frame" x="263" y="8" width="53" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Post">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.31665862710901649" blue="0.49426436564582493" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="addCommentPressed:" destination="R5Y-KW-7O0" eventType="touchUpInside" id="LcH-eQ-DvL"/>
@@ -238,7 +240,7 @@
                         <outlet property="checkInLabel" destination="U44-2h-Lvh" id="fsi-HW-jid"/>
                         <outlet property="mapImage" destination="ION-Rz-hje" id="wi8-lX-olz"/>
                         <outlet property="postButton" destination="Vl9-E2-nAK" id="PEz-px-18B"/>
-                        <outlet property="textField" destination="PMY-BC-2Yw" id="U9u-G5-mZe"/>
+                        <outlet property="textView" destination="PMY-BC-2Yw" id="EcB-AG-4Sp"/>
                         <segue destination="dxD-Pi-G25" kind="modal" identifier="SegueToCheckIn" id="elX-zu-oEV"/>
                     </connections>
                 </viewController>

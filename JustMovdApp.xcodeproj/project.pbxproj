@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		526D2DA1182BC2D300D2F5E4 /* avatar_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */; };
+		526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */; };
+		526D2DA8182C3C3200D2F5E4 /* checkin_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */; };
 		528AEF8618216D2E002AB658 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528AEF8518216D2E002AB658 /* MapKit.framework */; };
 		528AEF991821CF50002AB658 /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 528AEF981821CF50002AB658 /* location.png */; };
 		52B9C40A18186ED500A875B7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40918186ED500A875B7 /* Parse.framework */; };
@@ -145,6 +147,9 @@
 
 /* Begin PBXFileReference section */
 		526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_placeholder.png; sourceTree = "<group>"; };
+		526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCheckInViewController.h; sourceTree = "<group>"; };
+		526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCheckInViewController.m; sourceTree = "<group>"; };
+		526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkin_placeholder.png; sourceTree = "<group>"; };
 		528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewPostToActivityFeedDelegate.h; sourceTree = "<group>"; };
 		528AEF8518216D2E002AB658 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		528AEF981821CF50002AB658 /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
@@ -456,6 +461,7 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
+				526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */,
 				5AB695831821656A008F7832 /* AboutEditCell.h */,
 				5AB695841821656A008F7832 /* AboutEditCell.m */,
 				52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */,
@@ -481,6 +487,8 @@
 				5A2F2B2C182C0D630050A227 /* couple_blur@2x.png */,
 				5AB6958718216596008F7832 /* EditProfileViewController.h */,
 				5AB6958618216596008F7832 /* EditProfileViewController.m */,
+				526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */,
+				526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */,
 				5A4F5CFC1821666600CA6F17 /* en.lproj */,
 				5A2F2B26182C060F0050A227 /* FacebookLoginButton@2x.png */,
 				5A2F2B08182AE1900050A227 /* FeedConnectorVC.h */,
@@ -677,6 +685,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5DB80D2182972FC00C0DA0C /* messageicon@2x.png in Resources */,
+				526D2DA8182C3C3200D2F5E4 /* checkin_placeholder.png in Resources */,
 				5A169B1018201F340042767E /* FeedStoryboard.storyboard in Resources */,
 				5A2F2B1B182BFCB00050A227 /* tv@2x.png in Resources */,
 				5AC9DC43182ACAC00051EF9A /* Questionnaire.storyboard in Resources */,
@@ -739,6 +748,7 @@
 				5A2F2AE1182ACDE40050A227 /* ActivityFeedViewController.m in Sources */,
 				5A2F2AE2182ACDE40050A227 /* AppDelegate.m in Sources */,
 				5A2F2AE4182ACDE40050A227 /* CommentViewController.m in Sources */,
+				526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */,
 				5A2F2AE5182ACDE40050A227 /* Comms.m in Sources */,
 				5A2F2AE6182ACDE40050A227 /* EditProfileViewController.m in Sources */,
 				5A2F2AE9182ACDE40050A227 /* InfoCell.m in Sources */,
@@ -839,8 +849,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -879,8 +889,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -901,8 +911,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -921,8 +931,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

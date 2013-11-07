@@ -30,7 +30,6 @@
 
 @synthesize commentsLabel;
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,6 +41,9 @@
     self.textView.layer.cornerRadius = 3.0f;
     self.textView.font = CONTENT_FONT;
     self.textView.textColor = [UIColor darkGrayColor];
+    
+    self.postButton.layer.cornerRadius = 5.0f;
+    self.postButton.backgroundColor = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
     
     [self queryForComments];
     
@@ -75,10 +77,12 @@
     
 }
 
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -106,7 +110,7 @@
         [self styleCell:cell];
     }
     
-    // If it's the initial cell, it should display the post as shown in the Activity Feed
+    // Section 1 is the original Post from the feed
     if (indexPath.section == 0)
     {
         PFObject *checkIn;
@@ -133,7 +137,7 @@
         
     }else
         
-        // If not the initial cell, display any comments
+        // Section 2 is for comments on the post
         postCreator   = [self.commentsArray[indexPath.row] objectForKey:@"user"];
         contentString = [self.commentsArray[indexPath.row] objectForKey:@"textContent"];
         createdDate   = [self.commentsArray[indexPath.row] createdAt];
@@ -143,7 +147,6 @@
         cell.detailLabel.text = contentString;
         cell.timeLabel.text   = [self setTimeSincePostDate:createdDate];
         [cell.profilePicture setFile:imageFile forAvatarImageView:cell.profilePicture];
-
 
         return cell;
 }
@@ -307,6 +310,7 @@
     [self updateCommentCount];
 }
 
+
 - (IBAction)cancelPressed:(id)sender
 {
     [self textViewShouldEndEditing:self.textView];
@@ -370,6 +374,7 @@
     if (section == 1) return 30.0f;
     else return 0;
 }
+
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -438,8 +443,6 @@
     profileVC.facebookUsername = fbUsername;
     [self.navigationController pushViewController:profileVC animated:YES];
 }
-
-
 
 
 @end
