@@ -45,6 +45,7 @@
     int index;
     SpinnerViewController *spinner;
     BOOL isAll;
+    PFFile *imageFile;
 }
 
 @end
@@ -66,13 +67,11 @@
     if (facebookUsername) {
         [self.navigationItem setLeftBarButtonItem:nil];
     }
-    [self retrieveUserInfoFromParse];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
+    [self retrieveUserInfoFromParse];
 }
 
 - (void)intializeNeededStuff
@@ -127,7 +126,7 @@
         {
             selectedUserObject = object;
             selectedUser.cachePolicy = kPFCachePolicyCacheThenNetwork;
-            PFFile *imageFile = [object objectForKey:@"profilePictureFile"];
+            imageFile = [object objectForKey:@"profilePictureFile"];
             [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                 profilePicture = [UIImage imageWithData:data];
                 profilePictureBlur = [profilePicture stackBlur:10];
@@ -170,7 +169,7 @@
     {
         [self showEditButton:YES];
         
-        PFFile *imageFile = [[PFUser currentUser] objectForKey:@"profilePictureFile"];
+        imageFile = [[PFUser currentUser] objectForKey:@"profilePictureFile"];
         [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             profilePicture = [UIImage imageWithData:data];
             profilePictureBlur = [profilePicture stackBlur:10];
@@ -209,37 +208,6 @@
     }
 }
 
-- (void)retriveUserPostsAndCommentsCount
-{
-    if (!facebookUsername)
-    {
-        PFQuery *postsQuery = [PFQuery queryWithClassName:@"Activity"];
-        [postsQuery whereKey:@"user" equalTo:[PFUser currentUser]];
-        [postsQuery whereKey:@"type" equalTo:@"JMPost"];
-        [postsQuery orderByDescending:@"createdAt"];
-        [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error)
-        {
-            [userInfoDictionary setObject:posts forKey:@"posts"];
-            [userProfileTableView reloadData];
-            [spinner.view setHidden:YES];
-            
-        }];
-    }
-    else
-    {
-        PFQuery *postsQuery = [PFQuery queryWithClassName:@"Activity"];
-        [postsQuery whereKey:@"user" equalTo:selectedUserObject];
-        [postsQuery whereKey:@"type" equalTo:@"JMPost"];
-        [postsQuery orderByDescending:@"createdAt"];
-        [postsQuery findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error)
-        {
-            [userInfoDictionary setObject:posts forKey:@"posts"];
-            [userProfileTableView reloadData];
-            [spinner.view setHidden:YES];
-        }];
-    }
-}
-
 - (void)queryForTable
 {
     if (!facebookUsername)
@@ -263,12 +231,7 @@
                          isAll = YES;
                      else
                          isAll = NO;
-                     
-                     //                 // If postsArray doesn't exist, create it.
-                     //                 if (![userInfoDictionary[@"posts"]]) {
-                     //                 self.postsArray = [NSMutableArray new];
-                     //                 }
-                     
+
                      // Sort the array into descending order
                      [queryResults.mutableCopy sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                          int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
@@ -767,6 +730,7 @@
         }
         
         NSString *timeString = [timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:[userInfoDictionary[@"posts"][indexPath.row] createdAt]];
+        //[cell.profilePicture setFile:avatarFile forAvatarImageView:cell.profilePicture];
         postCell.profilePicture.image = profilePicture;
         postCell.nameLabel.text = name;
         postCell.timeLabel.text = timeString;
@@ -784,7 +748,21 @@
     {
         UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
         CommentViewController *commentVC = [feedSB instantiateViewControllerWithIdentifier:@"commentVC"];
+        commentVC.post = userInfoDictionary[@"posts"][indexPath.row];
+        
+        PFUser *selectUser = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"user"];
+        [selectUser setObject:imageFile forKey:@"profilePictureFile"];
+        if (facebookUsername) {
+            [selectUser setObject:[selectedUserObject objectForKey:@"firstName"] forKey:@"firstName"];
+        }
+        else {
+            [selectUser setObject:[[PFUser currentUser] objectForKey:@"firstName"] forKey:@"firstName"];
+        }
+        
         [self.navigationController pushViewController:commentVC animated:YES];
+        
+        
+        
     }
 }
 
