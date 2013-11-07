@@ -44,7 +44,7 @@
     self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
     
     self.tableView.backgroundColor = [UIColor grayColor];
-    
+        
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserverForName:@"gotofeed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self performSegueWithIdentifier:@"feed" sender:self];
@@ -146,7 +146,7 @@
     
     if (indexPath.row == 10){
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you sure you want to log out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you sure you want to sign out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
         [alert show];
         
        // [self logout];

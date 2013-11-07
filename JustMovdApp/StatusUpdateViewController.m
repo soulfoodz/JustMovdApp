@@ -11,7 +11,6 @@
 #import "PFImageView+ImageHandler.h"
 #import "NavViewController.h"
 #import "JMCache.h"
-#import "FBCheckInViewController.h"
 
 #define FONT [UIFont fontWithName:@"Roboto-Medium" size:14.0]
 

@@ -537,25 +537,25 @@
 
 - (NSString *)getImageNameFromString:(NSString *)string
 {
-    if ([string isEqualToString:@"Beer"]) {
-        return @"beer";
+    if ([string isEqualToString:@"Drink Beer"]) {
+        return @"beer_size@2x";
     }
-    else if ([string isEqualToString:@"Weights"]) {
-        return @"weights";
+    else if ([string isEqualToString:@"Lift Weights"]) {
+        return @"weightlifting_circle";
     }
-    else if ([string isEqualToString:@"Sports"]) {
-        return @"sports";
+    else if ([string isEqualToString:@"Play Sports"]) {
+        return @"sports_circle";
     }
-    else if ([string isEqualToString:@"Yoga"]) {
-        return @"yoga";
+    else if ([string isEqualToString:@"Do Yoga"]) {
+        return @"yoga_circle";
     }
-    else if ([string isEqualToString:@"Coffee"]) {
-        return @"coffee";
+    else if ([string isEqualToString:@"Drink Coffee"]) {
+        return @"coffee_circle";
     }
-    else if ([string isEqualToString:@"Games"]) {
-        return @"games";
+    else if ([string isEqualToString:@"Play Games"]) {
+        return @"vidgame_circle";
     }
-    else if ([string isEqualToString:@"TV"]) {
+    else if ([string isEqualToString:@"Watch TV"]) {
         return @"tv";
     }
     else {
@@ -794,6 +794,10 @@
         [PFQuery cancelPreviousPerformRequestsWithTarget:self];
     }
 }
+
+
+
+
 
 
 @end

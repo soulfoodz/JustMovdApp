@@ -83,7 +83,7 @@
     
     NSMutableDictionary *firstViewDict = [[NSMutableDictionary alloc] init];
     [firstViewDict setObject:@"coffee_circle" forKey:@"first"];
-    [firstViewDict setObject:@"beer_size@2x" forKey:@"second"];
+    [firstViewDict setObject:@"beer_size" forKey:@"second"];
     
     NSMutableDictionary *secondViewDict = [[NSMutableDictionary alloc] init];
     [secondViewDict setObject:@"weightlifting_circle" forKey:@"first"];
