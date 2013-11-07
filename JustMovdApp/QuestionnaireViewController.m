@@ -260,7 +260,7 @@
 
 -(void)popupInterests:(int)tag{
     
-    UIImageView *temp = [bottomHolder objectAtIndex:counter];
+    UIImageView *tempView = [bottomHolder objectAtIndex:counter];
     UIImage *image;
     
     if (tag == 0){
@@ -268,10 +268,10 @@
     } else {
         image = [UIImage imageNamed:[[imagesArray objectAtIndex:counter] objectForKey:@"second"]];
     }
-    [temp setImage:image];
+    [tempView setImage:image];
     
     [UIView animateWithDuration:0.6 animations:^{
-        temp.transform = CGAffineTransformMakeTranslation(0, -40);
+        tempView.transform = CGAffineTransformMakeTranslation(0, -40);
 
     }];
 

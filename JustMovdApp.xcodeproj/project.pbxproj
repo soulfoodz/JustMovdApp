@@ -95,6 +95,9 @@
 		5A4FD6B7181F1507006400A2 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4FD6B6181F1507006400A2 /* libz.1.1.3.dylib */; };
 		5A4FD6B9181F150E006400A2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4FD6B8181F150E006400A2 /* libsqlite3.dylib */; };
 		5A4FD7F2181F1680006400A2 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4FD6BB181F1673006400A2 /* FacebookSDK.framework */; };
+		5A50BCFF182C2D55002DD7AD /* walkthrough_david@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A50BCFE182C2D55002DD7AD /* walkthrough_david@2x.png */; };
+		5A50BD01182C3111002DD7AD /* walkthrough_ashley@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A50BD00182C3111002DD7AD /* walkthrough_ashley@2x.png */; };
+		5A50BD03182C3133002DD7AD /* walkthrough_sarah@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A50BD02182C3133002DD7AD /* walkthrough_sarah@2x.png */; };
 		5A5ABB3E1818420D00155B8F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB3D1818420D00155B8F /* Foundation.framework */; };
 		5A5ABB401818420D00155B8F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB3F1818420D00155B8F /* CoreGraphics.framework */; };
 		5A5ABB421818420D00155B8F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB411818420D00155B8F /* UIKit.framework */; };
@@ -188,7 +191,7 @@
 		5A2F2B26182C060F0050A227 /* FacebookLoginButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FacebookLoginButton@2x.png"; sourceTree = "<group>"; };
 		5A2F2B28182C06E50050A227 /* boston_skyline_blur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boston_skyline_blur@2x.png"; sourceTree = "<group>"; };
 		5A2F2B2C182C0D630050A227 /* couple_blur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "couple_blur@2x.png"; sourceTree = "<group>"; };
-		5A4AD426182C1A61001CBDE6 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "JustMovdApp/menu@2x.png"; sourceTree = "<group>"; };
+		5A4AD426182C1A61001CBDE6 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
 		5A4F5CE91821661400CA6F17 /* activityfeedcell_icon_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activityfeedcell_icon_comment.png; sourceTree = "<group>"; };
 		5A4F5CF51821666600CA6F17 /* beer_size@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beer_size@2x.png"; sourceTree = "<group>"; };
 		5A4F5CF71821666600CA6F17 /* coffee_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coffee_circle.png; sourceTree = "<group>"; };
@@ -219,6 +222,9 @@
 		5A4FD6B6181F1507006400A2 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		5A4FD6B8181F150E006400A2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		5A4FD6BB181F1673006400A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		5A50BCFE182C2D55002DD7AD /* walkthrough_david@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough_david@2x.png"; sourceTree = "<group>"; };
+		5A50BD00182C3111002DD7AD /* walkthrough_ashley@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough_ashley@2x.png"; sourceTree = "<group>"; };
+		5A50BD02182C3133002DD7AD /* walkthrough_sarah@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "walkthrough_sarah@2x.png"; sourceTree = "<group>"; };
 		5A5ABB3A1818420D00155B8F /* JustMovdApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JustMovdApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A5ABB3D1818420D00155B8F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5A5ABB3F1818420D00155B8F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -387,7 +393,6 @@
 		5A5ABB311818420D00155B8F = {
 			isa = PBXGroup;
 			children = (
-				5A4AD426182C1A61001CBDE6 /* menu@2x.png */,
 				5A5ABB431818420D00155B8F /* JustMovdApp */,
 				5A5ABB621818420D00155B8F /* JustMovdAppTests */,
 				5A5ABB3C1818420D00155B8F /* Frameworks */,
@@ -456,6 +461,7 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
+				5A4AD426182C1A61001CBDE6 /* menu@2x.png */,
 				5AB695831821656A008F7832 /* AboutEditCell.h */,
 				5AB695841821656A008F7832 /* AboutEditCell.m */,
 				52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */,
@@ -494,6 +500,9 @@
 				5AB6957618216389008F7832 /* IntroChildViewController.m */,
 				5AB6957218215EFB008F7832 /* IntroParentViewController.h */,
 				5AB6957318215EFB008F7832 /* IntroParentViewController.m */,
+				5A50BD02182C3133002DD7AD /* walkthrough_sarah@2x.png */,
+				5A50BCFE182C2D55002DD7AD /* walkthrough_david@2x.png */,
+				5A50BD00182C3111002DD7AD /* walkthrough_ashley@2x.png */,
 				52ED7E991825BA6600BFD440 /* JMCache.h */,
 				52ED7E9A1825BA6600BFD440 /* JMCache.m */,
 				5AC9DC52182ACBE90051EF9A /* JustMovdApp-Info.plist */,
@@ -676,6 +685,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A50BCFF182C2D55002DD7AD /* walkthrough_david@2x.png in Resources */,
 				E5DB80D2182972FC00C0DA0C /* messageicon@2x.png in Resources */,
 				5A169B1018201F340042767E /* FeedStoryboard.storyboard in Resources */,
 				5A2F2B1B182BFCB00050A227 /* tv@2x.png in Resources */,
@@ -688,6 +698,7 @@
 				E5DB80CA18286F3500C0DA0C /* sports@2x.png in Resources */,
 				5A4F5D2D1821666600CA6F17 /* sports_circle.png in Resources */,
 				5A2F2B1F182BFF640050A227 /* skyline_blur@2x.png in Resources */,
+				5A50BD01182C3111002DD7AD /* walkthrough_ashley@2x.png in Resources */,
 				E5DB80C618286F3500C0DA0C /* beer@2x.png in Resources */,
 				5A2F2B27182C060F0050A227 /* FacebookLoginButton@2x.png in Resources */,
 				5A2F2B2D182C0D630050A227 /* couple_blur@2x.png in Resources */,
@@ -700,6 +711,7 @@
 				5AC9DC36182ACA4A0051EF9A /* messageButton@2x.png in Resources */,
 				5A169B3218201F340042767E /* UpdateCellHeader.xib in Resources */,
 				5AC9DC53182ACBE90051EF9A /* JustMovdApp-Info.plist in Resources */,
+				5A50BD03182C3133002DD7AD /* walkthrough_sarah@2x.png in Resources */,
 				5A4AD427182C1A61001CBDE6 /* menu@2x.png in Resources */,
 				5A4F5D271821666600CA6F17 /* Roboto-Light.ttf in Resources */,
 				5A4F5D321821666600CA6F17 /* weightlifting_circle.png in Resources */,

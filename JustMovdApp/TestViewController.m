@@ -63,8 +63,7 @@
     
     [self findUsersWithinMiles:20.0];
     
-    self.view.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1.0];
-    //self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
     
     myTableView.backgroundColor = [UIColor clearColor];
     myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -81,7 +80,6 @@
 {
     PFGeoPoint *currentUserLocation = [[PFUser currentUser] objectForKey:@"geoPoint"];
     PFQuery *usersQuery = [PFUser query];
-   // usersQuery.cachePolicy =
     [usersQuery whereKey:@"geoPoint" nearGeoPoint:currentUserLocation withinMiles:miles];
     [usersQuery whereKey:@"objectId" notEqualTo:[PFUser currentUser].objectId];
     
@@ -89,8 +87,6 @@
      {
          matches = objects.mutableCopy;
          [self sortMatchesByDistance:matches];
-         //PFUser *currentUser = [PFUser currentUser];
-         
          
          PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
          [query whereKey:@"User" equalTo:[PFUser currentUser]];
@@ -142,13 +138,10 @@
                      }];
                      
                      
-                     
                  }];
-                 
                  
 
              }
-             
              
              
          }];

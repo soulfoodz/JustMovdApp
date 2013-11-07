@@ -18,6 +18,7 @@
     NSData *profilePictureData;
 
     NSArray *backgroundImages;
+    NSArray *backgroundViews;
     UIPageControl *pageControl;
 
 }
@@ -38,7 +39,8 @@
     [super viewDidLoad];
     
     backgroundImages = [[NSArray alloc] initWithObjects:@"chicago_skyline_blur", @"skyline_blur", @"boston_skyline_blur", nil];
-    //self.view.backgroundColor = [UIColor colorWithRed:80/255.0 green:177/255.0 blue:246/255.0 alpha:1.0];
+    backgroundViews = [[NSArray alloc] initWithObjects:@"walkthrough_david", @"walkthrough_sarah", @"walkthrough_ashley", nil];
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"skyline_blur"]];
 
     [self loadIntro];
@@ -72,19 +74,19 @@
     UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [nextButton setBackgroundImage:[UIImage imageNamed:@"FacebookLoginButton"] forState:UIControlStateNormal];
     [nextButton sizeToFit];
-    nextButton.center = CGPointMake(160, 480);
+    nextButton.center = CGPointMake(160, 460);
     
     [self.view addSubview:nextButton];
     [nextButton addTarget:self action:@selector(nextView) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 200, 200, 50)];
+    UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 150, 200, 50)];
     
     justMovdLabel.text = @"JustMovd";
     justMovdLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:32];
     justMovdLabel.textAlignment = NSTextAlignmentCenter;
     
-    justMovdLabel.center = CGPointMake(self.view.frame.size.width/2, 100);
+    justMovdLabel.center = CGPointMake(self.view.frame.size.width/2, 60);
     justMovdLabel.textColor = [UIColor whiteColor];
     
     [self.view addSubview:justMovdLabel];
@@ -98,7 +100,7 @@
     descriptionLabel.center = CGPointMake(self.view.frame.size.width/2, 250);
     descriptionLabel.textColor = [UIColor whiteColor];
 
-    [self.view addSubview:descriptionLabel];
+   // [self.view addSubview:descriptionLabel];
     
     
     pageControl = [[UIPageControl alloc] init];
@@ -106,7 +108,7 @@
     pageControl.currentPage = 0;
     pageControl.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height - 20);
     
-    [self.view addSubview:pageControl];
+   // [self.view addSubview:pageControl];
     
 
 }
@@ -125,18 +127,15 @@
     SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
     spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     
-//    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    activityIndicator.center = CGPointMake(self.view.frame.size.width/2, 200);
+
     
     UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
     coverView.backgroundColor = [UIColor grayColor];
     coverView.alpha = 0.1;
-//    
-    [self.view addSubview:coverView];
-//    [self.view addSubview:activityIndicator];
     
-//    [activityIndicator startAnimating];
+    [self.view addSubview:coverView];
+
     [self.view addSubview:spinner.view];
 
     
@@ -269,9 +268,8 @@
     
     childViewController.index = index;
     childViewController.backgroundImage = [backgroundImages objectAtIndex:index];
-    NSLog(@"%@", [backgroundImages objectAtIndex:index]);
-
-    NSLog(@"index: %i", index);
+    
+    childViewController.backgroundView = [backgroundViews objectAtIndex:index];
     
     return childViewController;
     
