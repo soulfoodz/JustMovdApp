@@ -97,15 +97,15 @@
     {
         NSLog(@"Background");
         //[PFPush handlePush:userInfo];
-//        UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
-//            OpenConversationViewController *conversationVC = [messagesSB instantiateViewControllerWithIdentifier:@"conversation"];
-//        UINavigationController *navigationForConversationVC = [[UINavigationController alloc] initWithRootViewController:conversationVC];
-//        
-//        UIStoryboard *questionSB = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
-//        SideBarViewController *sideBarVC = [questionSB instantiateViewControllerWithIdentifier:@"sidebarVC"];
-//        
-//        SWRevealViewController *revealVC = [[SWRevealViewController alloc] initWithRearViewController:sideBarVC frontViewController:navigationForConversationVC];
-//        [self.window setRootViewController:revealVC];
+        UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
+            OpenConversationViewController *conversationVC = [messagesSB instantiateViewControllerWithIdentifier:@"conversation"];
+        UINavigationController *navigationForConversationVC = [[UINavigationController alloc] initWithRootViewController:conversationVC];
+        
+        UIStoryboard *questionSB = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
+        SideBarViewController *sideBarVC = [questionSB instantiateViewControllerWithIdentifier:@"sidebarVC"];
+        
+        SWRevealViewController *revealVC = [[SWRevealViewController alloc] initWithRearViewController:sideBarVC frontViewController:navigationForConversationVC];
+        [self.window setRootViewController:revealVC];
     }
 }
 
