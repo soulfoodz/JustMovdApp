@@ -14,7 +14,7 @@
 
 @implementation IntroChildViewController
 
-@synthesize index, myLabel, backgroundImage;
+@synthesize index, myLabel, backgroundImage, backgroundView;
 
 
 - (void)viewDidLoad
@@ -24,6 +24,18 @@
     myLabel.text = nil;
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:backgroundImage]];
+    
+    UIImageView *bkView = [[UIImageView alloc] initWithFrame:CGRectMake(35, 100, 250, 400)];
+    [bkView setImage:[UIImage imageNamed:backgroundView]];
+    
+    [self.view addSubview:bkView];
+    
+    UIPageControl *page = [[UIPageControl alloc] init];
+    page.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height-10);
+    page.numberOfPages = 3;
+    page.currentPage = index;
+    [self.view addSubview:page];
+    
 
 }
 

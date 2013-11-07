@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *myLabel;
 @property (nonatomic) NSInteger index;
 @property (strong, nonatomic) NSString *backgroundImage;
+@property (strong, nonatomic) NSString *backgroundView;
 
 
 @end
