@@ -13,6 +13,7 @@
 #import "OpenConversationViewController.h"
 #import "SWRevealViewController.h"
 #import "SideBarViewController.h"
+#import "TestFlight.h"
 
 @implementation AppDelegate
 
@@ -21,6 +22,10 @@
     [Parse setApplicationId:@"VoLGglRLMEfV6y4YWx8t9b2X0OWYjCXwkWbzA9EO" clientKey:@"JNEhs1jNpYFEWW4eejYmN5EqXFoT0JFjAkB3TD0n"];
 
     [PFFacebookUtils initializeFacebook];
+    
+    
+    //[TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    [TestFlight takeOff:@"09c38ccf-ba84-43e2-a9f3-db5d4e403fbd"];
     
     //Register for push Notification
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
