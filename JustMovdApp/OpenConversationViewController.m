@@ -124,25 +124,25 @@
         {
             for (PFObject *conversationObject in objects)
             {
-                PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
-                NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
-                if (![conversationObject objectForKey:@"isShowBadge"]) {
-                    [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
+                if ([conversationObject objectForKey:@"toUser"]) {
+                    PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
+                    NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
+                    if (![conversationObject objectForKey:@"isShowBadge"]) {
+                        [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
+                    }
+                    else {
+                        [userInfoDictionary setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
+                    }
+                    [userInfoDictionary setObject:toUserObject forKey:@"user"];
+                    PFFile *imageFile = [toUserObject objectForKey:@"profilePictureFile"];
+                    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+                     {
+                         UIImage *userProfileImage = [UIImage imageWithData:data];
+                         [userInfoDictionary setObject:userProfileImage forKey:@"profilePic"];
+                         [self addLastMessagesWithUser:toUserObject toDictionary:userInfoDictionary];
+                         [tempArray addObject:userInfoDictionary];
+                     }];
                 }
-                else
-                {
-                    [userInfoDictionary setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
-                }
-                
-                [userInfoDictionary setObject:toUserObject forKey:@"user"];
-                PFFile *imageFile = [toUserObject objectForKey:@"profilePictureFile"];
-                [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-                 {
-                     UIImage *userProfileImage = [UIImage imageWithData:data];
-                     [userInfoDictionary setObject:userProfileImage forKey:@"profilePic"];
-                     [self addLastMessagesWithUser:toUserObject toDictionary:userInfoDictionary];
-                     [tempArray addObject:userInfoDictionary];
-                 }];
             }
         }
         else
