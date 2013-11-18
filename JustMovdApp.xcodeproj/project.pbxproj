@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		523321771832EDF3003879C5 /* BucketListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523321761832EDF3003879C5 /* BucketListViewController.m */; };
+		523321791832EE4C003879C5 /* BucketListStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */; };
+		5233217C1832F0E2003879C5 /* BucketListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233217B1832F0E2003879C5 /* BucketListCell.m */; };
+		5233217F18345B40003879C5 /* BucketDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233217E18345B40003879C5 /* BucketDetailViewController.m */; };
+		5233218218349A77003879C5 /* CheckInDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218118349A77003879C5 /* CheckInDetailViewController.m */; };
+		5233218518354B32003879C5 /* CheckInLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218418354B31003879C5 /* CheckInLocation.m */; };
+		523321871835FF7A003879C5 /* postcell_reportbutton_flagicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 523321861835FF7A003879C5 /* postcell_reportbutton_flagicon.png */; };
 		526D2DA1182BC2D300D2F5E4 /* avatar_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */; };
 		526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */; };
 		526D2DA8182C3C3200D2F5E4 /* checkin_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */; };
@@ -149,6 +156,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		523321751832EDF3003879C5 /* BucketListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListViewController.h; sourceTree = "<group>"; };
+		523321761832EDF3003879C5 /* BucketListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListViewController.m; sourceTree = "<group>"; };
+		523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BucketListStoryBoard.storyboard; sourceTree = "<group>"; };
+		5233217A1832F0E2003879C5 /* BucketListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListCell.h; sourceTree = "<group>"; };
+		5233217B1832F0E2003879C5 /* BucketListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListCell.m; sourceTree = "<group>"; };
+		5233217D18345B40003879C5 /* BucketDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketDetailViewController.h; sourceTree = "<group>"; };
+		5233217E18345B40003879C5 /* BucketDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketDetailViewController.m; sourceTree = "<group>"; };
+		5233218018349A77003879C5 /* CheckInDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailViewController.h; sourceTree = "<group>"; };
+		5233218118349A77003879C5 /* CheckInDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInDetailViewController.m; sourceTree = "<group>"; };
+		5233218318354B31003879C5 /* CheckInLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInLocation.h; sourceTree = "<group>"; };
+		5233218418354B31003879C5 /* CheckInLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInLocation.m; sourceTree = "<group>"; };
+		523321861835FF7A003879C5 /* postcell_reportbutton_flagicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postcell_reportbutton_flagicon.png; sourceTree = "<group>"; };
 		526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_placeholder.png; sourceTree = "<group>"; };
 		526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCheckInViewController.h; sourceTree = "<group>"; };
 		526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCheckInViewController.m; sourceTree = "<group>"; };
@@ -481,7 +500,18 @@
 				5A4F5CF51821666600CA6F17 /* beer_size@2x.png */,
 				5A2F2B18182BFCA60050A227 /* book@2x.png */,
 				5A2F2B28182C06E50050A227 /* boston_skyline_blur@2x.png */,
+				5233217D18345B40003879C5 /* BucketDetailViewController.h */,
+				5233217E18345B40003879C5 /* BucketDetailViewController.m */,
+				5233217A1832F0E2003879C5 /* BucketListCell.h */,
+				5233217B1832F0E2003879C5 /* BucketListCell.m */,
+				523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */,
+				523321751832EDF3003879C5 /* BucketListViewController.h */,
+				523321761832EDF3003879C5 /* BucketListViewController.m */,
 				526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */,
+				5233218018349A77003879C5 /* CheckInDetailViewController.h */,
+				5233218118349A77003879C5 /* CheckInDetailViewController.m */,
+				5233218318354B31003879C5 /* CheckInLocation.h */,
+				5233218418354B31003879C5 /* CheckInLocation.m */,
 				5A2F2B24182C032A0050A227 /* chicago_skyline_blur@2x.png */,
 				E5DB80C018286F3500C0DA0C /* coffee@2x.png */,
 				5A4F5CF71821666600CA6F17 /* coffee_circle.png */,
@@ -544,6 +574,7 @@
 				5AC9DC29182AC9770051EF9A /* PictureCell.m */,
 				52ED7E9C1827357A00BFD440 /* PostCell.h */,
 				52ED7E9D1827357A00BFD440 /* PostCell.m */,
+				523321861835FF7A003879C5 /* postcell_reportbutton_flagicon.png */,
 				5A169AA518201F340042767E /* PostCellDelegate.h */,
 				5AC9DC2E182AC9DE0051EF9A /* PostsByUserCell.h */,
 				5AC9DC2F182AC9DE0051EF9A /* PostsByUserCell.m */,
@@ -661,7 +692,7 @@
 				ORGANIZATIONNAME = "Kabir Mahal";
 				TargetAttributes = {
 					5A5ABB391818420D00155B8F = {
-						DevelopmentTeam = MJRHVF6576;
+						DevelopmentTeam = AYXNN5VFR7;
 					};
 					5A5ABB5A1818420D00155B8F = {
 						TestTargetID = 5A5ABB391818420D00155B8F;
@@ -720,6 +751,7 @@
 				5AC9DC36182ACA4A0051EF9A /* messageButton@2x.png in Resources */,
 				5A169B3218201F340042767E /* UpdateCellHeader.xib in Resources */,
 				5AC9DC53182ACBE90051EF9A /* JustMovdApp-Info.plist in Resources */,
+				523321791832EE4C003879C5 /* BucketListStoryBoard.storyboard in Resources */,
 				5A50BD03182C3133002DD7AD /* walkthrough_sarah@2x.png in Resources */,
 				5A4AD427182C1A61001CBDE6 /* menu@2x.png in Resources */,
 				5A4F5D271821666600CA6F17 /* Roboto-Light.ttf in Resources */,
@@ -738,6 +770,7 @@
 				E5DB80CD18286F3500C0DA0C /* yoga@2x.png in Resources */,
 				5A2F2B23182C00B30050A227 /* background3_blur@2x.png in Resources */,
 				E5DB80CC18286F3500C0DA0C /* weights@2x.png in Resources */,
+				523321871835FF7A003879C5 /* postcell_reportbutton_flagicon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,8 +793,10 @@
 				5A2F2AE1182ACDE40050A227 /* ActivityFeedViewController.m in Sources */,
 				5A2F2AE2182ACDE40050A227 /* AppDelegate.m in Sources */,
 				5A2F2AE4182ACDE40050A227 /* CommentViewController.m in Sources */,
+				523321771832EDF3003879C5 /* BucketListViewController.m in Sources */,
 				526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */,
 				5A2F2AE5182ACDE40050A227 /* Comms.m in Sources */,
+				5233217F18345B40003879C5 /* BucketDetailViewController.m in Sources */,
 				5A2F2AE6182ACDE40050A227 /* EditProfileViewController.m in Sources */,
 				5A2F2AE9182ACDE40050A227 /* InfoCell.m in Sources */,
 				5A2F2AEA182ACDE40050A227 /* IntroChildViewController.m in Sources */,
@@ -772,6 +807,7 @@
 				5A2F2AF0182ACDE40050A227 /* MessageBubbleLeftCell.m in Sources */,
 				5A2F2AF1182ACDE40050A227 /* MessageBubbleRightCell.m in Sources */,
 				5A2F2AF2182ACDE40050A227 /* MessagingViewController.m in Sources */,
+				5233218518354B32003879C5 /* CheckInLocation.m in Sources */,
 				5A2F2AF3182ACDE40050A227 /* NavViewController.m in Sources */,
 				5A2F2AF4182ACDE40050A227 /* OpenConversationCell.m in Sources */,
 				5A2F2AF5182ACDE40050A227 /* OpenConversationViewController.m in Sources */,
@@ -783,6 +819,7 @@
 				5A2F2AFB182ACDE40050A227 /* ProfileInterestCell.m in Sources */,
 				E5A942B8182B855A00064BD0 /* NotificationIndicatorViewController.m in Sources */,
 				5A2F2AFC182ACDE40050A227 /* QuestionnaireViewController.m in Sources */,
+				5233218218349A77003879C5 /* CheckInDetailViewController.m in Sources */,
 				5A2F2AFD182ACDE40050A227 /* QuestionView.m in Sources */,
 				5A2F2AFE182ACDE40050A227 /* SideBarViewController.m in Sources */,
 				5A2F2AFF182ACDE40050A227 /* SpinnerViewController.m in Sources */,
@@ -792,6 +829,7 @@
 				5A2F2B0A182AE1900050A227 /* FeedConnectorVC.m in Sources */,
 				5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */,
 				5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */,
+				5233217C1832F0E2003879C5 /* BucketListCell.m in Sources */,
 				5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */,
 				5A2F2B06182ACDE40050A227 /* UserProfileViewController.m in Sources */,
 			);
@@ -861,8 +899,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -902,8 +940,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -925,8 +963,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -945,8 +983,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -955,7 +993,7 @@
 				GCC_PREFIX_HEADER = "JustMovdApp/JustMovdApp-Prefix.pch";
 				INFOPLIST_FILE = "JustMovdApp/JustMovdApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "BE59304E-7237-47D9-9021-ED265B8B4D5C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

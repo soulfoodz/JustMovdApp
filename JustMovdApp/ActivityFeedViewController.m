@@ -16,6 +16,8 @@
 #import "SWRevealViewController.h"
 #import "IntroParentViewController.h"
 #import "UserProfileViewController.h"
+#import "CheckInDetailViewController.h"
+#import "CheckInLocation.h"
 
 #define kLoadingCellTag 7
 #define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
@@ -304,46 +306,6 @@
 }
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"SegueToCommentViewController"])
-    {
-        if ([sender isKindOfClass:[NSIndexPath class]]) {
-            CommentViewController *dvc;
-            NSIndexPath *indexPath;
-        
-            indexPath = (NSIndexPath *)sender;
-            dvc       = segue.destinationViewController;
-            dvc.post  = self.postsArray[indexPath.row];
-        }
-        else return;
-    }
-    
-    if ([segue.identifier isEqualToString:@"SegueToAddNewStatusUpdate"])
-    {
-        StatusUpdateViewController *statusVC;
-        
-        statusVC = segue.destinationViewController;
-        statusVC.navigationItem.title = @"New Post";
-        statusVC.user = [PFUser currentUser];
-        statusVC.delegate = self;
-        statusVC.reloadTVBlock = ^(){
-            [self queryForTable];
-        };
-        
-        if ([sender isKindOfClass:[UIButton class]])
-        {
-            UIButton *button = sender;
-            if ([button.titleLabel.text isEqualToString:@"Check in"])
-            {
-                statusVC.presentingCheckIn = YES;
-            }
-            else statusVC.presentingCheckIn = NO;
-        }
-    }
-}
-
-
 - (UITableViewCell *)loadingCell
 {
     UIActivityIndicatorView *activityIndicator;
@@ -440,10 +402,47 @@
 
 - (void)checkInMapImageWasTappedInCell:(PostCell *)cell
 {
-    //
+    [self performSegueWithIdentifier:@"SegueToCheckInDetailViewController" sender:cell];
 }
 
 
+- (void)flagPostInCell:(PostCell *)cell
+{
+    NSIndexPath *indexPath;
+    PFObject *post;
+    PFObject *flaggedPost;
+    PFUser   *postCreator;
+    
+    indexPath = [self.tableView indexPathForCell:cell];
+    post      = self.postsArray[indexPath.row];
+    flaggedPost = [PFObject objectWithClassName:@"FlaggedActivities"];
+    postCreator = post[@"user"];
+    
+    [flaggedPost setObject:[PFUser currentUser] forKey:@"flaggedBy"];
+    [flaggedPost setObject:postCreator forKey:@"originalPoster"];
+    [flaggedPost setObject:post forKey:@"activity"];
+    
+    [post incrementKey:@"flagCount"];
+    
+    [flaggedPost saveEventually:^(BOOL succeeded, NSError *error) {
+        
+        if (succeeded)
+            [self presentAlertViewForFlaggedPost];
+        else
+            NSLog(@"Flag didn't work : ERROR %@", error);
+    }];
+}
+
+
+- (void)presentAlertViewForFlaggedPost
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thank You!" message:@"JustMovd has received your report and will look into the matter." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [alert show];
+}
+
+
+#pragma  mark - Segues
 
 - (void)goToStatusUpdate:(UIButton *)sender
 {
@@ -457,6 +456,72 @@
 }
 
 
+- (IBAction)unwindFromCheckInVC:(UIStoryboardSegue *)unwindSegue
+{
+    
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"SegueToCommentViewController"])
+    {
+        if ([sender isKindOfClass:[NSIndexPath class]]) {
+            CommentViewController *dvc;
+            NSIndexPath *indexPath;
+            
+            indexPath = (NSIndexPath *)sender;
+            dvc       = segue.destinationViewController;
+            dvc.post  = self.postsArray[indexPath.row];
+        }
+        else return;
+    }
+    
+    if ([segue.identifier isEqualToString:@"SegueToAddNewStatusUpdate"])
+    {
+        StatusUpdateViewController *statusVC;
+        
+        statusVC = segue.destinationViewController;
+        statusVC.navigationItem.title = @"New Post";
+        statusVC.user = [PFUser currentUser];
+        statusVC.delegate = self;
+        statusVC.reloadTVBlock = ^(){
+            [self queryForTable];
+        };
+        
+        if ([sender isKindOfClass:[UIButton class]])
+        {
+            UIButton *button = sender;
+            if ([button.titleLabel.text isEqualToString:@"Check in"])
+            {
+                statusVC.presentingCheckIn = YES;
+            }
+            else statusVC.presentingCheckIn = NO;
+        }
+    }
+    
+    if ([segue.identifier isEqualToString:@"SegueToCheckInDetailViewController"])
+    {
+        CheckInDetailViewController *dvc;
+        NSIndexPath                 *indexPath;
+        PFObject                    *checkIn;
+        PFGeoPoint                  *location;
+        CLLocationCoordinate2D      centerCoord;
+        
+        indexPath   = [self.tableView indexPathForCell:sender];
+        checkIn     = [self.postsArray[indexPath.row] objectForKey:@"checkIn"];
+        location    = checkIn[@"location"];
+        centerCoord = CLLocationCoordinate2DMake(location.latitude, location.longitude);
+        
+        dvc = segue.destinationViewController;
+        dvc.checkIn = checkIn;
+    }
+}
+
+
+
+#pragma mark - TableViewHeader
+
 - (void)setupTableViewHeader
 {
     UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
@@ -464,28 +529,21 @@
     UIButton *checkInBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];
     UIButton *statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 160, 44)];
     
-    statusBtn.backgroundColor = [UIColor colorWithRed:80.0/255.0 green:187.0/255.0 blue:182.0/255.0 alpha:1.0];
     checkInBtn.backgroundColor = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
+    statusBtn.backgroundColor  = [UIColor colorWithRed:80.0/255.0 green:187.0/255.0 blue:182.0/255.0 alpha:1.0];
     
     [checkInBtn setTitle:@"Check in" forState:UIControlStateNormal];
     [checkInBtn setTitle:@"Check in" forState:UIControlStateSelected];
     [checkInBtn addTarget:self action:@selector(goToCheckIn:) forControlEvents:UIControlEventTouchUpInside];
     
     [statusBtn setTitle:@"Status" forState:UIControlStateNormal];
-    [statusBtn setTitle:@"Check in" forState:UIControlStateSelected];
+    [statusBtn setTitle:@"Status" forState:UIControlStateSelected];
     [statusBtn addTarget:self action:@selector(goToStatusUpdate:) forControlEvents:UIControlEventTouchUpInside];
     
     [toolBar addSubview:checkInBtn];
     [toolBar addSubview:statusBtn];
-    toolBar.backgroundColor = [UIColor whiteColor];//[UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
     
     self.tableView.tableHeaderView = toolBar;
-}
-
-
-- (IBAction)unwindFromCheckInVC:(UIStoryboardSegue *)unwindSegue
-{
-    
 }
 
 

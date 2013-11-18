@@ -15,5 +15,6 @@
 
 - (void)avatarImageWasTappedInCell:(PostCell *)cell;
 - (void)checkInMapImageWasTappedInCell:(PostCell *)cell;
+- (void)flagPostInCell:(PostCell *)cell;
 
 @end

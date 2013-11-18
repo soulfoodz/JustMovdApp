@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PostCellDelegate.h"
 
-@interface PostCell : UITableViewCell
+@interface PostCell : UITableViewCell <UIActionSheetDelegate>
 
-//Outlets
 @property (strong, nonatomic) id <PostCellDelegate> delegate;
+@property (nonatomic) BOOL hasCheckIn;
+
+// Outlets
 @property (strong, nonatomic) UIView *separatorView;
 @property (strong, nonatomic) UIView *commentView;
 @property (strong, nonatomic) PFImageView *profilePicture;
@@ -24,7 +26,7 @@
 @property (strong, nonatomic) UILabel *checkInLabel;
 @property (strong, nonatomic) UIButton *avatarButton;
 @property (strong, nonatomic) UIButton *checkInButton;
-@property (nonatomic) BOOL hasCheckIn;
+@property (strong, nonatomic) UIButton *reportButton;
 
 
 - (void)resetContents;

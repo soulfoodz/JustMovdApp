@@ -9,6 +9,7 @@
 #import "FBCheckInViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "StatusUpdateViewController.h"
+#import "CheckInLocation.h"
 
 @interface FBCheckInViewController ()
 
@@ -75,11 +76,21 @@
 
 - (void)placePickerViewControllerSelectionDidChange:(FBPlacePickerViewController *)placePicker
 {
-    FBPlace *place;
+    // FBPlace *place;
+    CheckInLocation *checkInLocation = [CheckInLocation new];
+    
+    NSString *urlString = [[[placePicker.selection objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+    
+    checkInLocation.location = [placePicker.selection objectForKey:@"location"];
+    checkInLocation.name     = [placePicker.selection objectForKey:@"name"];
+    checkInLocation.id       = [placePicker.selection objectForKey:@"id"];
+    checkInLocation.category = [placePicker.selection objectForKey:@"category"];
+    checkInLocation.logoURLString = urlString;
+    
+    
     [self.locationManager stopUpdatingLocation];
-    place = (FBPlace *)placePicker.selection;
     [self performSegueWithIdentifier:@"SegueFromCheckInLocationSelection"
-                              sender:place];
+                              sender:checkInLocation];
 
 }
 
@@ -89,7 +100,6 @@
     if ([segue.identifier isEqualToString:@"SegueFromCheckInLocationSelection"]){
         StatusUpdateViewController *updateVC = segue.destinationViewController;
         updateVC.selectedPlace = sender;
-        updateVC.nameString = sender[@"name"];
         updateVC.presentingCheckIn = NO;
         updateVC.mapImage.image = self.mapViewImage;
     }
@@ -114,12 +124,6 @@
     [snapshotter startWithCompletionHandler:^(MKMapSnapshot *snapshot, NSError *error) {
         UIImage *image = snapshot.image;
         self.mapViewImage = image;
-        
-        
-        NSLog(@"Got the image");
-//        NSData *data = UIImagePNGRepresentation(image);
-//        PFFile *mapImageFile = [PFFile fileWithData:data];
-//        self.mapImageFile = mapImageFile;
     }];
 }
 
