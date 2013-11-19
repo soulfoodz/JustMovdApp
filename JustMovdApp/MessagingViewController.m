@@ -228,7 +228,7 @@
         CGRect tableViewFrame = messagesTableView.frame;
         tableViewFrame.size.height = maxY - chatViewContainerFrame.size.height;
         [messagesTableView setFrame:tableViewFrame];
-        [self scrollToBottomTableViewWithAnimation:YES];
+        [self scrollToBottomTableViewWithAnimation:NO];
     }
 }
 
