@@ -29,6 +29,7 @@
     PFObject *tempInterests;
 
     SpinnerViewController *spinner;
+    CLLocationManager *locationManager;
     
 }
 
@@ -46,6 +47,10 @@
     spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
     [self.view addSubview:spinner.view];
     
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    [locationManager startUpdatingLocation];
     
     isReady = NO;
     
@@ -60,8 +65,6 @@
     sideBarButton.action = @selector(revealToggle:);
     
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
-    [self findUsersWithinMiles:20.0];
     
     self.view.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
     
@@ -86,65 +89,86 @@
     [usersQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
      {
          matches = objects.mutableCopy;
-         [self sortMatchesByDistance:matches];
          
-         PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
-         [query whereKey:@"User" equalTo:[PFUser currentUser]];
-         
-         [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-             currentUserInterests = object;
+         if ([matches count] == 0){
+             spinner.view = nil;
+             
+             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, self.view.frame.size.height/2-40, 240, 20)];
+             label.text = @"Looks like no one is near you.";
+             label.textAlignment = NSTextAlignmentCenter;
+             label.font = [UIFont fontWithName:@"Roboto-Regular" size:15];
+             [self.view addSubview:label];
+             
+             UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(40, self.view.frame.size.height/2-20, 240, 20)];
+             label1.text = @"Try again later!";
+             label1.textAlignment = NSTextAlignmentCenter;
+             label1.font = [UIFont fontWithName:@"Roboto-Regular" size:15];
+             [self.view addSubview:label1];
              
              
-             for (PFUser *temp in matches){
+         } else {
+             
+             [self sortMatchesByDistance:matches];
+             
+             PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
+             [query whereKey:@"User" equalTo:[PFUser currentUser]];
+             
+             [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                 currentUserInterests = object;
                  
                  
-                 PFFile *imageFile = [temp objectForKey:@"profilePictureFile"];
-                 [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                 for (PFUser *temp in matches){
                      
-                     UIImage *tempImage = [UIImage imageWithData:data];
-                     [profilePics addObject:tempImage];
                      
-                     PFQuery *tempQuery = [PFQuery queryWithClassName:@"Interests"];
-                     [tempQuery whereKey:@"User" equalTo:temp];
-                                          
-                     [tempQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                         tempInterests = object;
+                     PFFile *imageFile = [temp objectForKey:@"profilePictureFile"];
+                     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
                          
+                         UIImage *tempImage = [UIImage imageWithData:data];
+                         [profilePics addObject:tempImage];
                          
-                         NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+                         PFQuery *tempQuery = [PFQuery queryWithClassName:@"Interests"];
+                         [tempQuery whereKey:@"User" equalTo:temp];
                          
-                         if ([tempInterests[@"first"] isEqualToString:currentUserInterests[@"first"]]){
-                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"first"]]];
-                         }
-                         if ([tempInterests[@"second"] isEqualToString:currentUserInterests[@"second"]]){
-                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"second"]]];
-                         }
-                         if ([tempInterests[@"third"] isEqualToString:currentUserInterests[@"third"]]){
-                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"third"]]];
-                         }
-                         if ([tempInterests[@"fourth"] isEqualToString:currentUserInterests[@"fourth"]]){
-                             [tempArray addObject:[self getImageNameFromString:tempInterests[@"fourth"]]];
-                         }
-                         [sharedInterests addObject:tempArray];
-                         
-                         if ([sharedInterests count] == [matches count]){
-                             spinner.view = nil;
+                         [tempQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                             tempInterests = object;
                              
-                             isReady = YES;
-                             [myTableView reloadData];
-                         }
+                             
+                             NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+                             
+                             if ([tempInterests[@"first"] isEqualToString:currentUserInterests[@"first"]]){
+                                 [tempArray addObject:[self getImageNameFromString:tempInterests[@"first"]]];
+                             }
+                             if ([tempInterests[@"second"] isEqualToString:currentUserInterests[@"second"]]){
+                                 [tempArray addObject:[self getImageNameFromString:tempInterests[@"second"]]];
+                             }
+                             if ([tempInterests[@"third"] isEqualToString:currentUserInterests[@"third"]]){
+                                 [tempArray addObject:[self getImageNameFromString:tempInterests[@"third"]]];
+                             }
+                             if ([tempInterests[@"fourth"] isEqualToString:currentUserInterests[@"fourth"]]){
+                                 [tempArray addObject:[self getImageNameFromString:tempInterests[@"fourth"]]];
+                             }
+                             [sharedInterests addObject:tempArray];
+                             
+                             if ([sharedInterests count] == [matches count]){
+                                 spinner.view = nil;
+                                 
+                                 isReady = YES;
+                                 [myTableView reloadData];
+                             }
+                             
+                             
+                         }];
                          
                          
                      }];
                      
                      
-                 }];
+                 }
                  
-
-             }
+                 
+             }];
              
-             
-         }];
+         }
          
          
      }];
@@ -326,6 +350,41 @@
     
     
     
+}
+
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didFailWithError: %@", error);
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [errorAlert show];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+    
+    if (currentLocation != nil) {
+        
+        [self findUsersWithinMiles:20.0];
+
+        
+        PFUser *user = [PFUser currentUser];
+        
+        PFGeoPoint *userLocation =
+        [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude
+                               longitude:currentLocation.coordinate.longitude];
+        user[@"geoPoint"] = userLocation;
+        
+        [user saveInBackground];
+        [locationManager stopUpdatingLocation];
+        
+        
+    }
 }
 
 

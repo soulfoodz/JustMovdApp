@@ -34,7 +34,7 @@
         
         profilePicture.clipsToBounds = YES;
         
-        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 170, 100, 30)];
+        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 170, 150, 30)];
         nameLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:18];
         nameLabel.textColor = [UIColor orangeColor];
         
