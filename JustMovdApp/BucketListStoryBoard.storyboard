@@ -7,7 +7,7 @@
         <!--Bucket List View Controller-->
         <scene sceneID="myq-Gq-JvQ">
             <objects>
-                <viewController id="Kc5-Je-UXC" customClass="BucketListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BucketList" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kc5-Je-UXC" customClass="BucketListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5ac-Ag-ItW"/>
                         <viewControllerLayoutGuide type="bottom" id="MJ9-5k-Jh3"/>

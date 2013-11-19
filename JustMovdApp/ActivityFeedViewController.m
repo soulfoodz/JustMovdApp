@@ -18,6 +18,7 @@
 #import "UserProfileViewController.h"
 #import "CheckInDetailViewController.h"
 #import "CheckInLocation.h"
+#import "BucketListViewController.h"
 
 #define kLoadingCellTag 7
 #define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
@@ -68,8 +69,6 @@
     } else {
         
         self.tableView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
-        //self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-
         
         sideBarButton.target = self.revealViewController;
         sideBarButton.action = @selector(revealToggle:);
@@ -95,6 +94,7 @@
         PFQuery *queryForAllPosts;
         queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
         [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
+        //[queryForAllPosts whereKey:@"flagCount" lessThan:[NSNumber numberWithInt:1]];
         [queryForAllPosts includeKey:@"user"];
         [queryForAllPosts includeKey:@"checkIn"];
         queryForAllPosts.limit = 10;
@@ -110,7 +110,6 @@
                      self.isAll = YES;
                  else
                      self.isAll = NO;
-                 
                  
                  // If postsArray doesn't exist, create it.
                  if (!self.postsArray) self.postsArray = [NSMutableArray new];
@@ -145,6 +144,7 @@
 
         PFQuery *bigQuery;
         bigQuery = [PFQuery orQueryWithSubqueries:@[queryForAllPosts, greaterThanQuery]];
+        //[bigQuery whereKey:@"flagCount" lessThan:[NSNumber numberWithInt:1]];
         [bigQuery includeKey:@"user"];
         [bigQuery includeKey:@"checkIn"];
         bigQuery.limit = 10;
@@ -383,8 +383,9 @@
 
 -(void)avatarImageWasTappedInCell:(PostCell *)cell
 {
+
     NSIndexPath  *indexPath;
-    PFUser       *postCreator;
+    PFUser *postCreator;
     UIStoryboard *storyboard;
     UserProfileViewController *profileVC;
     NSString     *username;
@@ -393,10 +394,19 @@
     profileVC   = [storyboard instantiateViewControllerWithIdentifier:@"profile"];
     indexPath   = [self.tableView indexPathForCell:cell];
     postCreator = [self.postsArray[indexPath.row] objectForKey:@"user"];
-    username    = [postCreator objectForKey:@"username"];
     
-    profileVC.facebookUsername = username;
+    profileVC.user               = postCreator;
+    profileVC.userProfilePicture = (UIImage *)cell.profilePicture.image;
+    
     [self.navigationController pushViewController:profileVC animated:YES];
+    
+//    UIStoryboard *storyboard;
+//    BucketListViewController *bucketVC;
+//    
+//    storyboard  = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
+//    bucketVC   =  [storyboard instantiateViewControllerWithIdentifier:@"BucketList"];
+//    
+//    [self.navigationController pushViewController:bucketVC animated:YES];
 }
 
 

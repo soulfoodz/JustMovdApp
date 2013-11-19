@@ -11,7 +11,8 @@
 @interface BucketListCell : UITableViewCell
 
 @property (strong, nonatomic) PFImageView *mainImage;
-@property (strong, nonatomic) PFImageView *localAvatar;
+@property (strong, nonatomic) PFImageView *creatorAvatar;
+@property (strong, nonatomic) UILabel *creatorLabel;
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *timeLabel;

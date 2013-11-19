@@ -93,6 +93,7 @@
     [newPost setObject:[PFUser currentUser] forKey:@"user"];
     [newPost setObject:@"JMPost" forKey:@"type"];
     [newPost setObject:[NSNumber numberWithInt:0] forKey:@"postCommentCounter"];
+    [newPost setObject:[NSNumber numberWithInt:0] forKey:@"flagCount"];
     
     
     // If there is a CheckIn, create it and set it into the newPost object

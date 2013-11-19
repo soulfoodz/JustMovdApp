@@ -290,6 +290,7 @@
     [newComment setObject:[PFUser currentUser] forKey:@"user"];
     [newComment setObject:@"JMComment" forKey:@"type"];
     [newComment setObject:self.post forKey:@"post"];
+    [newComment setObject:[NSNumber numberWithInt:0] forKey:@"flagCount"];
     [self.post incrementKey:@"postCommentCounter" byAmount:[NSNumber numberWithInt:1]];
     [[JMCache sharedCache] incrementCommentCountForPost:self.post];
     

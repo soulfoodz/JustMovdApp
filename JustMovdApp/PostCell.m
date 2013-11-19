@@ -101,7 +101,7 @@
     [self.backgroundView addSubview:nameLabel];
     
     // Set reportButton
-    reportButton.frame = CGRectMake((self.backgroundView.frame.size.width + self.backgroundView.frame.origin.x) - 30, nameLabel.frame.origin.y +4, 14, 14);
+    reportButton.frame = CGRectMake((self.backgroundView.frame.size.width + self.backgroundView.frame.origin.x) - 30, nameLabel.frame.origin.y +4, 28, 28);
     [reportButton setImage:[UIImage imageNamed:@"postcell_reportbutton_flagicon"] forState: UIControlStateNormal];
     [self addSubview:reportButton];
     
@@ -197,7 +197,11 @@
 
 - (void)reportButtonTapped
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Report post as inappropriate", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Report post as inappropriate", nil];
     
     [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
 }
