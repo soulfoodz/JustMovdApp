@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface TestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 

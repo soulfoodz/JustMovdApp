@@ -124,23 +124,28 @@
 - (void)commsDidLogin:(BOOL)loggedIn
 {
     
-    SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
-    spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
-    
 
-    
-    UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    
-    coverView.backgroundColor = [UIColor grayColor];
-    coverView.alpha = 0.1;
-    
-    [self.view addSubview:coverView];
-
-    [self.view addSubview:spinner.view];
 
     
 	if (loggedIn)
     {
+        
+        SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
+        spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
+        
+        
+        
+        UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        
+        coverView.backgroundColor = [UIColor grayColor];
+        coverView.alpha = 0.1;
+        
+        [self.view addSubview:coverView];
+        
+        [self.view addSubview:spinner.view];
+        
+        
+        
 		// Send out request to facebook and get information that we need
         NSString *fbInfoToRequest = @"me/?fields=username,name,gender,id,email,birthday,location";  // <--- asking for these
         
@@ -249,8 +254,6 @@
 	}
     
     
-    spinner = nil;
-
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -319,7 +322,7 @@
 
 -(void)viewControllerDone:(id)view{
     [self dismissViewControllerAnimated:NO completion:^{
-        nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"gotofeed" object:nil];
     }];
 }
 

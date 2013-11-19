@@ -70,6 +70,7 @@
 		5A2F2B27182C060F0050A227 /* FacebookLoginButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A2F2B26182C060F0050A227 /* FacebookLoginButton@2x.png */; };
 		5A2F2B29182C06E50050A227 /* boston_skyline_blur@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A2F2B28182C06E50050A227 /* boston_skyline_blur@2x.png */; };
 		5A2F2B2D182C0D630050A227 /* couple_blur@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A2F2B2C182C0D630050A227 /* couple_blur@2x.png */; };
+		5A39688A1830B13F008A9F8A /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A3968861830B13F008A9F8A /* libTestFlight.a */; };
 		5A4AD427182C1A61001CBDE6 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4AD426182C1A61001CBDE6 /* menu@2x.png */; };
 		5A4F5CEA1821661400CA6F17 /* activityfeedcell_icon_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CE91821661400CA6F17 /* activityfeedcell_icon_comment.png */; };
 		5A4F5D1A1821666600CA6F17 /* beer_size@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5CF51821666600CA6F17 /* beer_size@2x.png */; };
@@ -196,6 +197,10 @@
 		5A2F2B26182C060F0050A227 /* FacebookLoginButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FacebookLoginButton@2x.png"; sourceTree = "<group>"; };
 		5A2F2B28182C06E50050A227 /* boston_skyline_blur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boston_skyline_blur@2x.png"; sourceTree = "<group>"; };
 		5A2F2B2C182C0D630050A227 /* couple_blur@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "couple_blur@2x.png"; sourceTree = "<group>"; };
+		5A3968861830B13F008A9F8A /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = ../libTestFlight.a; sourceTree = "<group>"; };
+		5A3968871830B13F008A9F8A /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestFlight.h; path = ../TestFlight.h; sourceTree = "<group>"; };
+		5A3968881830B13F008A9F8A /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TestFlight+AsyncLogging.h"; path = "../TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		5A3968891830B13F008A9F8A /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TestFlight+ManualSessions.h"; path = "../TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		5A4AD426182C1A61001CBDE6 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
 		5A4F5CE91821661400CA6F17 /* activityfeedcell_icon_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activityfeedcell_icon_comment.png; sourceTree = "<group>"; };
 		5A4F5CF51821666600CA6F17 /* beer_size@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beer_size@2x.png"; sourceTree = "<group>"; };
@@ -363,6 +368,7 @@
 				52B9C418181884BA00A875B7 /* Security.framework in Frameworks */,
 				52B9C416181884AC00A875B7 /* QuartzCore.framework in Frameworks */,
 				52B9C4141818849C00A875B7 /* MobileCoreServices.framework in Frameworks */,
+				5A39688A1830B13F008A9F8A /* libTestFlight.a in Frameworks */,
 				52B9C4121818849100A875B7 /* libz.1.1.3.dylib in Frameworks */,
 				52B9C4101818848300A875B7 /* CoreLocation.framework in Frameworks */,
 				5A5ABB401818420D00155B8F /* CoreGraphics.framework in Frameworks */,
@@ -466,6 +472,10 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
+				5A3968861830B13F008A9F8A /* libTestFlight.a */,
+				5A3968871830B13F008A9F8A /* TestFlight.h */,
+				5A3968881830B13F008A9F8A /* TestFlight+AsyncLogging.h */,
+				5A3968891830B13F008A9F8A /* TestFlight+ManualSessions.h */,
 				5AB695831821656A008F7832 /* AboutEditCell.h */,
 				5AB695841821656A008F7832 /* AboutEditCell.m */,
 				52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */,
@@ -861,8 +871,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -880,7 +890,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "8DBC8BDD-AB39-46B9-94A7-1F4757336A55";
+				PROVISIONING_PROFILE = "9383A4C4-C2D4-4A03-BCBF-5FA1BD000F9C";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -902,8 +912,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -914,7 +924,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "8DBC8BDD-AB39-46B9-94A7-1F4757336A55";
+				PROVISIONING_PROFILE = "9383A4C4-C2D4-4A03-BCBF-5FA1BD000F9C";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -923,10 +933,11 @@
 		5A5ABB6D1818420D00155B8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -934,8 +945,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JustMovdApp/JustMovdApp-Prefix.pch";
 				INFOPLIST_FILE = "JustMovdApp/JustMovdApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/KabirMahal/Documents/Mobile\\ Makers/JustMovdApp",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9383A4C4-C2D4-4A03-BCBF-5FA1BD000F9C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -943,10 +958,11 @@
 		5A5ABB6E1818420D00155B8F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -954,8 +970,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JustMovdApp/JustMovdApp-Prefix.pch";
 				INFOPLIST_FILE = "JustMovdApp/JustMovdApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/KabirMahal/Documents/Mobile\\ Makers/JustMovdApp",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9383A4C4-C2D4-4A03-BCBF-5FA1BD000F9C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
