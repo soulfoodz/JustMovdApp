@@ -35,8 +35,7 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshConversation) name:@"NewMessageNotification" object:nil];
     
-    sideBarButton.target = self.revealViewController;
-    sideBarButton.action = @selector(revealToggle:);
+    [self addSideBarMenu];
     
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
@@ -50,6 +49,12 @@
             [self.navigationController.navigationBar setNeedsDisplay];
         }
     }
+}
+
+- (void)addSideBarMenu
+{
+    sideBarButton.target = self.revealViewController;
+    sideBarButton.action = @selector(revealToggle:);
 }
 
 - (void)refreshConversation
@@ -77,8 +82,7 @@
 
 - (void)initializeStuffing
 {
-    self.view.layer.shouldRasterize = YES;
-    self.view.layer.rasterizationScale = 2.0;
+    [self.navigationItem setRightBarButtonItem:self.editButtonItem];
     
     noConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     noConversationLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:20.0];
@@ -124,25 +128,25 @@
         {
             for (PFObject *conversationObject in objects)
             {
-                PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
-                NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
-                if (![conversationObject objectForKey:@"isShowBadge"]) {
-                    [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
+                if ([conversationObject objectForKey:@"toUser"]) {
+                    PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
+                    NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
+                    if ([conversationObject objectForKey:@"isShowBadge"]) {
+                        [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
+                    }
+                    else {
+                        [userInfoDictionary setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
+                    }
+                    [userInfoDictionary setObject:toUserObject forKey:@"user"];
+                    PFFile *imageFile = [toUserObject objectForKey:@"profilePictureFile"];
+                    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+                     {
+                         UIImage *userProfileImage = [UIImage imageWithData:data];
+                         [userInfoDictionary setObject:userProfileImage forKey:@"profilePic"];
+                         [self addLastMessagesWithUser:toUserObject toDictionary:userInfoDictionary];
+                         [tempArray addObject:userInfoDictionary];
+                     }];
                 }
-                else
-                {
-                    [userInfoDictionary setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
-                }
-                
-                [userInfoDictionary setObject:toUserObject forKey:@"user"];
-                PFFile *imageFile = [toUserObject objectForKey:@"profilePictureFile"];
-                [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-                 {
-                     UIImage *userProfileImage = [UIImage imageWithData:data];
-                     [userInfoDictionary setObject:userProfileImage forKey:@"profilePic"];
-                     [self addLastMessagesWithUser:toUserObject toDictionary:userInfoDictionary];
-                     [tempArray addObject:userInfoDictionary];
-                 }];
             }
         }
         else
@@ -231,6 +235,20 @@
 
 #pragma mark - Table view data source
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    
+    if(editing == YES)
+    {
+        // Your code for entering edit mode goes here
+        [openConversationTableView setEditing:editing animated:animated];
+    } else {
+        // Your code for exiting edit mode goes here
+        [openConversationTableView setEditing:editing animated:animated];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -248,7 +266,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 90.0;
+    return 85.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

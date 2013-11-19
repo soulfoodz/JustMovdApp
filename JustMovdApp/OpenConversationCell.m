@@ -22,7 +22,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
-        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(2, 2, 316, 88)];
+        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(2, 2, 316, 83)];
         backgroundView.backgroundColor = [UIColor whiteColor];
         backgroundView.layer.cornerRadius = 3;
         [self addSubview:backgroundView];

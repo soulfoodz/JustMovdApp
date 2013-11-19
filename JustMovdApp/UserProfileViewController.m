@@ -210,7 +210,7 @@
 
 - (void)queryForTable
 {
-    if (!facebookUsername)
+    if (!facebookUsername || [facebookUsername isEqualToString:[[PFUser currentUser] objectForKey:@"username"]])
     {
         if ([userInfoDictionary[@"posts"] count] == 0){
             PFQuery *queryForAllPosts;
