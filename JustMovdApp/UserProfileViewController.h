@@ -13,11 +13,15 @@
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *userProfileTableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
 
 //Properties
 @property (strong, nonatomic) NSMutableArray *userInfosArray;
 @property (strong, nonatomic) NSString *facebookUsername;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;
+
+
+@property (strong, nonatomic) PFUser *user;
+@property (strong, nonatomic) UIImage *userProfilePicture;
 
 
 //Actions, methods

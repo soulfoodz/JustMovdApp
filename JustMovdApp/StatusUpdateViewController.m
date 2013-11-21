@@ -93,29 +93,33 @@
     [newPost setObject:[PFUser currentUser] forKey:@"user"];
     [newPost setObject:@"JMPost" forKey:@"type"];
     [newPost setObject:[NSNumber numberWithInt:0] forKey:@"postCommentCounter"];
+    [newPost setObject:[NSNumber numberWithInt:0] forKey:@"flagCount"];
     
     
     // If there is a CheckIn, create it and set it into the newPost object
     if (self.selectedPlace)
     {
-        PFObject *newCheckIn = [PFObject objectWithClassName:@"CheckIn"];
+        PFObject *newCheckIn  = [PFObject objectWithClassName:@"CheckIn"];
         
-        double latitude = self.selectedPlace.location.latitude.doubleValue;
-        double longitude = self.selectedPlace.location.longitude.doubleValue;
-        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:latitude longitude:longitude];
+        // Format the location
+        double latitude       = self.selectedPlace.location.latitude.doubleValue;
+        double longitude      = self.selectedPlace.location.longitude.doubleValue;
+        PFGeoPoint *geoPoint  = [PFGeoPoint geoPointWithLatitude:latitude longitude:longitude];
         
+        // Format the mapImage
         UIImage *checkInImage = [self getMapImageWithAnnotation];
-        NSData *imageData = UIImagePNGRepresentation(checkInImage);
-        NSString *fileName = [NSString stringWithFormat:@"image.png"];
-        PFFile *imageFile = [PFFile fileWithName:fileName data:imageData];
+        NSData *imageData     = UIImagePNGRepresentation(checkInImage);
+        NSString *fileName    = [NSString stringWithFormat:@"image.png"];
+        PFFile *imageFile     = [PFFile fileWithName:fileName data:imageData];
         
-        NSString *placeID = self.selectedPlace[@"id"];
-        
+        // Set the CheckIn
+        [newCheckIn setObject:self.selectedPlace.name forKey:@"placeName"];
+        [newCheckIn setObject:self.selectedPlace.id forKey:@"placeId"];
+        [newCheckIn setObject:self.selectedPlace.logoURLString forKey:@"logoURL"];
         [newCheckIn setObject:geoPoint forKey:@"location"];
-        [newCheckIn setObject:self.selectedPlace[@"name"] forKey:@"placeName"];
-        [newCheckIn setObject:placeID forKey:@"placeId"];
         [newCheckIn setObject:imageFile forKey:@"mapImage"];
         
+        // Set the post pointer to the new check in
         [newPost setObject:newCheckIn forKey:@"checkIn"];
     }
     
@@ -178,39 +182,38 @@
     NSString    *urlString;
     NSURL       *imageURL;
     NSData      *imageData;
+    NSString    *nameString;
     
-    // Annotation setup
+    // faux annotation setup
     annotation = [UIImage imageNamed:@"activityfeed_checkin_annotation_resizable.png"];
     mapCenter = CGPointMake(self.mapImage.bounds.size.width / 2, self.mapImage.bounds.size.height / 2);
     
-    annoImageView = [UIImageView new];
-    annoImageView.frame = CGRectMake(20, 10, 260, 76);
-    annoImageView.center = CGPointMake(mapCenter.x ,mapCenter.y); //- annoImageView.frame.size.height / 2);
-    annoImageView.image = annotation;
+    annoImageView        = [UIImageView new];
+    annoImageView.frame  = CGRectMake(20, 10, 260, 76);
+    annoImageView.center = CGPointMake(mapCenter.x ,mapCenter.y);
+    annoImageView.image  = annotation;
     
-    // Logo image setup
-    logo             = [[UIImageView alloc] initWithFrame:CGRectMake(4, 4, 54, 54)];
-    urlString        = [[[self.selectedPlace objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
-    imageURL         = [NSURL URLWithString:urlString];
-    imageData        = [NSData dataWithContentsOfURL:imageURL];
-    logo.image       = [UIImage imageWithData:imageData];
-    logo.contentMode = UIViewContentModeScaleAspectFill;
+    // Setup the Logo image and add it to the faux annotation bkgd
+    logo               = [[UIImageView alloc] initWithFrame:CGRectMake(4, 4, 54, 54)];
+    urlString          = self.selectedPlace.logoURLString;
+    imageURL           = [NSURL URLWithString:urlString];
+    imageData          = [NSData dataWithContentsOfURL:imageURL];
+    logo.image         = [UIImage imageWithData:imageData];
+    logo.contentMode   = UIViewContentModeScaleAspectFill;
     logo.clipsToBounds = YES;
     [annoImageView addSubview:logo];
     
-    
-    // Place name label setup
-    placeName = [UILabel new];
+    // Setup the place name label
+    placeName               = [UILabel new];
     placeName.numberOfLines = 0;
     placeName.lineBreakMode = NSLineBreakByWordWrapping;
     placeName.clipsToBounds = NO;
 
-   // self.nameString = self.selectedPlace[@"name"];
-    CGSize nameSize = [self sizeForString:self.nameString];
+    nameString = self.selectedPlace.name;
+    CGSize nameSize = [self sizeForString:nameString];
     placeName.frame = CGRectMake(64, 6, nameSize.width, nameSize.height);
-    placeName.text  = self.selectedPlace[@"name"];
-    placeName.font = [UIFont fontWithName:@"Roboto-Medium" size:15.0];
-    //placeName.font  = FONT;
+    placeName.text  = nameString;
+    placeName.font  = [UIFont fontWithName:@"Roboto-Medium" size:15.0];
     [annoImageView addSubview:placeName];
 
     [self.mapImage addSubview:annoImageView];
@@ -225,6 +228,7 @@
     [self.mapImage.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *mapWithAnnotation = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    
     return mapWithAnnotation;
 }
 

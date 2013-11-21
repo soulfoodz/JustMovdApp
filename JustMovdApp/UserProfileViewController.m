@@ -56,6 +56,8 @@
 @synthesize facebookUsername;
 @synthesize editButton;
 @synthesize sideBarButton;
+@synthesize user;
+@synthesize userProfilePicture;
 
 - (void)viewDidLoad
 {
@@ -64,7 +66,8 @@
     
     [self intializeNeededStuff];
     
-    if (facebookUsername) {
+    facebookUsername = user.username;
+    if (user == [PFUser currentUser]) {
         [self.navigationItem setLeftBarButtonItem:nil];
     }
 }
@@ -99,9 +102,9 @@
     userInfoDictionary[@"location"]         = @"";
     userInfoDictionary[@"age"]              = @"";
     userInfoDictionary[@"firstInterest"]    = @"";
-    userInfoDictionary[@"secondInterest"]    = @"";
+    userInfoDictionary[@"secondInterest"]   = @"";
     userInfoDictionary[@"thirdInterest"]    = @"";
-    userInfoDictionary[@"fourthInterest"]    = @"";
+    userInfoDictionary[@"fourthInterest"]   = @"";
     
     userInfosArray = [[NSMutableArray alloc] init];
     

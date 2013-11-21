@@ -27,6 +27,7 @@
                         <outlet property="sideBarButton" destination="Jm4-ly-WWt" id="hOe-gB-7qx"/>
                         <segue destination="6si-kW-0ei" kind="modal" identifier="SegueToAddNewStatusUpdate" id="Kqm-W7-9fO"/>
                         <segue destination="R5Y-KW-7O0" kind="push" identifier="SegueToCommentViewController" id="Ce0-ok-gsU"/>
+                        <segue destination="KBW-0G-C80" kind="push" identifier="SegueToCheckInDetailViewController" id="d6E-Ba-JsP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pS6-wz-xww" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -99,11 +100,49 @@
                         <outlet property="tableView" destination="9WB-fw-a5N" id="Lec-7r-Gbs"/>
                         <outlet property="textView" destination="ep4-tJ-ZCH" id="7mV-9G-zjY"/>
                         <outlet property="textViewContainer" destination="okf-AF-Ckw" id="Nhd-PS-WZE"/>
+                        <segue destination="KBW-0G-C80" kind="push" identifier="SegueToCheckInDetailViewController" id="0fG-M6-9nq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W2U-jK-OsP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1117" y="-68"/>
+            <point key="canvasLocation" x="1053" y="-50"/>
+        </scene>
+        <!--Check In Detail View Controller-->
+        <scene sceneID="QB3-tS-mQS">
+            <objects>
+                <viewController id="KBW-0G-C80" customClass="CheckInDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ROF-O2-zKL"/>
+                        <viewControllerLayoutGuide type="bottom" id="vDk-5U-VG2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BcL-1K-z0W">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vwb-hh-PQD">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KBW-0G-C80" id="ZWF-aU-i35"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Uxl-eB-dMA">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="KTd-o2-SLW">
+                            <connections>
+                                <action selector="buttonToMapAppTapped:" destination="KBW-0G-C80" id="Emw-8w-rmB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="vwb-hh-PQD" id="34a-jI-G0u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mge-Ey-G4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1491" y="70"/>
         </scene>
         <!--Fake Profile View Controller-->
         <scene sceneID="uf3-48-1YH">
@@ -295,4 +334,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="0fG-M6-9nq"/>
+    </inferredMetricsTieBreakers>
 </document>

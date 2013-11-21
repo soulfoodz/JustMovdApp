@@ -8,8 +8,13 @@
 
 #import "PostCell.h"
 
-#define maxContentWidth 200.0f
-#define detailLabelFont [UIFont fontWithName:@"Roboto-Regular" size:15.0]
+#define maxContentWidth       200.0f
+#define nameLabelFont         [UIFont fontWithName:@"Roboto-Medium" size:17.0]
+#define detailLabelFont       [UIFont fontWithName:@"Roboto-Regular" size:15.0]
+#define checkInLabelFont      [UIFont fontWithName:@"Roboto-Regular" size:13.0]
+#define commentCountLabelFont [UIFont fontWithName:@"Roboto-Regular" size:12.0]
+#define timeLabelFont         [UIFont fontWithName:@"Roboto-Light" size:12.0]
+
 
 @implementation PostCell
 
@@ -23,9 +28,9 @@
 @synthesize hasCheckIn;
 @synthesize checkInLabel;
 @synthesize commentView;
-@synthesize delegate;
 @synthesize avatarButton;
 @synthesize checkInButton;
+@synthesize reportButton;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -34,20 +39,23 @@
         // Initialization code
         self.backgroundColor = [UIColor clearColor];
         self.selectionStyle  = UITableViewCellSelectionStyleNone;
-
+        
         profilePicture    = [[PFImageView alloc] initWithFrame:CGRectMake(10, 10, 64, 64)];
-        avatarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        
         checkInImage      = [[PFImageView alloc] initWithFrame:CGRectMake(5, 120, 288, 180)];
-        checkInButton     = [[UIButton alloc] initWithFrame:checkInImage.bounds];
         nameLabel         = [[UILabel alloc] initWithFrame:CGRectMake(86, 10, 200, 20)];
         checkInLabel      = [UILabel new];
         timeLabel         = [UILabel new];
         detailLabel       = [UILabel new];
         commentCountLabel = [UILabel new];
+        reportButton      = [UIButton buttonWithType:UIButtonTypeCustom];
+        checkInButton     = [UIButton buttonWithType:UIButtonTypeCustom];
+        avatarButton      = [UIButton buttonWithType:UIButtonTypeCustom];
 
         [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        
+        [avatarButton addTarget:self action:@selector(profilePictureTapped) forControlEvents:UIControlEventTouchUpInside];
+        [checkInButton addTarget:self action:@selector(checkInTapped) forControlEvents:UIControlEventTouchUpInside];
+        [reportButton addTarget:self action:@selector(reportButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -81,23 +89,24 @@
     profilePicture.contentMode              = UIViewContentModeScaleAspectFill;
     profilePicture.layer.shouldRasterize    = YES;
     profilePicture.layer.rasterizationScale = 2.0;
-
-//    [avatarButton setFrame:profilePicture.bounds];
-//    avatarButton.backgroundColor          = [UIColor redColor];
-//    avatarButton.userInteractionEnabled   = YES;
-//    [avatarButton addTarget:nil action:@selector(profilePictureTapped) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setFrame:CGRectMake(20, 15, profilePicture.frame.size.width, profilePicture.frame.size.height)];
-    [button addTarget:self action:@selector(profilePictureTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:button];
+    avatarButton.frame           = profilePicture.frame;
+    avatarButton.backgroundColor = [UIColor clearColor];
+    [self addSubview:avatarButton];
     [self.backgroundView addSubview:profilePicture];
     
-    nameLabel.font      = [UIFont fontWithName:@"Roboto-Medium" size:17.0];
+    // Set nameLabel
+    nameLabel.font      = nameLabelFont;
     nameLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:171.0/255.0 blue:40.0/255.0 alpha:1.0];
     [self.backgroundView addSubview:nameLabel];
     
-    timeLabel.font      = [UIFont fontWithName:@"Roboto-Light" size:12.0];
+    // Set reportButton
+    reportButton.frame = CGRectMake((self.backgroundView.frame.size.width + self.backgroundView.frame.origin.x) - 30, nameLabel.frame.origin.y +4, 28, 28);
+    [reportButton setImage:[UIImage imageNamed:@"postcell_reportbutton_flagicon"] forState: UIControlStateNormal];
+    [self addSubview:reportButton];
+    
+    // Set timeLabel
+    timeLabel.font      = timeLabelFont;
     timeLabel.textColor = [UIColor lightGrayColor];
     [self.backgroundView addSubview:timeLabel];
     
@@ -108,7 +117,7 @@
         // Move the timeLabel frame down.
         timeLabel.frame = CGRectMake(86, 48, 200, 16);
         checkInLabel.frame     = CGRectMake(86, 32, 200, 16);
-        checkInLabel.font      = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
+        checkInLabel.font      = checkInLabelFont;
         checkInLabel.textColor = [UIColor darkGrayColor];
         
         [self.backgroundView addSubview:checkInLabel];
@@ -133,11 +142,10 @@
         checkInImage.layer.shadowOffset     = CGSizeMake(0.0, 0.0);
         checkInImage.userInteractionEnabled = YES;
         checkInImage.contentMode            = UIViewContentModeScaleAspectFit;
-        
-        checkInButton.backgroundColor        = [UIColor clearColor];
-        checkInButton.userInteractionEnabled = YES;
-        [checkInButton addTarget:nil action:@selector(profilePictureTapped) forControlEvents:UIControlEventTouchUpInside];
-        [checkInImage addSubview:checkInButton];
+        checkInButton.backgroundColor       = [UIColor clearColor];
+        checkInButton.frame                 = checkInImage.frame;
+        checkInButton.enabled               = YES;
+        [self addSubview:checkInButton];
         
         [self.backgroundView addSubview:checkInImage];
     }
@@ -163,7 +171,7 @@
     
     CGRect rect                     = commentView.bounds;
     commentCountLabel.frame         = CGRectMake(rect.origin.x +10, rect.origin.y +8, rect.size.width -10, rect.size.height /2);
-    commentCountLabel.font          = [UIFont fontWithName:@"Roboto-Regular" size:12.0];
+    commentCountLabel.font          = commentCountLabelFont;
     commentCountLabel.textColor     = [UIColor darkGrayColor];
     commentCountLabel.textAlignment = NSTextAlignmentLeft;
     
@@ -175,14 +183,34 @@
 
 - (void)profilePictureTapped
 {
-    [delegate avatarImageWasTappedInCell:self];
+    [self.delegate avatarImageWasTappedInCell:self];
     NSLog(@"Tapped");
 }
 
 
 - (void)checkInTapped
 {
-    [delegate checkInMapImageWasTappedInCell:self];
+    [self.delegate checkInMapImageWasTappedInCell:self];
+    NSLog(@"Tapped");
+}
+
+
+- (void)reportButtonTapped
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Report post as inappropriate", nil];
+    
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+}
+
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+        [self.delegate flagPostInCell:self];
 }
 
 
@@ -207,6 +235,7 @@
     commentCountLabel.text = nil;
     checkInLabel.text      = nil;
     timeLabel.text         = nil;
+    checkInButton.enabled  = NO;
     hasCheckIn             = NO;
 }
 

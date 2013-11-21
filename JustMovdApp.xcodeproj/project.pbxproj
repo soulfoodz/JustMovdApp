@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		523321771832EDF3003879C5 /* BucketListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523321761832EDF3003879C5 /* BucketListViewController.m */; };
+		523321791832EE4C003879C5 /* BucketListStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */; };
+		5233217C1832F0E2003879C5 /* BucketListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233217B1832F0E2003879C5 /* BucketListCell.m */; };
+		5233217F18345B40003879C5 /* BucketDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233217E18345B40003879C5 /* BucketDetailViewController.m */; };
+		5233218218349A77003879C5 /* CheckInDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218118349A77003879C5 /* CheckInDetailViewController.m */; };
+		5233218518354B32003879C5 /* CheckInLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218418354B31003879C5 /* CheckInLocation.m */; };
+		5233218B183AFBD2003879C5 /* postcell_reportbutton_flagicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */; };
+		5233218E183B2FEC003879C5 /* bucketlistcell_timeicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */; };
+		5233218F183B2FEC003879C5 /* bucketlistcell_distanceicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */; };
 		526D2DA1182BC2D300D2F5E4 /* avatar_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */; };
 		526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */; };
 		526D2DA8182C3C3200D2F5E4 /* checkin_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */; };
@@ -59,7 +68,6 @@
 		5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF018201F340042767E /* TTTTimeIntervalFormatter.m */; };
 		5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF218201F340042767E /* UIImage+StackBlur.m */; };
 		5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A169AF418201F340042767E /* UpdateCellHeader.m */; };
-		5A2F2B06182ACDE40050A227 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB6957B1821643F008F7832 /* UserProfileViewController.m */; };
 		5A2F2B0A182AE1900050A227 /* FeedConnectorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2F2B09182AE1900050A227 /* FeedConnectorVC.m */; };
 		5A2F2B19182BFCA60050A227 /* book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A2F2B18182BFCA60050A227 /* book@2x.png */; };
 		5A2F2B1B182BFCB00050A227 /* tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A2F2B1A182BFCB00050A227 /* tv@2x.png */; };
@@ -108,6 +116,7 @@
 		5A5ABB671818420D00155B8F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A5ABB651818420D00155B8F /* InfoPlist.strings */; };
 		5A5ABB691818420D00155B8F /* JustMovdAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5ABB681818420D00155B8F /* JustMovdAppTests.m */; };
 		5A5ABB7B1818723800155B8F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5ABB7A1818723800155B8F /* Parse.framework */; };
+		5A9233D9183DCCBE00C1F7AF /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9233D8183DCCBE00C1F7AF /* UserProfileViewController.m */; };
 		5AC9DC0F1822FAD40051EF9A /* letsplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC0E1822FAD40051EF9A /* letsplay.png */; };
 		5AC9DC20182AC7F90051EF9A /* KyleMai.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC1F182AC7F90051EF9A /* KyleMai.storyboard */; };
 		5AC9DC2D182AC9CC0051EF9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AC9DC2B182AC9CC0051EF9A /* Main.storyboard */; };
@@ -147,6 +156,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		523321751832EDF3003879C5 /* BucketListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListViewController.h; sourceTree = "<group>"; };
+		523321761832EDF3003879C5 /* BucketListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListViewController.m; sourceTree = "<group>"; };
+		523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BucketListStoryBoard.storyboard; sourceTree = "<group>"; };
+		5233217A1832F0E2003879C5 /* BucketListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListCell.h; sourceTree = "<group>"; };
+		5233217B1832F0E2003879C5 /* BucketListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListCell.m; sourceTree = "<group>"; };
+		5233217D18345B40003879C5 /* BucketDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketDetailViewController.h; sourceTree = "<group>"; };
+		5233217E18345B40003879C5 /* BucketDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketDetailViewController.m; sourceTree = "<group>"; };
+		5233218018349A77003879C5 /* CheckInDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailViewController.h; sourceTree = "<group>"; };
+		5233218118349A77003879C5 /* CheckInDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInDetailViewController.m; sourceTree = "<group>"; };
+		5233218318354B31003879C5 /* CheckInLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInLocation.h; sourceTree = "<group>"; };
+		5233218418354B31003879C5 /* CheckInLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInLocation.m; sourceTree = "<group>"; };
+		5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postcell_reportbutton_flagicon.png; sourceTree = "<group>"; };
+		5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketlistcell_timeicon.png; sourceTree = "<group>"; };
+		5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketlistcell_distanceicon.png; sourceTree = "<group>"; };
 		526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_placeholder.png; sourceTree = "<group>"; };
 		526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCheckInViewController.h; sourceTree = "<group>"; };
 		526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCheckInViewController.m; sourceTree = "<group>"; };
@@ -240,12 +263,12 @@
 		5A5ABB661818420D00155B8F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5A5ABB681818420D00155B8F /* JustMovdAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JustMovdAppTests.m; sourceTree = "<group>"; };
 		5A5ABB7A1818723800155B8F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		5A9233D7183DCCBE00C1F7AF /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
+		5A9233D8183DCCBE00C1F7AF /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
 		5AB6957218215EFB008F7832 /* IntroParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroParentViewController.h; sourceTree = "<group>"; };
 		5AB6957318215EFB008F7832 /* IntroParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroParentViewController.m; sourceTree = "<group>"; };
 		5AB6957618216389008F7832 /* IntroChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroChildViewController.m; sourceTree = "<group>"; };
 		5AB69578182163BE008F7832 /* IntroChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroChildViewController.h; sourceTree = "<group>"; };
-		5AB6957B1821643F008F7832 /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
-		5AB6957D18216459008F7832 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
 		5AB695801821649D008F7832 /* InfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoCell.h; sourceTree = "<group>"; };
 		5AB695811821649D008F7832 /* InfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoCell.m; sourceTree = "<group>"; };
 		5AB695831821656A008F7832 /* AboutEditCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutEditCell.h; sourceTree = "<group>"; };
@@ -460,10 +483,6 @@
 		5A5ABB431818420D00155B8F /* JustMovdApp */ = {
 			isa = PBXGroup;
 			children = (
-				5A3968861830B13F008A9F8A /* libTestFlight.a */,
-				5A3968871830B13F008A9F8A /* TestFlight.h */,
-				5A3968881830B13F008A9F8A /* TestFlight+AsyncLogging.h */,
-				5A3968891830B13F008A9F8A /* TestFlight+ManualSessions.h */,
 				5AB695831821656A008F7832 /* AboutEditCell.h */,
 				5AB695841821656A008F7832 /* AboutEditCell.m */,
 				52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */,
@@ -479,7 +498,20 @@
 				5A4F5CF51821666600CA6F17 /* beer_size@2x.png */,
 				5A2F2B18182BFCA60050A227 /* book@2x.png */,
 				5A2F2B28182C06E50050A227 /* boston_skyline_blur@2x.png */,
+				5233217D18345B40003879C5 /* BucketDetailViewController.h */,
+				5233217E18345B40003879C5 /* BucketDetailViewController.m */,
+				5233217A1832F0E2003879C5 /* BucketListCell.h */,
+				5233217B1832F0E2003879C5 /* BucketListCell.m */,
+				5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */,
+				5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */,
+				523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */,
+				523321751832EDF3003879C5 /* BucketListViewController.h */,
+				523321761832EDF3003879C5 /* BucketListViewController.m */,
 				526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */,
+				5233218018349A77003879C5 /* CheckInDetailViewController.h */,
+				5233218118349A77003879C5 /* CheckInDetailViewController.m */,
+				5233218318354B31003879C5 /* CheckInLocation.h */,
+				5233218418354B31003879C5 /* CheckInLocation.m */,
 				5A2F2B24182C032A0050A227 /* chicago_skyline_blur@2x.png */,
 				E5DB80C018286F3500C0DA0C /* coffee@2x.png */,
 				5A4F5CF71821666600CA6F17 /* coffee_circle.png */,
@@ -511,6 +543,7 @@
 				5AC9DC34182ACA140051EF9A /* JustMovdApp-Prefix.pch */,
 				5AC9DC1F182AC7F90051EF9A /* KyleMai.storyboard */,
 				5AC9DC0E1822FAD40051EF9A /* letsplay.png */,
+				5A3968861830B13F008A9F8A /* libTestFlight.a */,
 				528AEF981821CF50002AB658 /* location.png */,
 				5AC9DC21182AC8460051EF9A /* main.m */,
 				5AC9DC2B182AC9CC0051EF9A /* Main.storyboard */,
@@ -542,6 +575,7 @@
 				5AC9DC29182AC9770051EF9A /* PictureCell.m */,
 				52ED7E9C1827357A00BFD440 /* PostCell.h */,
 				52ED7E9D1827357A00BFD440 /* PostCell.m */,
+				5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */,
 				5A169AA518201F340042767E /* PostCellDelegate.h */,
 				5AC9DC2E182AC9DE0051EF9A /* PostsByUserCell.h */,
 				5AC9DC2F182AC9DE0051EF9A /* PostsByUserCell.m */,
@@ -569,6 +603,9 @@
 				5AC9DC46182ACAEE0051EF9A /* StatusUpdateViewController.m */,
 				5AC9DC14182859A10051EF9A /* SWRevealViewController.h */,
 				5AC9DC15182859A10051EF9A /* SWRevealViewController.m */,
+				5A3968881830B13F008A9F8A /* TestFlight+AsyncLogging.h */,
+				5A3968891830B13F008A9F8A /* TestFlight+ManualSessions.h */,
+				5A3968871830B13F008A9F8A /* TestFlight.h */,
 				5A4F5D3518216FE700CA6F17 /* TestViewController.h */,
 				5A4F5D3618216FE700CA6F17 /* TestViewController.m */,
 				5A4F5D101821666600CA6F17 /* TTTTimeIntervalFormatter.h */,
@@ -579,9 +616,9 @@
 				5A169AF318201F340042767E /* UpdateCellHeader.h */,
 				5A169AF418201F340042767E /* UpdateCellHeader.m */,
 				5A169AF518201F340042767E /* UpdateCellHeader.xib */,
-				5AB6957D18216459008F7832 /* UserProfileViewController.h */,
-				5AB6957B1821643F008F7832 /* UserProfileViewController.m */,
 				5A4F5D111821666600CA6F17 /* vidgame_circle.png */,
+				5A9233D7183DCCBE00C1F7AF /* UserProfileViewController.h */,
+				5A9233D8183DCCBE00C1F7AF /* UserProfileViewController.m */,
 				5A50BD00182C3111002DD7AD /* walkthrough_ashley@2x.png */,
 				5A50BCFE182C2D55002DD7AD /* walkthrough_david@2x.png */,
 				5A50BD02182C3133002DD7AD /* walkthrough_sarah@2x.png */,
@@ -708,6 +745,7 @@
 				528AEF991821CF50002AB658 /* location.png in Resources */,
 				5A2F2B25182C032A0050A227 /* chicago_skyline_blur@2x.png in Resources */,
 				E5DB80CA18286F3500C0DA0C /* sports@2x.png in Resources */,
+				5233218F183B2FEC003879C5 /* bucketlistcell_distanceicon.png in Resources */,
 				5A4F5D2D1821666600CA6F17 /* sports_circle.png in Resources */,
 				5A2F2B1F182BFF640050A227 /* skyline_blur@2x.png in Resources */,
 				5A50BD01182C3111002DD7AD /* walkthrough_ashley@2x.png in Resources */,
@@ -723,9 +761,11 @@
 				5AC9DC36182ACA4A0051EF9A /* messageButton@2x.png in Resources */,
 				5A169B3218201F340042767E /* UpdateCellHeader.xib in Resources */,
 				5AC9DC53182ACBE90051EF9A /* JustMovdApp-Info.plist in Resources */,
+				523321791832EE4C003879C5 /* BucketListStoryBoard.storyboard in Resources */,
 				5A50BD03182C3133002DD7AD /* walkthrough_sarah@2x.png in Resources */,
 				5A4AD427182C1A61001CBDE6 /* menu@2x.png in Resources */,
 				5A4F5D271821666600CA6F17 /* Roboto-Light.ttf in Resources */,
+				5233218E183B2FEC003879C5 /* bucketlistcell_timeicon.png in Resources */,
 				5A4F5D321821666600CA6F17 /* weightlifting_circle.png in Resources */,
 				52ED7EB21829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png in Resources */,
 				5A4F5D2A1821666600CA6F17 /* Roboto-Thin.ttf in Resources */,
@@ -741,6 +781,7 @@
 				E5DB80CD18286F3500C0DA0C /* yoga@2x.png in Resources */,
 				5A2F2B23182C00B30050A227 /* background3_blur@2x.png in Resources */,
 				E5DB80CC18286F3500C0DA0C /* weights@2x.png in Resources */,
+				5233218B183AFBD2003879C5 /* postcell_reportbutton_flagicon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,8 +804,10 @@
 				5A2F2AE1182ACDE40050A227 /* ActivityFeedViewController.m in Sources */,
 				5A2F2AE2182ACDE40050A227 /* AppDelegate.m in Sources */,
 				5A2F2AE4182ACDE40050A227 /* CommentViewController.m in Sources */,
+				523321771832EDF3003879C5 /* BucketListViewController.m in Sources */,
 				526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */,
 				5A2F2AE5182ACDE40050A227 /* Comms.m in Sources */,
+				5233217F18345B40003879C5 /* BucketDetailViewController.m in Sources */,
 				5A2F2AE6182ACDE40050A227 /* EditProfileViewController.m in Sources */,
 				5A2F2AE9182ACDE40050A227 /* InfoCell.m in Sources */,
 				5A2F2AEA182ACDE40050A227 /* IntroChildViewController.m in Sources */,
@@ -775,6 +818,7 @@
 				5A2F2AF0182ACDE40050A227 /* MessageBubbleLeftCell.m in Sources */,
 				5A2F2AF1182ACDE40050A227 /* MessageBubbleRightCell.m in Sources */,
 				5A2F2AF2182ACDE40050A227 /* MessagingViewController.m in Sources */,
+				5233218518354B32003879C5 /* CheckInLocation.m in Sources */,
 				5A2F2AF3182ACDE40050A227 /* NavViewController.m in Sources */,
 				5A2F2AF4182ACDE40050A227 /* OpenConversationCell.m in Sources */,
 				5A2F2AF5182ACDE40050A227 /* OpenConversationViewController.m in Sources */,
@@ -785,7 +829,9 @@
 				5A2F2AFA182ACDE40050A227 /* PostsByUserCell.m in Sources */,
 				5A2F2AFB182ACDE40050A227 /* ProfileInterestCell.m in Sources */,
 				E5A942B8182B855A00064BD0 /* NotificationIndicatorViewController.m in Sources */,
+				5A9233D9183DCCBE00C1F7AF /* UserProfileViewController.m in Sources */,
 				5A2F2AFC182ACDE40050A227 /* QuestionnaireViewController.m in Sources */,
+				5233218218349A77003879C5 /* CheckInDetailViewController.m in Sources */,
 				5A2F2AFD182ACDE40050A227 /* QuestionView.m in Sources */,
 				5A2F2AFE182ACDE40050A227 /* SideBarViewController.m in Sources */,
 				5A2F2AFF182ACDE40050A227 /* SpinnerViewController.m in Sources */,
@@ -795,8 +841,8 @@
 				5A2F2B0A182AE1900050A227 /* FeedConnectorVC.m in Sources */,
 				5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */,
 				5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */,
+				5233217C1832F0E2003879C5 /* BucketListCell.m in Sources */,
 				5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */,
-				5A2F2B06182ACDE40050A227 /* UserProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -864,8 +910,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -905,8 +951,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kabir Mahal (L287JD3XLZ)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -968,7 +1014,7 @@
 					"/Users/KabirMahal/Documents/Mobile\\ Makers/JustMovdApp",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "BE59304E-7237-47D9-9021-ED265B8B4D5C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

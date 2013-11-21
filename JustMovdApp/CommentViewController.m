@@ -12,6 +12,8 @@
 #import "TTTTimeIntervalFormatter.h"
 #import "PFImageView+ImageHandler.h"
 #import "UserProfileViewController.h"
+#import "CheckInDetailViewController.h"
+#import <MapKit/MapKit.h>
 
 
 #define maxContentWidth 300.0f
@@ -132,10 +134,8 @@
         cell.detailLabel.text       = contentString;
         cell.timeLabel.text         = [self setTimeSincePostDate:createdDate];
         [cell.profilePicture setFile:imageFile forAvatarImageView:cell.profilePicture];
-        
-        return cell;
-        
-    }else
+    }
+    else{
         
         // Section 2 is for comments on the post
         postCreator   = [self.commentsArray[indexPath.row] objectForKey:@"user"];
@@ -143,12 +143,13 @@
         createdDate   = [self.commentsArray[indexPath.row] createdAt];
         imageFile     = [postCreator objectForKey:@"profilePictureFile"];
 
-        cell.nameLabel.text   = postCreator[@"name"];
+        cell.nameLabel.text   = postCreator[@"firstName"];
         cell.detailLabel.text = contentString;
         cell.timeLabel.text   = [self setTimeSincePostDate:createdDate];
         [cell.profilePicture setFile:imageFile forAvatarImageView:cell.profilePicture];
-
-        return cell;
+    }
+    
+    return cell;
 }
 
 
@@ -238,7 +239,7 @@
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(self.commentsArray.count - 1) inSection:1];
 
                 // Shorten the tableviews frame
-                self.tableView.frame = CGRectMake(0,0,320,(self.view.frame.size.height - 264));
+                self.tableView.frame = CGRectMake(0,0,320,(self.view.bounds.size.height - 264));
                 
                 // Scroll so the last row is above the textViewContainer
                 [self.tableView scrollToRowAtIndexPath:indexPath
@@ -289,6 +290,7 @@
     [newComment setObject:[PFUser currentUser] forKey:@"user"];
     [newComment setObject:@"JMComment" forKey:@"type"];
     [newComment setObject:self.post forKey:@"post"];
+    [newComment setObject:[NSNumber numberWithInt:0] forKey:@"flagCount"];
     [self.post incrementKey:@"postCommentCounter" byAmount:[NSNumber numberWithInt:1]];
     [[JMCache sharedCache] incrementCommentCountForPost:self.post];
     
@@ -329,11 +331,11 @@
 - (void)handleConnectionTimeOut
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to save comment"
-                                                        message:@"We're having trouble with the internet connection and were unable to save your last comment."
+                                                        message:@"We're having trouble with the internet connection and were unable to                  save your last comment."
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:nil];
-    
+
     [alertView show];
 }
 
@@ -421,12 +423,14 @@
 }
 
 
+#pragma mark - PostCell Delegate Methods
+
 -(void)avatarImageWasTappedInCell:(PostCell *)cell
 {
+    UserProfileViewController *profileVC;
     NSIndexPath  *indexPath;
     PFUser       *postCreator;
     UIStoryboard *storyboard;
-    UserProfileViewController *profileVC;
     NSString     *fbUsername;
     
     storyboard  = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
@@ -443,6 +447,72 @@
     profileVC.facebookUsername = fbUsername;
     [self.navigationController pushViewController:profileVC animated:YES];
 }
+
+
+- (void)checkInMapImageWasTappedInCell:(PostCell *)cell
+{
+    [self performSegueWithIdentifier:@"SegueToCheckInDetailViewController" sender:cell];
+}
+
+
+- (void)flagPostInCell:(PostCell *)cell
+{
+    NSIndexPath *indexPath;
+    PFObject    *post;
+    PFObject    *flaggedPost;
+    PFUser      *postCreator;
+    
+    indexPath   = [self.tableView indexPathForCell:cell];
+    post        = self.commentsArray[indexPath.row];
+    flaggedPost = [PFObject objectWithClassName:@"FlaggedActivities"];
+    postCreator = post[@"user"];
+    
+    [flaggedPost setObject:[PFUser currentUser] forKey:@"flaggedBy"];
+    [flaggedPost setObject:postCreator forKey:@"originalPoster"];
+    [flaggedPost setObject:post forKey:@"activity"];
+    
+    [post incrementKey:@"flagCount"];
+    
+    [flaggedPost saveEventually:^(BOOL succeeded, NSError *error) {
+        if (succeeded)
+            [self presentAlertViewForFlaggedPost];
+        else
+            NSLog(@"Flag didn't work : ERROR %@", error);
+    }];
+}
+
+
+- (void)presentAlertViewForFlaggedPost
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
+                                                    message:@"JustMovd has received your report and will look into the matter."
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [alert show];
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"SegueToCheckInDetailViewController"])
+    {
+        CheckInDetailViewController *dvc;
+        NSIndexPath                 *indexPath;
+        PFObject                    *checkIn;
+        PFGeoPoint                  *location;
+        CLLocationCoordinate2D      centerCoord;
+        
+        indexPath   = [self.tableView indexPathForCell:sender];
+        checkIn     = [self.post objectForKey:@"checkIn"];
+        location    = checkIn[@"location"];
+        centerCoord = CLLocationCoordinate2DMake(location.latitude, location.longitude);
+        
+        dvc = segue.destinationViewController;
+        dvc.checkIn = checkIn;
+    }
+}
+
 
 
 @end
