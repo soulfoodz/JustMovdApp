@@ -110,7 +110,7 @@
         <!--Check In Detail View Controller-->
         <scene sceneID="QB3-tS-mQS">
             <objects>
-                <viewController id="KBW-0G-C80" customClass="CheckInDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="checkInDetailVC" id="KBW-0G-C80" customClass="CheckInDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ROF-O2-zKL"/>
                         <viewControllerLayoutGuide type="bottom" id="vDk-5U-VG2"/>

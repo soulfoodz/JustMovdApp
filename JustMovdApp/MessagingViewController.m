@@ -239,9 +239,18 @@
         NSLog(@"backspace");
         [self increaseChatTextBoxSize];
         //return YES; //  <-- must always return YES to delete, else doesnt delete anything
+        [self checkSendButtonState];
+        
+        return YES;
     }
     
-    [self checkSendButtonState];
+    if ([text isEqualToString:@"\n"]) {
+        //Do whatever you want
+        NSLog(@"return");
+        [self increaseChatTextBoxSize];
+        [self checkSendButtonState];
+        return YES;
+    }
     
     return YES;
 }

@@ -9,18 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface CheckInLocation : NSObject <MKAnnotation, FBGraphPlace>
+@interface CheckInLocation : NSObject <MKAnnotation>
 
 // MKAnnotation protocol
 @property (nonatomic, readonly, copy) NSString *title;
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 
-// FBGraphPlace protocol
-@property (retain, nonatomic) NSString *category;
-@property (retain, nonatomic) NSString *id;
-@property (retain, nonatomic) id<FBGraphLocation> location;
-@property (retain, nonatomic) NSString *name;
-@property (retain, nonatomic) NSString *logoURLString;
+@property (strong, nonatomic) NSString *category;
+@property (strong, nonatomic) NSString *id;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *logoURLString;
+@property (nonatomic) CLLocationCoordinate2D location;
 
 
 @end

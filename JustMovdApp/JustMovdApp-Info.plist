@@ -14,6 +14,8 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleDisplayName</key>
+	<string>JustMovd</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.1</string>
 	<key>CFBundleSignature</key>
@@ -27,14 +29,14 @@
 			<string>facebookidentifier</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb471192969666367</string>
+				<string>fb630415430314309</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FacebookAppID</key>
-	<string>471192969666367</string>
+	<string>630415430314309</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>

@@ -76,22 +76,28 @@
 
 - (void)placePickerViewControllerSelectionDidChange:(FBPlacePickerViewController *)placePicker
 {
-    // FBPlace *place;
-    CheckInLocation *checkInLocation = [CheckInLocation new];
+    id <FBGraphPlace> place;
+    CheckInLocation *checkInLocation;
+    NSString        *urlString;
+    CLLocationCoordinate2D coord;
     
-    NSString *urlString = [[[placePicker.selection objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+    place           = placePicker.selection;
+    checkInLocation = [CheckInLocation new];
+    coord           = CLLocationCoordinate2DMake(place.location.latitude.floatValue,
+                                                 place.location.longitude.floatValue);
+    urlString       = [[[place objectForKey:@"picture"]
+                               objectForKey:@"data"]
+                               objectForKey:@"url"];
     
-    checkInLocation.location = [placePicker.selection objectForKey:@"location"];
-    checkInLocation.name     = [placePicker.selection objectForKey:@"name"];
-    checkInLocation.id       = [placePicker.selection objectForKey:@"id"];
-    checkInLocation.category = [placePicker.selection objectForKey:@"category"];
     checkInLocation.logoURLString = urlString;
-    
+    checkInLocation.coordinate    = coord;
+    checkInLocation.name          = [place objectForKey:@"name"];
+    checkInLocation.id            = [place objectForKey:@"id"];
+    checkInLocation.category      = [place objectForKey:@"category"];
     
     [self.locationManager stopUpdatingLocation];
     [self performSegueWithIdentifier:@"SegueFromCheckInLocationSelection"
                               sender:checkInLocation];
-
 }
 
 

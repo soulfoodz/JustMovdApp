@@ -696,7 +696,7 @@
 				ORGANIZATIONNAME = "Kabir Mahal";
 				TargetAttributes = {
 					5A5ABB391818420D00155B8F = {
-						DevelopmentTeam = MJRHVF6576;
+						DevelopmentTeam = AYXNN5VFR7;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
@@ -986,7 +986,7 @@
 				INFOPLIST_FILE = "JustMovdApp/JustMovdApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/KabirMahal/Documents/Mobile\\ Makers/JustMovdApp",
+					/Users/macbookpro/Dropbox/JustMovdApp,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1011,10 +1011,10 @@
 				INFOPLIST_FILE = "JustMovdApp/JustMovdApp-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/KabirMahal/Documents/Mobile\\ Makers/JustMovdApp",
+					/Users/macbookpro/Dropbox/JustMovdApp,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BE59304E-7237-47D9-9021-ED265B8B4D5C";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

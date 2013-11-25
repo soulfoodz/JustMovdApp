@@ -100,35 +100,21 @@
 
 - (void)loadOpenConversationsForCurrentUserFromParse
 {
-    
-//    PFQuery *conversationFromQuery = [PFQuery queryWithClassName:@"Conversation"];
-//    [conversationFromQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-//    PFQuery *conversationToQuery = [PFQuery queryWithClassName:@"Conversation"];
-//    [conversationToQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
-//    PFQuery *combinedQuery = [PFQuery orQueryWithSubqueries:@[conversationFromQuery, conversationToQuery]];
-//    [combinedQuery includeKey:@"toUser"];
-//    [combinedQuery includeKey:@"fromUser"];
-//    [combinedQuery findObjectsInBackgroundWithBlock:^(NSArray *combinedObjects, NSError *error) {
-//        NSLog(@"combineQuery %@", combinedObjects);
-//        PFUser *thisUser;
-//        for(PFObject *object in combinedObjects)
-//            thisUser = [object objectForKey:@"toUser"];
-//        NSLog(@"%@", thisUser);
-//    }];
-    
-    
+    returnedObjectsCount = 0;
     PFQuery *conversationQuery = [PFQuery queryWithClassName:@"Conversation"];
     [conversationQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
     [conversationQuery includeKey:@"toUser"];
     [conversationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
     {
-        returnedObjectsCount = (int)objects.count;
+        //returnedObjectsCount = (int)objects.count;
         
         if (objects.count > 0)
         {
             for (PFObject *conversationObject in objects)
             {
-                if ([conversationObject objectForKey:@"toUser"]) {
+                PFUser *toUser = [conversationObject objectForKey:@"toUser"];
+                if (toUser) {
+                    returnedObjectsCount++;
                     PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
                     NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
                     if ([conversationObject objectForKey:@"isShowBadge"]) {

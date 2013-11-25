@@ -344,12 +344,10 @@
     UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
     UserProfileViewController *profileVC = [messagesSB instantiateViewControllerWithIdentifier:@"profile"];
     
-    profileVC.facebookUsername = ((PFUser*)[matches objectAtIndex:indexPath.row]).username;
-    
+    profileVC.user               = ((PFUser*)[matches objectAtIndex:indexPath.row]);
+    profileVC.userProfilePicture = (UIImage *)[profilePics objectAtIndex:indexPath.row];
+
     [self.navigationController pushViewController:profileVC animated:YES];
-    
-    
-    
 }
 
 

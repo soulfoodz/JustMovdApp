@@ -388,7 +388,6 @@
     PFUser *postCreator;
     UIStoryboard *storyboard;
     UserProfileViewController *profileVC;
-    NSString     *username;
     
     storyboard  = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
     profileVC   = [storyboard instantiateViewControllerWithIdentifier:@"profile"];
@@ -399,14 +398,6 @@
     profileVC.userProfilePicture = (UIImage *)cell.profilePicture.image;
     
     [self.navigationController pushViewController:profileVC animated:YES];
-    
-//    UIStoryboard *storyboard;
-//    BucketListViewController *bucketVC;
-//    
-//    storyboard  = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
-//    bucketVC   =  [storyboard instantiateViewControllerWithIdentifier:@"BucketList"];
-//    
-//    [self.navigationController pushViewController:bucketVC animated:YES];
 }
 
 

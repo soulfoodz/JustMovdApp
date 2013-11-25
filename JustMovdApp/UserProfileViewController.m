@@ -24,6 +24,8 @@
 #import "PFImageView+ImageHandler.h"
 #import "CommentViewController.h"
 #import "NotificationIndicatorViewController.h"
+#import "ActivityFeedViewController.h"
+#import "CheckInDetailViewController.h"
 
 
 #define kLoadingCellTag 7
@@ -39,7 +41,6 @@
     CGRect aboutCellHeight;
     CGRect postCellHeight;
     TTTTimeIntervalFormatter *timeFormatter;
-    PFObject *selectedUserObject;
     NSMutableArray *commentCount;
     UILabel *headerLabelViewSection2;
     int index;
@@ -67,9 +68,11 @@
     [self intializeNeededStuff];
     
     facebookUsername = user.username;
-    if (user == [PFUser currentUser]) {
+    if ([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[ActivityFeedViewController class]]) {
         [self.navigationItem setLeftBarButtonItem:nil];
     }
+    
+    NSLog(@"Title: %@", [self.navigationController.viewControllers objectAtIndex:0]);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -94,6 +97,8 @@
     
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
+    //NSLog(@"User: %@", user);
+    
     userInfoDictionary = [[NSMutableDictionary alloc] init];
     userInfoDictionary[@"name"]             = @"";
     userInfoDictionary[@"gender"]           = @"";
@@ -113,60 +118,64 @@
     headerLabelViewSection2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
 }
 
+- (void)checkInMapImageWasTappedInCell:(PostCell *)cell
+{
+    NSIndexPath *indexPath = [userProfileTableView indexPathForSelectedRow];
+    PFObject *checkIn = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"checkIn"];
+    
+    UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
+    CheckInDetailViewController *checkInDetailVC = [feedSB instantiateViewControllerWithIdentifier:@"checkInDetailVC"];
+    
+    checkInDetailVC.checkIn = checkIn;
+    
+    [self.navigationController pushViewController:checkInDetailVC animated:YES];
+}
+
 ///////////////////////
 
 - (void)retrieveUserInfoFromParse
 {
     [spinner.view setHidden:NO];
     
-    if (facebookUsername && ![facebookUsername isEqualToString:[[PFUser currentUser] objectForKey:@"username"]])
+    if ([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[ActivityFeedViewController class]])
     {
         [self showEditButton:NO];
         
-        PFQuery *selectedUser = [PFUser query];
-        [selectedUser whereKey:@"FBUsername" equalTo:facebookUsername];
-        [selectedUser getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
-        {
-            selectedUserObject = object;
-            selectedUser.cachePolicy = kPFCachePolicyCacheThenNetwork;
-            imageFile = [object objectForKey:@"profilePictureFile"];
-            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                profilePicture = [UIImage imageWithData:data];
-                profilePictureBlur = [profilePicture stackBlur:10];
-                [userProfileTableView reloadData];
-            }];
-            
-            userInfoDictionary[@"name"]     = [object objectForKey:@"firstName"];
-            userInfoDictionary[@"gender"]   = [object objectForKey:@"gender"];
-            userInfoDictionary[@"email"]    = [object objectForKey:@"email"];
-            userInfoDictionary[@"about"]    = [object objectForKey:@"about"];
-            userInfoDictionary[@"location"] = [object objectForKey:@"location"];
-            
-            PFQuery *interestQuery = [PFQuery queryWithClassName:@"Interests"];
-            [interestQuery whereKey:@"User" equalTo:object];
-            [interestQuery getFirstObjectInBackgroundWithBlock:^(PFObject *interestObject, NSError *error)
-            {
-                if (interestObject)
-                {
-                    userInfoDictionary[@"firstInterest"]     = [interestObject objectForKey:@"first"];
-                    userInfoDictionary[@"secondInterest"]     = [interestObject objectForKey:@"second"];
-                    userInfoDictionary[@"thirdInterest"]     = [interestObject objectForKey:@"third"];
-                    userInfoDictionary[@"fourthInterest"]     = [interestObject objectForKey:@"fourth"];
-                    [userProfileTableView reloadData];
-                }
-            }];
-            
-            //Convert age
-            NSInteger age = [self calculateYearsFromDateStringWithFormatMMddyyyy:[object objectForKey:@"birthday"]];
-            //////////////
-            
-            userInfoDictionary[@"age"] = [NSString stringWithFormat:@"%li", (long)age];
-            
-            //[self retriveUserPostsAndCommentsCount];
-            [self queryForTable];
-            
-            [userProfileTableView reloadData];
-        }];
+        profilePicture = userProfilePicture;
+        profilePictureBlur = [profilePicture stackBlur:10];
+        [userProfileTableView reloadData];
+        
+        userInfoDictionary[@"name"]     = [user objectForKey:@"firstName"];
+        userInfoDictionary[@"gender"]   = [user objectForKey:@"gender"];
+        userInfoDictionary[@"email"]    = [user objectForKey:@"email"];
+        userInfoDictionary[@"about"]    = [user objectForKey:@"about"];
+        userInfoDictionary[@"location"] = [user objectForKey:@"location"];
+        
+        PFQuery *interestQuery = [PFQuery queryWithClassName:@"Interests"];
+        [interestQuery includeKey:@"User"];
+        [interestQuery whereKey:@"User" equalTo:user];
+        [interestQuery getFirstObjectInBackgroundWithBlock:^(PFObject *interestObject, NSError *error)
+         {
+             if (interestObject)
+             {
+                 userInfoDictionary[@"firstInterest"]     = [interestObject objectForKey:@"first"];
+                 userInfoDictionary[@"secondInterest"]    = [interestObject objectForKey:@"second"];
+                 userInfoDictionary[@"thirdInterest"]     = [interestObject objectForKey:@"third"];
+                 userInfoDictionary[@"fourthInterest"]    = [interestObject objectForKey:@"fourth"];
+                 [userProfileTableView reloadData];
+             }
+         }];
+        
+        //Convert age
+        NSInteger age = [self calculateYearsFromDateStringWithFormatMMddyyyy:[user objectForKey:@"birthday"]];
+        //////////////
+        
+        userInfoDictionary[@"age"] = [NSString stringWithFormat:@"%li", (long)age];
+        
+        //[self retriveUserPostsAndCommentsCount];
+        [self queryForTable];
+        
+        [userProfileTableView reloadData];
     }
     else
     {
@@ -213,7 +222,7 @@
 
 - (void)queryForTable
 {
-    if (!facebookUsername || [facebookUsername isEqualToString:[[PFUser currentUser] objectForKey:@"username"]])
+    if (!user || [user.username isEqualToString:[PFUser currentUser].username])
     {
         if ([userInfoDictionary[@"posts"] count] == 0){
             PFQuery *queryForAllPosts;
@@ -225,8 +234,8 @@
             queryForAllPosts.cachePolicy = kPFCachePolicyNetworkOnly;
             [queryForAllPosts orderByDescending:@"createdAt"];
             
-            [queryForAllPosts findObjectsInBackgroundWithBlock:
-             ^(NSArray *queryResults, NSError *error) {
+            [queryForAllPosts findObjectsInBackgroundWithBlock:^(NSArray *queryResults, NSError *error)
+            {
                  if (!error)
                  {
                      // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
@@ -303,7 +312,7 @@
             PFQuery *queryForAllPosts;
             queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
             [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
-            [queryForAllPosts whereKey:@"user" equalTo:selectedUserObject];
+            [queryForAllPosts whereKey:@"user" equalTo:user];
             [queryForAllPosts includeKey:@"checkIn"];
             queryForAllPosts.limit = 10;
             queryForAllPosts.cachePolicy = kPFCachePolicyNetworkOnly;
@@ -332,14 +341,13 @@
                  }
                  else NSLog(@"Error fetching posts : %@", error);
              }];
-            
         }
         
         if ([userInfoDictionary[@"posts"] count] > 0){
             PFQuery *queryForAllPosts;
             queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
             [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
-            [queryForAllPosts whereKey:@"user" equalTo:selectedUserObject];
+            [queryForAllPosts whereKey:@"user" equalTo:user];
             [queryForAllPosts whereKey:@"createdAt" lessThan:[[userInfoDictionary[@"posts"] lastObject] createdAt]];
             
             PFQuery *greaterThanQuery;
@@ -466,18 +474,18 @@
     
     if ([segue.identifier isEqualToString:@"segueProfileToMessaging"]) {
         MessagingViewController *conversationVC = segue.destinationViewController;
-        conversationVC.selectedUser = selectedUserObject;
+        conversationVC.selectedUser = user;
         
         PFQuery *checkExistingConversationMeToOther = [PFQuery queryWithClassName:@"Conversation"];
         [checkExistingConversationMeToOther whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-        [checkExistingConversationMeToOther whereKey:@"toUser" equalTo:selectedUserObject];
+        [checkExistingConversationMeToOther whereKey:@"toUser" equalTo:user];
         [checkExistingConversationMeToOther countObjectsInBackgroundWithBlock:^(int number, NSError *error)
         {
             if (number == 0)
             {
                 PFObject *newMessage1 = [PFObject objectWithClassName:@"Conversation"];
                 [newMessage1 setObject:[PFUser currentUser] forKey:@"fromUser"];
-                [newMessage1 setObject:selectedUserObject forKey:@"toUser"];
+                [newMessage1 setObject:user forKey:@"toUser"];
                 [newMessage1 setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
                 [newMessage1 saveInBackground];
             }
@@ -485,14 +493,14 @@
         
         PFQuery *checkExistingConversationOtherToMe = [PFQuery queryWithClassName:@"Conversation"];
         [checkExistingConversationOtherToMe whereKey:@"toUser" equalTo:[PFUser currentUser]];
-        [checkExistingConversationOtherToMe whereKey:@"fromUser" equalTo:selectedUserObject];
+        [checkExistingConversationOtherToMe whereKey:@"fromUser" equalTo:user];
         [checkExistingConversationOtherToMe countObjectsInBackgroundWithBlock:^(int number, NSError *error)
          {
              if (number == 0)
              {
                  PFObject *newMessage2 = [PFObject objectWithClassName:@"Conversation"];
                  [newMessage2 setObject:[PFUser currentUser] forKey:@"toUser"];
-                 [newMessage2 setObject:selectedUserObject forKey:@"fromUser"];
+                 [newMessage2 setObject:user forKey:@"fromUser"];
                  [newMessage2 setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
                  [newMessage2 saveInBackground];
              }
@@ -658,6 +666,7 @@
     if (!postCell) {
         postCell = [[PostCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:postCellID];
         [postCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        postCell.delegate = self;
     }
     
     ProfileInterestCell *interestCell = [tableView dequeueReusableCellWithIdentifier:interestCellID];
@@ -686,7 +695,7 @@
                 pictureCell.profilePictureOriginal.image = profilePicture;
                 pictureCell.usernameLabel.text = [NSString stringWithFormat:@"%@, %@/%@", name, age, gender];
                 pictureCell.fromTownLabel.text = [NSString stringWithFormat:@"via %@", userInfoDictionary[@"location"]];
-                if (!facebookUsername || [[[PFUser currentUser] username] isEqualToString:facebookUsername]) {
+                if (!user || [user.username isEqualToString:[PFUser currentUser].username]) {
                     [pictureCell.messageButton setHidden:YES];
                 }
                 returnCell = pictureCell;
@@ -753,19 +762,18 @@
         CommentViewController *commentVC = [feedSB instantiateViewControllerWithIdentifier:@"commentVC"];
         commentVC.post = userInfoDictionary[@"posts"][indexPath.row];
         
-        PFUser *selectUser = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"user"];
-        [selectUser setObject:imageFile forKey:@"profilePictureFile"];
-        if (facebookUsername) {
-            [selectUser setObject:[selectedUserObject objectForKey:@"firstName"] forKey:@"firstName"];
+        PFUser *selectUser = (PFUser *)[userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"user"];
+        
+        if (user) {
+            [selectUser setObject:[user objectForKey:@"firstName"] forKey:@"firstName"];
+            [selectUser setObject:[user objectForKey:@"profilePictureFile"] forKey:@"profilePictureFile"];
         }
         else {
+            [selectUser setObject:imageFile forKey:@"profilePictureFile"];
             [selectUser setObject:[[PFUser currentUser] objectForKey:@"firstName"] forKey:@"firstName"];
         }
         
         [self.navigationController pushViewController:commentVC animated:YES];
-        
-        
-        
     }
 }
 

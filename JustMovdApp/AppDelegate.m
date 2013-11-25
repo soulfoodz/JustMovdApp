@@ -105,6 +105,7 @@
         UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
             OpenConversationViewController *conversationVC = [messagesSB instantiateViewControllerWithIdentifier:@"conversation"];
         UINavigationController *navigationForConversationVC = [[UINavigationController alloc] initWithRootViewController:conversationVC];
+        navigationForConversationVC.navigationBar.tintColor = [UIColor blackColor];
         
         UIStoryboard *questionSB = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
         SideBarViewController *sideBarVC = [questionSB instantiateViewControllerWithIdentifier:@"sidebarVC"];
