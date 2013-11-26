@@ -407,6 +407,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		523321DD18445F2F003879C5 /* Eric's Files */ = {
+			isa = PBXGroup;
+			children = (
+				5A169AA618201F340042767E /* ActivityFeedViewController.h */,
+				5A169AA718201F340042767E /* ActivityFeedViewController.m */,
+				528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */,
+				5233218018349A77003879C5 /* CheckInDetailViewController.h */,
+				5233218118349A77003879C5 /* CheckInDetailViewController.m */,
+				5233218318354B31003879C5 /* CheckInLocation.h */,
+				5233218418354B31003879C5 /* CheckInLocation.m */,
+				5AC9DC31182AC9F20051EF9A /* CommentViewController.h */,
+				5AC9DC32182AC9F20051EF9A /* CommentViewController.m */,
+				526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */,
+				526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */,
+				5A169AC118201F340042767E /* FeedStoryboard.storyboard */,
+				52ED7E9C1827357A00BFD440 /* PostCell.h */,
+				52ED7E9D1827357A00BFD440 /* PostCell.m */,
+				5A169AA518201F340042767E /* PostCellDelegate.h */,
+				5AC9DC45182ACAEE0051EF9A /* StatusUpdateViewController.h */,
+				5AC9DC46182ACAEE0051EF9A /* StatusUpdateViewController.m */,
+			);
+			name = "Eric's Files";
+			sourceTree = "<group>";
+		};
 		5A4F5CFC1821666600CA6F17 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,9 +511,7 @@
 				5AB695841821656A008F7832 /* AboutEditCell.m */,
 				52ED7EB11829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png */,
 				5A4F5CE91821661400CA6F17 /* activityfeedcell_icon_comment.png */,
-				5A169AA618201F340042767E /* ActivityFeedViewController.h */,
-				5A169AA718201F340042767E /* ActivityFeedViewController.m */,
-				528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */,
+				523321DD18445F2F003879C5 /* Eric's Files */,
 				5A169AAA18201F340042767E /* AppDelegate.h */,
 				5A169AAB18201F340042767E /* AppDelegate.m */,
 				526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */,
@@ -508,15 +530,9 @@
 				523321751832EDF3003879C5 /* BucketListViewController.h */,
 				523321761832EDF3003879C5 /* BucketListViewController.m */,
 				526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */,
-				5233218018349A77003879C5 /* CheckInDetailViewController.h */,
-				5233218118349A77003879C5 /* CheckInDetailViewController.m */,
-				5233218318354B31003879C5 /* CheckInLocation.h */,
-				5233218418354B31003879C5 /* CheckInLocation.m */,
 				5A2F2B24182C032A0050A227 /* chicago_skyline_blur@2x.png */,
 				E5DB80C018286F3500C0DA0C /* coffee@2x.png */,
 				5A4F5CF71821666600CA6F17 /* coffee_circle.png */,
-				5AC9DC31182AC9F20051EF9A /* CommentViewController.h */,
-				5AC9DC32182AC9F20051EF9A /* CommentViewController.m */,
 				5AC9DC4C182ACB520051EF9A /* Comms.h */,
 				5AC9DC4D182ACB520051EF9A /* Comms.m */,
 				5A2F2B2C182C0D630050A227 /* couple_blur@2x.png */,
@@ -524,11 +540,8 @@
 				5AB6958618216596008F7832 /* EditProfileViewController.m */,
 				5A4F5CFC1821666600CA6F17 /* en.lproj */,
 				5A2F2B26182C060F0050A227 /* FacebookLoginButton@2x.png */,
-				526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */,
-				526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */,
 				5A2F2B08182AE1900050A227 /* FeedConnectorVC.h */,
 				5A2F2B09182AE1900050A227 /* FeedConnectorVC.m */,
-				5A169AC118201F340042767E /* FeedStoryboard.storyboard */,
 				E5DB80C118286F3500C0DA0C /* games@2x.png */,
 				5A169AC218201F340042767E /* Images.xcassets */,
 				5AB695801821649D008F7832 /* InfoCell.h */,
@@ -573,10 +586,7 @@
 				5AC9DC3A182ACA840051EF9A /* PFImageView+ImageHandler.m */,
 				5AC9DC28182AC9770051EF9A /* PictureCell.h */,
 				5AC9DC29182AC9770051EF9A /* PictureCell.m */,
-				52ED7E9C1827357A00BFD440 /* PostCell.h */,
-				52ED7E9D1827357A00BFD440 /* PostCell.m */,
 				5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */,
-				5A169AA518201F340042767E /* PostCellDelegate.h */,
 				5AC9DC2E182AC9DE0051EF9A /* PostsByUserCell.h */,
 				5AC9DC2F182AC9DE0051EF9A /* PostsByUserCell.m */,
 				E5DB80CE18287F7500C0DA0C /* ProfileInterestCell.h */,
@@ -599,8 +609,6 @@
 				E5DB80D41829765100C0DA0C /* SpinnerViewController.m */,
 				E5DB80C218286F3500C0DA0C /* sports@2x.png */,
 				5A4F5D0C1821666600CA6F17 /* sports_circle.png */,
-				5AC9DC45182ACAEE0051EF9A /* StatusUpdateViewController.h */,
-				5AC9DC46182ACAEE0051EF9A /* StatusUpdateViewController.m */,
 				5AC9DC14182859A10051EF9A /* SWRevealViewController.h */,
 				5AC9DC15182859A10051EF9A /* SWRevealViewController.m */,
 				5A3968881830B13F008A9F8A /* TestFlight+AsyncLogging.h */,

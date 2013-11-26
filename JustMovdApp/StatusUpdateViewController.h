@@ -20,7 +20,6 @@ typedef void (^callbackBlock)();
 @property BOOL presentingCheckIn;
 @property (strong, nonatomic) callbackBlock reloadTVBlock;
 @property (strong, nonatomic) id <AddNewPostToActivityFeedDelegate> delegate;
-//@property (strong, nonatomic) id <FBGraphPlace> selectedPlace;
 @property (strong, nonatomic) CheckInLocation *selectedPlace;
 @property (strong, nonatomic) PFUser *user;
 @property (strong, nonatomic) PFFile *mapFile;

@@ -79,7 +79,16 @@
     [self.view addSubview:nextButton];
     [nextButton addTarget:self action:@selector(nextView) forControlEvents:UIControlEventTouchUpInside];
     
-    
+/*
+    UIButton *eulaLabelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    eulaLabelBtn.frame = CGRectMake(0, 0, 100, 20);
+    eulaLabelBtn.center = CGPointMake(160, 520);
+    eulaLabelBtn.titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:10.0f];
+    [eulaLabelBtn setTitle:@"View EULA" forState:UIControlStateNormal];
+    [eulaLabelBtn addTarget:self action:@selector(goToEULA) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:eulaLabelBtn];
+ */
+
     UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 150, 200, 50)];
     
     justMovdLabel.text = @"JustMovd";
@@ -113,6 +122,31 @@
 
 }
 
+
+/*
+- (void)goToEULA
+{
+    UIViewController *eulaVC;
+    UINavigationController *navC;
+    UIWebView        *webView;
+    NSString         *urlString;
+    NSURL            *url;
+    NSURLRequest     *aRequest;
+    
+    urlString  = @"http://www.apple.com/legal/internet-services/itunes/appstore/dev/stdeula/";
+    url        = [NSURL URLWithString:urlString];
+    aRequest   = [NSURLRequest requestWithURL:url];
+    
+    webView     = [UIWebView new];
+    eulaVC      = [[UIViewController alloc] init];
+    eulaVC.view = webView;
+    
+    [webView loadRequest:aRequest];
+    navC = [[UINavigationController alloc] initWithRootViewController:eulaVC];
+    [self presentViewController:eulaVC animated:YES completion:nil];
+     
+}
+*/
 
 
 -(void)nextView {

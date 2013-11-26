@@ -16,9 +16,6 @@
 
 @interface StatusUpdateViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *checkInLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *checkInImageView;
-
 @end
 
 @implementation StatusUpdateViewController
@@ -34,8 +31,10 @@
     self.textView.textColor = [UIColor darkGrayColor];
     
     // Check to see if view should go straight to "CheckInVC"
-    if (self.presentingCheckIn == YES) self.view.alpha = 0;
-    else if (!avatarImageView) [self setAvatarThumbnail];
+    if (self.presentingCheckIn == YES)
+        self.view.alpha = 0;
+    else if (!avatarImageView)
+        [self setAvatarThumbnail];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -43,10 +42,7 @@
     if (self.presentingCheckIn == YES)
        [self performSegueWithIdentifier:@"SegueToCheckIn" sender:self];
     else
-    {
         [self.textView becomeFirstResponder];
-        [self checkForFBPlaceAddedToUpdate];
-    }
 }
 
 
@@ -59,23 +55,6 @@
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
     self.postButton.enabled = YES;
-}
-
-
-- (void)checkForFBPlaceAddedToUpdate
-{
-    if (self.selectedPlace)
-    {
-        self.checkInImageView.hidden = NO;
-        self.checkInImageView.clipsToBounds = YES;
-        self.checkInLabel.hidden = NO;
-        self.checkInLabel.text = [NSString stringWithFormat:@"- at %@",self.selectedPlace.name];
-    }
-    else
-    {
-        self.checkInLabel.hidden = YES;
-        self.checkInImageView.hidden = YES;
-    }
 }
 
 
