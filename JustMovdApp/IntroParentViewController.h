@@ -11,7 +11,7 @@
 #import "QuestionnaireVCDelegate.h"
 
 
-@interface IntroParentViewController : UIViewController <UIPageViewControllerDataSource, CommsDelegate, QuestionnaireVCDelegate, UIPageViewControllerDelegate>
+@interface IntroParentViewController : UIViewController <UIPageViewControllerDataSource, CommsDelegate, QuestionnaireVCDelegate, UIPageViewControllerDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 

@@ -254,22 +254,25 @@
 - (void)animateViewDown
 {
     // Animate the textViewContainer down
-    [UIView animateWithDuration:0.3f animations:^{
+    [UIView animateWithDuration:0.3f
+                     animations:^{
+                                 // Animate the textView beneath the keyboard
+                                 self.textViewContainer.frame = CGRectMake(self.textViewContainer.frame.origin.x,
+                                 self.view.bounds.size.height - self.textViewContainer.frame.size.height,
+                                 self.textViewContainer.frame.size.width,
+                                 self.textViewContainer.frame.size.height);
         
-        // Animate the textView beneath the keyboard
-        self.textViewContainer.frame = CGRectMake(self.textViewContainer.frame.origin.x,
-                                                  self.view.bounds.size.height - self.textViewContainer.frame.size.height,
-                                                  self.textViewContainer.frame.size.width,
-                                                  self.textViewContainer.frame.size.height);
-        
-        if (self.commentsArray.count > 1){
-            [UIView animateWithDuration:0.3f animations:^{
-                
-                // Shorten the tableviews frame
-                self.tableView.frame = CGRectMake(0,0,320,520);
-            }];
-        }
-    }];
+                                 if (self.commentsArray.count > 1)
+                                    {
+                                    [UIView animateWithDuration:0.3f
+                                                     animations:^{
+                                                                 // Shorten the tableviews frame
+                                                                 self.tableView.frame = CGRectMake(0,0,320,520);
+                                                                  }
+                                    ];
+                                    }
+                                  }
+     ];
 }
 
 
@@ -278,10 +281,10 @@
 
 - (IBAction)addCommentPressed:(UIButton *)sender
 {
-    if (self.textView.text.length == 0)
+ if (self.textView.text.length == 0)
     {
-        [self displayNoTextAlert];
-        return;
+    [self displayNoTextAlert];
+    return;
     }
 
     // Create a newComment object
@@ -484,12 +487,14 @@
 
 - (void)presentAlertViewForFlaggedPost
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
-                                                    message:@"JustMovd has received your report and will look into the matter."
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK" otherButtonTitles:nil];
+UIAlertView *alert;
     
-    [alert show];
+ alert = [[UIAlertView alloc] initWithTitle:@"Thank You!"
+                                    message:@"JustMovd has received your report and will look into the matter."
+                                   delegate:self
+                          cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+ [alert show];
 }
 
 
