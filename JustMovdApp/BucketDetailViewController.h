@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BucketDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface BucketDetailViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) PFObject *bucket;
 
-// Outlets
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 
 @end

@@ -7,8 +7,13 @@
 //
 
 #import "BucketDetailViewController.h"
+#import "BucketDetailCell.h"
+#import "FoursquareServices.h"
 
 @interface BucketDetailViewController ()
+
+// Outlets
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 

@@ -16,6 +16,12 @@
 		5233218B183AFBD2003879C5 /* postcell_reportbutton_flagicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */; };
 		5233218E183B2FEC003879C5 /* bucketlistcell_timeicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */; };
 		5233218F183B2FEC003879C5 /* bucketlistcell_distanceicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */; };
+		5233223218498DB7003879C5 /* BucketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223118498DB7003879C5 /* BucketCell.m */; };
+		52332235184991A6003879C5 /* BucketListCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52332234184991A6003879C5 /* BucketListCollectionViewController.m */; };
+		5233223818499348003879C5 /* ParseServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223718499348003879C5 /* ParseServices.m */; };
+		5233223B184D26D5003879C5 /* FoursquareServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223A184D26D5003879C5 /* FoursquareServices.m */; };
+		5233223F184D40D4003879C5 /* FoursquareVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223E184D40D4003879C5 /* FoursquareVenue.m */; };
+		52332242184D7F05003879C5 /* BucketDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52332241184D7F05003879C5 /* BucketDetailCell.m */; };
 		526D2DA1182BC2D300D2F5E4 /* avatar_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */; };
 		526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */; };
 		526D2DA8182C3C3200D2F5E4 /* checkin_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */; };
@@ -170,6 +176,18 @@
 		5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postcell_reportbutton_flagicon.png; sourceTree = "<group>"; };
 		5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketlistcell_timeicon.png; sourceTree = "<group>"; };
 		5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketlistcell_distanceicon.png; sourceTree = "<group>"; };
+		5233223018498DB7003879C5 /* BucketCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketCell.h; sourceTree = "<group>"; };
+		5233223118498DB7003879C5 /* BucketCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketCell.m; sourceTree = "<group>"; };
+		52332233184991A6003879C5 /* BucketListCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListCollectionViewController.h; sourceTree = "<group>"; };
+		52332234184991A6003879C5 /* BucketListCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListCollectionViewController.m; sourceTree = "<group>"; };
+		5233223618499348003879C5 /* ParseServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseServices.h; sourceTree = "<group>"; };
+		5233223718499348003879C5 /* ParseServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseServices.m; sourceTree = "<group>"; };
+		52332239184D26D5003879C5 /* FoursquareServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareServices.h; sourceTree = "<group>"; };
+		5233223A184D26D5003879C5 /* FoursquareServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareServices.m; sourceTree = "<group>"; };
+		5233223D184D40D4003879C5 /* FoursquareVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareVenue.h; sourceTree = "<group>"; };
+		5233223E184D40D4003879C5 /* FoursquareVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareVenue.m; sourceTree = "<group>"; };
+		52332240184D7F05003879C5 /* BucketDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketDetailCell.h; sourceTree = "<group>"; };
+		52332241184D7F05003879C5 /* BucketDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketDetailCell.m; sourceTree = "<group>"; };
 		526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_placeholder.png; sourceTree = "<group>"; };
 		526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCheckInViewController.h; sourceTree = "<group>"; };
 		526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCheckInViewController.m; sourceTree = "<group>"; };
@@ -410,9 +428,27 @@
 		523321DD18445F2F003879C5 /* Eric's Files */ = {
 			isa = PBXGroup;
 			children = (
+				5233223D184D40D4003879C5 /* FoursquareVenue.h */,
+				5233223E184D40D4003879C5 /* FoursquareVenue.m */,
+				5233223C184D26EE003879C5 /* Services */,
 				5A169AA618201F340042767E /* ActivityFeedViewController.h */,
 				5A169AA718201F340042767E /* ActivityFeedViewController.m */,
 				528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */,
+				5233217D18345B40003879C5 /* BucketDetailViewController.h */,
+				5233217E18345B40003879C5 /* BucketDetailViewController.m */,
+				5233217A1832F0E2003879C5 /* BucketListCell.h */,
+				5233217B1832F0E2003879C5 /* BucketListCell.m */,
+				5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */,
+				5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */,
+				523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */,
+				52332240184D7F05003879C5 /* BucketDetailCell.h */,
+				52332241184D7F05003879C5 /* BucketDetailCell.m */,
+				5233223018498DB7003879C5 /* BucketCell.h */,
+				5233223118498DB7003879C5 /* BucketCell.m */,
+				52332233184991A6003879C5 /* BucketListCollectionViewController.h */,
+				52332234184991A6003879C5 /* BucketListCollectionViewController.m */,
+				523321751832EDF3003879C5 /* BucketListViewController.h */,
+				523321761832EDF3003879C5 /* BucketListViewController.m */,
 				5233218018349A77003879C5 /* CheckInDetailViewController.h */,
 				5233218118349A77003879C5 /* CheckInDetailViewController.m */,
 				5233218318354B31003879C5 /* CheckInLocation.h */,
@@ -429,6 +465,17 @@
 				5AC9DC46182ACAEE0051EF9A /* StatusUpdateViewController.m */,
 			);
 			name = "Eric's Files";
+			sourceTree = "<group>";
+		};
+		5233223C184D26EE003879C5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				52332239184D26D5003879C5 /* FoursquareServices.h */,
+				5233223A184D26D5003879C5 /* FoursquareServices.m */,
+				5233223618499348003879C5 /* ParseServices.h */,
+				5233223718499348003879C5 /* ParseServices.m */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		5A4F5CFC1821666600CA6F17 /* en.lproj */ = {
@@ -520,15 +567,6 @@
 				5A4F5CF51821666600CA6F17 /* beer_size@2x.png */,
 				5A2F2B18182BFCA60050A227 /* book@2x.png */,
 				5A2F2B28182C06E50050A227 /* boston_skyline_blur@2x.png */,
-				5233217D18345B40003879C5 /* BucketDetailViewController.h */,
-				5233217E18345B40003879C5 /* BucketDetailViewController.m */,
-				5233217A1832F0E2003879C5 /* BucketListCell.h */,
-				5233217B1832F0E2003879C5 /* BucketListCell.m */,
-				5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */,
-				5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */,
-				523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */,
-				523321751832EDF3003879C5 /* BucketListViewController.h */,
-				523321761832EDF3003879C5 /* BucketListViewController.m */,
 				526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */,
 				5A2F2B24182C032A0050A227 /* chicago_skyline_blur@2x.png */,
 				E5DB80C018286F3500C0DA0C /* coffee@2x.png */,
@@ -808,6 +846,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52332242184D7F05003879C5 /* BucketDetailCell.m in Sources */,
 				5A2F2ADF182ACDE40050A227 /* AboutEditCell.m in Sources */,
 				5A2F2AE1182ACDE40050A227 /* ActivityFeedViewController.m in Sources */,
 				5A2F2AE2182ACDE40050A227 /* AppDelegate.m in Sources */,
@@ -820,16 +859,20 @@
 				5A2F2AE9182ACDE40050A227 /* InfoCell.m in Sources */,
 				5A2F2AEA182ACDE40050A227 /* IntroChildViewController.m in Sources */,
 				5A2F2AEB182ACDE40050A227 /* IntroParentViewController.m in Sources */,
+				5233223F184D40D4003879C5 /* FoursquareVenue.m in Sources */,
 				5A2F2AEC182ACDE40050A227 /* JMCache.m in Sources */,
+				5233223218498DB7003879C5 /* BucketCell.m in Sources */,
 				5A2F2AEE182ACDE40050A227 /* main.m in Sources */,
 				5A2F2AEF182ACDE40050A227 /* MatchTableViewCell.m in Sources */,
 				5A2F2AF0182ACDE40050A227 /* MessageBubbleLeftCell.m in Sources */,
 				5A2F2AF1182ACDE40050A227 /* MessageBubbleRightCell.m in Sources */,
 				5A2F2AF2182ACDE40050A227 /* MessagingViewController.m in Sources */,
 				5233218518354B32003879C5 /* CheckInLocation.m in Sources */,
+				5233223B184D26D5003879C5 /* FoursquareServices.m in Sources */,
 				5A2F2AF3182ACDE40050A227 /* NavViewController.m in Sources */,
 				5A2F2AF4182ACDE40050A227 /* OpenConversationCell.m in Sources */,
 				5A2F2AF5182ACDE40050A227 /* OpenConversationViewController.m in Sources */,
+				5233223818499348003879C5 /* ParseServices.m in Sources */,
 				5A2F2AF6182ACDE40050A227 /* OtherEditCell.m in Sources */,
 				5A2F2AF7182ACDE40050A227 /* PFImageView+ImageHandler.m in Sources */,
 				5A2F2AF8182ACDE40050A227 /* PictureCell.m in Sources */,
@@ -841,6 +884,7 @@
 				5A2F2AFC182ACDE40050A227 /* QuestionnaireViewController.m in Sources */,
 				5233218218349A77003879C5 /* CheckInDetailViewController.m in Sources */,
 				5A2F2AFD182ACDE40050A227 /* QuestionView.m in Sources */,
+				52332235184991A6003879C5 /* BucketListCollectionViewController.m in Sources */,
 				5A2F2AFE182ACDE40050A227 /* SideBarViewController.m in Sources */,
 				5A2F2AFF182ACDE40050A227 /* SpinnerViewController.m in Sources */,
 				5A2F2B00182ACDE40050A227 /* StatusUpdateViewController.m in Sources */,

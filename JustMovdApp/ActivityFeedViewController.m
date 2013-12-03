@@ -18,7 +18,7 @@
 #import "UserProfileViewController.h"
 #import "CheckInDetailViewController.h"
 #import "CheckInLocation.h"
-#import "BucketListViewController.h"
+#import "BucketListCollectionViewController.h"
 
 #define kLoadingCellTag 7
 #define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
@@ -229,6 +229,28 @@
 }
 
 
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    
+//    PFObject *checkIn;
+//    
+//    checkIn = [PFObject objectWithClassName:@"CheckIn"];
+//    checkIn = [self.postsArray[indexPath.row] objectForKey:@"checkIn"];
+//    
+//    
+//    // Check for a checkin and begin loading photo here
+//    if (checkIn)
+//    {
+//        cell.hasCheckIn        = YES;
+//        placeName              = [NSString stringWithFormat:@"at %@", [checkIn objectForKey:@"placeName"]];
+//        cell.checkInLabel.text = placeName;
+//        [cell.checkInImage setFile:(PFFile *)checkIn[@"mapImage"] forImageView:cell.checkInImage];
+//    }
+//    
+//    
+//}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"SegueToCommentViewController" sender:indexPath];
@@ -383,10 +405,18 @@
 
 -(void)avatarImageWasTappedInCell:(PostCell *)cell
 {
-
-    NSIndexPath  *indexPath;
-    PFUser *postCreator;
     UIStoryboard *storyboard;
+    BucketListCollectionViewController *bucketVC;
+    
+    storyboard = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
+    bucketVC   = [storyboard instantiateInitialViewController];
+    [self presentViewController:bucketVC animated:YES completion:nil];
+    
+    
+/*
+    NSIndexPath               *indexPath;
+    PFUser                    *postCreator;
+    UIStoryboard              *storyboard;
     UserProfileViewController *profileVC;
     
     storyboard  = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
@@ -398,6 +428,7 @@
     profileVC.userProfilePicture = (UIImage *)cell.profilePicture.image;
     
     [self.navigationController pushViewController:profileVC animated:YES];
+ */
 }
 
 
