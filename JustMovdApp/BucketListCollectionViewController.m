@@ -104,6 +104,7 @@
     cell.distanceLabel.text  = [NSString stringWithFormat:@"%.1f mi", milesApart];
     //cell.bucketNumLabel.text = [NSString stringWithFormat:@"%@ bucket lists", bucket[@"bucketListCount"]];
     cell.timeLabel.text      = @"2 hrs";
+    cell.creatorLabel.text   = @"Created by:";
     
     // Set the cell's image in background
     [cell.mainImage setFile:bucket[@"image"] forImageView:cell.mainImage];
@@ -167,10 +168,10 @@
         NSIndexPath                *ip;
         BucketDetailViewController *dvc;
         
-        ip             = (NSIndexPath *)sender;
-        selectedBucket = self.bucketList[ip.row];
-        dvc            = segue.destinationViewController;
-        dvc.bucket     = selectedBucket;
+        ip              = (NSIndexPath *)sender;
+        selectedBucket  = self.bucketList[ip.row];
+        dvc             = segue.destinationViewController;
+        dvc.bucket      = selectedBucket;
     }
 }
 

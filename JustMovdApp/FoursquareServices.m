@@ -42,67 +42,65 @@
     NSString     *urlString;
     NSURL        *URL;
     
-    urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/VENUE_ID?&client_id=%@&client_secret=%@&v=%@", clientID, clientSecret, fsApiVersion];
+    urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/%@?&client_id=%@&client_secret=%@&v=%@", venueID, clientID, clientSecret, fsApiVersion];
     URL       = [NSURL URLWithString:urlString];
     
     return URL;
 }
 
 
-//- (void)getInfoForVenueWithID:(NSString *)venueID completionBlock:(VenueSearchCompletionBlock)completionBlock;
-//{
-//    NSURL        *url;
-//    NSURLRequest *urlRequest;
-//    
-//    url        = [self getURLForVenueWithID:venueID];
-//    urlRequest = [self foursquareURLRequestForVenuesNearLatitude:latitude
-//                                                       longitude:longitude
-//                                                           limit:venueLimit
-//                                                      searchTerm:searchterm];
-//    
-//    [NSURLConnection sendAsynchronousRequest:urlRequest
-//                                       queue:[NSOperationQueue mainQueue]
-//                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//                               
-//                               NSDictionary   *dataDict;
-//                               NSArray        *venuesArray;
-//                               NSMutableArray *venues;
-//                               
-//                               dataDict = [NSJSONSerialization JSONObjectWithData:data
-//                                                                          options:0
-//                                                                            error:&connectionError];
-//                               
-//                               // If there's an error, send back the completion block with the error
-//                               // Else, pull out the data
-//                               if (connectionError) completionBlock(NO, nil);
-//                               
-//                               venuesArray = dataDict[@"response"][@"venues"];
-//                               venues      = [NSMutableArray new];
-//                               
-//                               // for each venue in the array, create a FoursquareVenue object
-//                               for (id venue in venuesArray)
-//                               {
-//                                   FoursquareVenue *newVenue;
-//                                   
-//                                   newVenue              = [FoursquareVenue new];
-//                                   newVenue.id           = venue[@"id"];
-//                                   newVenue.name         = venue[@"name"];
-//                                   newVenue.shortURL     = venue[@"shortURL"];
-//                                   newVenue.stats        = venue[@"stats"];
-//                                   newVenue.locationDict = venue[@"location"];
-//                                   newVenue.category     = venue[@"categories"][@"shortName"];
-//                                   //newVenue.latitude = venue[@"location"][@"lat"];
-//                                   //newVenue.longitude = venue[@"location"][@"lng"];
-//                                   
-//                                   [self getImagesForVenue:newVenue withSize:thumbnailSize];
-//                                   
-//                                   [venues addObject:newVenue];
-//                               }
-//                               
-//                               completionBlock(YES, venues);
-//                           }];
-//    
-//}
+- (void)getInfoForVenueWithID:(NSString *)venueID completionBlock:(VenueSearchCompletionBlock)completionBlock;
+{
+    NSURL        *url;
+    NSURLRequest *urlRequest;
+    
+    url        = [self getURLForVenueWithID:venueID];
+    
+    [NSURLConnection sendAsynchronousRequest:urlRequest
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                               
+                               NSDictionary    *dataDict;
+                               NSDictionary    *dict;
+                               FoursquareVenue *newVenue;
+                               NSString        *latString;
+                               NSString        *lngString;
+                               NSArray         *venue;
+                               
+                               dataDict = [NSJSONSerialization JSONObjectWithData:data
+                                                                          options:0
+                                                                            error:&connectionError];
+                               
+                               // If there's an error, send back the completion block with the error
+                               // Else, pull out the data
+                               if (connectionError) completionBlock(NO, nil);
+                               
+                               // Get the dict containing all the venues info
+                               dict = dataDict[@"response"][@"venue"];
+                            
+                               // Pull out simple values
+                               newVenue.id          = dict[@"id"];
+                               newVenue.name        = dict[@"name"];
+                               newVenue.address     = dict[@"location"][@""];
+                               newVenue.city        = dict[@"location"][@"city"];
+                               newVenue.postalCode  = dict[@"location"][@"postalCode"];
+                               newVenue.category    = dict[@"categories"][0][@"name"];
+                               newVenue.phone       = dict[@"contact"][@"formattedPhone"];
+                               newVenue.url         = dict[@"url"];
+                               
+                               // Pull out the longitude and latitude values
+                               lngString            = (NSString *)dict[@"location"][@"lng"];
+                               newVenue.lng         = lngString.floatValue;
+                               
+                               latString            = (NSString *)dict[@"location"][@"lat"];
+                               newVenue.lng         = latString.floatValue;
+                               
+                               venue = @[newVenue];
+                               
+                               completionBlock(YES, venue);
+                        }];
+    
+}
 
 
 - (void)findVenuesNearLatitude:(double)latitude longitude:(double)longitude searchterm:(NSString *)searchterm completionBlock:(VenueSearchCompletionBlock)completionBlock
@@ -141,14 +139,10 @@
                                    newVenue              = [FoursquareVenue new];
                                    newVenue.id           = venue[@"id"];
                                    newVenue.name         = venue[@"name"];
-                                   newVenue.shortURL     = venue[@"shortURL"];
-                                   newVenue.stats        = venue[@"stats"];
-                                   newVenue.locationDict = venue[@"location"];
+                                   newVenue.url          = venue[@"shortURL"];
                                    newVenue.category     = venue[@"categories"][@"shortName"];
                                    //newVenue.latitude = venue[@"location"][@"lat"];
                                    //newVenue.longitude = venue[@"location"][@"lng"];
-                                   
-                                   [self getImagesForVenue:newVenue withSize:thumbnailSize];
                                    
                                    [venues addObject:newVenue];
                                 }
@@ -164,18 +158,17 @@
     NSURL    *photoURL;
     NSString *urlString;
     
-    urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/VENUE_ID/photos?VENUE_ID=%@&client_id=%@&client_secret=%@&v=%@", venueID, clientID, clientSecret, fsApiVersion];
+    urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/%@/photos?&client_id=%@&client_secret=%@&v=%@", venueID,clientID, clientSecret, fsApiVersion];
+    photoURL  = [NSURL URLWithString:urlString];
     
     return photoURL;
 }
 
-- (void)getImagesForVenue:(FoursquareVenue *)venue withSize:(NSString *)imageSize
+- (void)getImagesForVenue:(NSString *)venueID withSize:(NSString *)imageSize completionBlock:(VenueSearchCompletionBlock)completionBlock
 {
     NSURL        *photoURL;
     NSURLRequest *urlRequest;
-    NSString     *venueID;
     
-    venueID    = venue.id;
     photoURL   = [self photoSourceURLForVenueID:venueID];
     urlRequest = [NSURLRequest requestWithURL:photoURL];
     
@@ -193,31 +186,34 @@
                                
                                // If there's an error, send back the completion block with the error
                                // Else, pull out the data
-                               //if (connectionError) completionBlock(NO, nil);
+                               if (connectionError) completionBlock(NO, nil);
                                
                                photosArray = dataDict[@"response"][@"photos"][@"items"];
-                               photos      = [NSMutableArray new];
-                               
+                               photos      = [NSMutableArray arrayWithCapacity:5];
+                            
                                for (id photo in photosArray)
                                {
-                                   NSString *thumbnailString;
-                                   NSURL    *thumbnailURL;
-                                   NSData   *thumbnailData;
+                                   NSString *urlString;
+                                   NSURL    *imageURL;
+                                   NSData   *imageData;
                                    
                                    // Find a photo taken with instagram
-                                   if (![photo[@"source"][@"name"] isEqualToString:@"Instagram"]) break;
+                                   if (![photo[@"source"][@"name"] isEqualToString:@"Instagram"]) continue;
                                    
-                                   // Construct a urlString for both thumbnail and full image
-                                   thumbnailString = [NSString stringWithFormat:@"%@%@%@", photo[@"prefix"], imageSize, photo[@"suffix"]];
+                                   // See below about this URL setup
+                                   urlString = [NSString stringWithFormat:@"%@%@%@", photo[@"prefix"], imageSize, photo[@"suffix"]];
+                                   imageURL  = [NSURL URLWithString:urlString];
+                                   imageData = [NSData dataWithContentsOfURL:imageURL];
                                    
-                                   thumbnailURL = [NSURL URLWithString:thumbnailString];
-                                   thumbnailData = [NSData dataWithContentsOfURL:thumbnailURL];
-                                   venue.thumbnailImage = [UIImage imageWithData:thumbnailData];
-                                   
-                                   continue;
+                                   if (photos.count < 5)
+                                       [photos addObject:imageData];
+                                   else
+                                       break;
                                 }
+                               
+                               completionBlock(YES, photos);
                         }];
-    /* 
+    /*
      To avoid having to resize, we're just going to grab photos whose [@"source"][@"name"] == @"Instagram"
      
      To assemble a resolvable photo URL, take prefix + size + suffix, e.g. https://irs0.4sqi.net/img/general/300x500/2341723_vt1Kr-SfmRmdge-M7b4KNgX2_PHElyVbYL65pMnxEQw.jpg.
@@ -233,5 +229,6 @@
      
      */
 }
+
 
 @end

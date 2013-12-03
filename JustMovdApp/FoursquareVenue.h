@@ -12,13 +12,14 @@
 
 @property (strong, nonatomic) NSString     *id;
 @property (strong, nonatomic) NSString     *name;
-@property (strong, nonatomic) NSString     *shortURL;
+@property (strong, nonatomic) NSString     *url;
 @property (strong, nonatomic) NSString     *category;
-@property (strong, nonatomic) NSNumber     *stats;
-@property (strong, nonatomic) NSDictionary *locationDict;
-@property (strong, nonatomic) UIImage      *thumbnailImage;
+@property (strong, nonatomic) NSString     *phone;
+@property (strong, nonatomic) NSString     *address;
+@property (strong, nonatomic) NSString     *postalCode;
+@property (strong, nonatomic) NSString     *city;
 @property (strong, nonatomic) UIImage      *fullImage;
-@property (nonatomic) float latitude;
-@property (nonatomic) float longitude;
+@property (nonatomic) float lat;
+@property (nonatomic) float lng;
 
 @end

@@ -10,8 +10,7 @@
 
 @interface BucketDetailViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
-@property (strong, nonatomic) PFObject *bucket;
-
-
+@property (strong, nonatomic) PFObject       *bucket;
+@property (strong, nonatomic) NSMutableArray *photosArray;
 
 @end

@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		523321771832EDF3003879C5 /* BucketListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523321761832EDF3003879C5 /* BucketListViewController.m */; };
 		523321791832EE4C003879C5 /* BucketListStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */; };
-		5233217C1832F0E2003879C5 /* BucketListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233217B1832F0E2003879C5 /* BucketListCell.m */; };
 		5233217F18345B40003879C5 /* BucketDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233217E18345B40003879C5 /* BucketDetailViewController.m */; };
 		5233218218349A77003879C5 /* CheckInDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218118349A77003879C5 /* CheckInDetailViewController.m */; };
 		5233218518354B32003879C5 /* CheckInLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218418354B31003879C5 /* CheckInLocation.m */; };
@@ -162,11 +160,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		523321751832EDF3003879C5 /* BucketListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListViewController.h; sourceTree = "<group>"; };
-		523321761832EDF3003879C5 /* BucketListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListViewController.m; sourceTree = "<group>"; };
 		523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BucketListStoryBoard.storyboard; sourceTree = "<group>"; };
-		5233217A1832F0E2003879C5 /* BucketListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListCell.h; sourceTree = "<group>"; };
-		5233217B1832F0E2003879C5 /* BucketListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListCell.m; sourceTree = "<group>"; };
 		5233217D18345B40003879C5 /* BucketDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketDetailViewController.h; sourceTree = "<group>"; };
 		5233217E18345B40003879C5 /* BucketDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketDetailViewController.m; sourceTree = "<group>"; };
 		5233218018349A77003879C5 /* CheckInDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInDetailViewController.h; sourceTree = "<group>"; };
@@ -436,8 +430,6 @@
 				528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */,
 				5233217D18345B40003879C5 /* BucketDetailViewController.h */,
 				5233217E18345B40003879C5 /* BucketDetailViewController.m */,
-				5233217A1832F0E2003879C5 /* BucketListCell.h */,
-				5233217B1832F0E2003879C5 /* BucketListCell.m */,
 				5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */,
 				5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */,
 				523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */,
@@ -447,8 +439,6 @@
 				5233223118498DB7003879C5 /* BucketCell.m */,
 				52332233184991A6003879C5 /* BucketListCollectionViewController.h */,
 				52332234184991A6003879C5 /* BucketListCollectionViewController.m */,
-				523321751832EDF3003879C5 /* BucketListViewController.h */,
-				523321761832EDF3003879C5 /* BucketListViewController.m */,
 				5233218018349A77003879C5 /* CheckInDetailViewController.h */,
 				5233218118349A77003879C5 /* CheckInDetailViewController.m */,
 				5233218318354B31003879C5 /* CheckInLocation.h */,
@@ -851,7 +841,6 @@
 				5A2F2AE1182ACDE40050A227 /* ActivityFeedViewController.m in Sources */,
 				5A2F2AE2182ACDE40050A227 /* AppDelegate.m in Sources */,
 				5A2F2AE4182ACDE40050A227 /* CommentViewController.m in Sources */,
-				523321771832EDF3003879C5 /* BucketListViewController.m in Sources */,
 				526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */,
 				5A2F2AE5182ACDE40050A227 /* Comms.m in Sources */,
 				5233217F18345B40003879C5 /* BucketDetailViewController.m in Sources */,
@@ -893,7 +882,6 @@
 				5A2F2B0A182AE1900050A227 /* FeedConnectorVC.m in Sources */,
 				5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */,
 				5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */,
-				5233217C1832F0E2003879C5 /* BucketListCell.m in Sources */,
 				5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

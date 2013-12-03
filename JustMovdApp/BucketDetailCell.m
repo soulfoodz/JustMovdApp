@@ -7,6 +7,7 @@
 //
 
 #import "BucketDetailCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define titleFont    [UIFont fontWithName:@"Roboto-Medium" size:17.0]
 #define subtitleFont [UIFont fontWithName:@"Roboto-Regular" size:13.0]
@@ -15,13 +16,7 @@
 
 @interface BucketDetailCell ()
 
-@property (weak, nonatomic) IBOutlet UIView      *mainView;
-@property (weak, nonatomic) IBOutlet UILabel     *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel     *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel     *creatorLabel;
-@property (weak, nonatomic) IBOutlet UILabel     *quoteLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *mainImage;
-@property (weak, nonatomic) IBOutlet UIImageView *creatorAvatar;
+
 
 
 @end
@@ -39,27 +34,28 @@
 
 - (void)styleSubviews
 {
-    _titleLabel.font          = titleFont;
-    _titleLabel.textColor     = titleColor;
+    _titleLabel.font         = titleFont;
+    _titleLabel.textColor    = titleColor;
     
-    _subtitleLabel.font       = detailsFont;
-    _subtitleLabel.textColor  = [UIColor lightGrayColor];
+    _subtitleLabel.font      = detailsFont;
+    _subtitleLabel.textColor = [UIColor lightGrayColor];
     
-    _creatorLabel.font           = detailsFont;
-    _creatorLabel.textColor      = [UIColor lightGrayColor];
+    _creatorLabel.font       = subtitleFont;
+    _creatorLabel.textColor  = [UIColor lightGrayColor];
     
-    _mainImage.contentMode        = UIViewContentModeScaleAspectFill;
-    _mainImage.clipsToBounds      = YES;
+    _quoteLabel.font      = detailsFont;
+    _quoteLabel.textColor = [UIColor darkGrayColor];
+    
+    _mainImage.contentMode   = UIViewContentModeScaleAspectFill;
+    _mainImage.clipsToBounds = YES;
     
     _mainView.clipsToBounds       = YES;
-    _mainView.layer.cornerRadius  = 4.0f;
-    _mainView.layer.shadowPath    = [[UIBezierPath bezierPathWithRoundedRect:_mainView.frame cornerRadius:4.0f] CGPath];
-    
+        
     _creatorAvatar.contentMode        = UIViewContentModeScaleAspectFill;
-    _creatorAvatar.clipsToBounds      = YES;
     _creatorAvatar.layer.cornerRadius = _creatorAvatar.frame.size.width/2;
     _creatorAvatar.layer.borderWidth  = 2.0f;
     _creatorAvatar.layer.borderColor  = [UIColor whiteColor].CGColor;
+    _creatorAvatar.clipsToBounds      = YES;
 }
 
 

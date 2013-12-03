@@ -13,7 +13,9 @@ typedef void (^VenueSearchCompletionBlock)(BOOL success, NSArray *results);
 @interface FoursquareServices : NSObject
 
 - (void)findVenuesNearLatitude:(double)latitude longitude:(double)longitude searchterm:(NSString *)searchterm completionBlock:(VenueSearchCompletionBlock)completionBlock;
-- (NSURL *)URLForVenueID:(NSString *)venueID andMethod:(NSString *)method;
+- (NSURL *)getURLForVenueWithID:(NSString *)venueID;
+- (void)getImagesForVenue:(NSString *)venueID withSize:(NSString *)imageSize completionBlock:(VenueSearchCompletionBlock)completionBlock;
+
 
 
 @end
