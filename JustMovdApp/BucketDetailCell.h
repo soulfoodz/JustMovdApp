@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel     *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *creatorLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *quoteLabel;
+
 @property (weak, nonatomic) IBOutlet UIImageView *mainImage;
 @property (weak, nonatomic) IBOutlet PFImageView *creatorAvatar;
 

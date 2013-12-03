@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet PFImageView *mainImage;
 @property (weak, nonatomic) IBOutlet PFImageView *creatorAvatar;
 @property (weak, nonatomic) IBOutlet UILabel *creatorLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 

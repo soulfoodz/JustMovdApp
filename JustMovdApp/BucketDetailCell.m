@@ -9,17 +9,15 @@
 #import "BucketDetailCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define titleFont    [UIFont fontWithName:@"Roboto-Medium" size:17.0]
-#define subtitleFont [UIFont fontWithName:@"Roboto-Regular" size:13.0]
-#define detailsFont  [UIFont fontWithName:@"Roboto-Regular" size:12.0]
+#define titleFont    [UIFont fontWithName:@"Roboto-Medium"  size:17.0]
+#define subtitleFont [UIFont fontWithName:@"Roboto-Medium"  size:15.0]
+#define detailsFont  [UIFont fontWithName:@"Roboto-Regular" size:13.0]
 #define titleColor   [UIColor colorWithRed:80.0/255.0 green:187.0/255.0 blue:182.0/255.0 alpha:1.0]
 
 @interface BucketDetailCell ()
 
-
-
-
 @end
+
 
 @implementation BucketDetailCell
 
@@ -38,10 +36,10 @@
     _titleLabel.textColor    = titleColor;
     
     _subtitleLabel.font      = detailsFont;
-    _subtitleLabel.textColor = [UIColor lightGrayColor];
+    _subtitleLabel.textColor = [UIColor whiteColor];
     
     _creatorLabel.font       = subtitleFont;
-    _creatorLabel.textColor  = [UIColor lightGrayColor];
+    _creatorLabel.textColor  = [UIColor darkGrayColor];
     
     _quoteLabel.font      = detailsFont;
     _quoteLabel.textColor = [UIColor darkGrayColor];
@@ -49,7 +47,7 @@
     _mainImage.contentMode   = UIViewContentModeScaleAspectFill;
     _mainImage.clipsToBounds = YES;
     
-    _mainView.clipsToBounds       = YES;
+    _mainView.clipsToBounds  = YES;
         
     _creatorAvatar.contentMode        = UIViewContentModeScaleAspectFill;
     _creatorAvatar.layer.cornerRadius = _creatorAvatar.frame.size.width/2;

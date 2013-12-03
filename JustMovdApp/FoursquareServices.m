@@ -55,13 +55,14 @@
     NSURLRequest *urlRequest;
     
     url        = [self getURLForVenueWithID:venueID];
+    urlRequest = [NSURLRequest requestWithURL:url];
     
     [NSURLConnection sendAsynchronousRequest:urlRequest
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                                
                                NSDictionary    *dataDict;
-                               NSDictionary    *dict;
+                               NSDictionary    *venueDict;
                                FoursquareVenue *newVenue;
                                NSString        *latString;
                                NSString        *lngString;
@@ -76,30 +77,30 @@
                                if (connectionError) completionBlock(NO, nil);
                                
                                // Get the dict containing all the venues info
-                               dict = dataDict[@"response"][@"venue"];
+                               venueDict = dataDict[@"response"][@"venue"];
+                               newVenue  = [FoursquareVenue new];
                             
                                // Pull out simple values
-                               newVenue.id          = dict[@"id"];
-                               newVenue.name        = dict[@"name"];
-                               newVenue.address     = dict[@"location"][@""];
-                               newVenue.city        = dict[@"location"][@"city"];
-                               newVenue.postalCode  = dict[@"location"][@"postalCode"];
-                               newVenue.category    = dict[@"categories"][0][@"name"];
-                               newVenue.phone       = dict[@"contact"][@"formattedPhone"];
-                               newVenue.url         = dict[@"url"];
+                               newVenue.id          = venueDict[@"id"];
+                               newVenue.name        = venueDict[@"name"];
+                               newVenue.address     = venueDict[@"location"][@"address"];
+                               newVenue.city        = venueDict[@"location"][@"city"];
+                               newVenue.postalCode  = venueDict[@"location"][@"postalCode"];
+                               newVenue.category    = venueDict[@"categories"][0][@"name"];
+                               newVenue.phone       = venueDict[@"contact"][@"formattedPhone"];
+                               newVenue.url         = venueDict[@"url"];
                                
                                // Pull out the longitude and latitude values
-                               lngString            = (NSString *)dict[@"location"][@"lng"];
+                               lngString            = (NSString *)venueDict[@"location"][@"lng"];
                                newVenue.lng         = lngString.floatValue;
                                
-                               latString            = (NSString *)dict[@"location"][@"lat"];
+                               latString            = (NSString *)venueDict[@"location"][@"lat"];
                                newVenue.lng         = latString.floatValue;
                                
                                venue = @[newVenue];
                                
                                completionBlock(YES, venue);
                         }];
-    
 }
 
 

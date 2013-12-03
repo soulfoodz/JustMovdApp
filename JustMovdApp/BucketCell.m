@@ -12,7 +12,7 @@
 
 #define titleFont    [UIFont fontWithName:@"Roboto-Medium" size:17.0]
 #define subtitleFont [UIFont fontWithName:@"Roboto-Regular" size:13.0]
-#define detailsFont  [UIFont fontWithName:@"Roboto-Regular" size:12.0]
+#define detailsFont  [UIFont fontWithName:@"Roboto-Regular" size:13.0]
 #define titleColor   [UIColor colorWithRed:80.0/255.0 green:187.0/255.0 blue:182.0/255.0 alpha:1.0]
 
 @interface BucketCell ()
@@ -39,7 +39,7 @@
     _mainImage.image     = nil;
     _titleLabel.text     = nil;
     _distanceLabel.text  = nil;
-    _timeLabel.text      = nil;
+    _categoryLabel.text  = nil;
     
     [self styleCell];
 }
@@ -47,13 +47,17 @@
 
 - (void)styleCell
 {
-    _shadowView.layer.cornerRadius  = 4.0f;
-    _shadowView.layer.shadowColor   = [UIColor blackColor].CGColor;
-    _shadowView.layer.shadowOpacity = 0.3f;
-    _shadowView.layer.shadowRadius  = 0.6f;
-    _shadowView.layer.shadowOffset  = CGSizeMake(0, 0.6f);
-    _shadowView.layer.shadowPath    = [[UIBezierPath bezierPathWithRoundedRect:_mainView.bounds cornerRadius:4.0f] CGPath];
-    _shadowView.layer.shouldRasterize = YES;
+    // This view goes under the mainView and is strictly used for a shadow
+    // It needs to be here because we maskToBounds all subviews of mainView,
+    // which means the cell's shadow wouldn't be displayed
+    
+    _shadowView.layer.cornerRadius       = 4.0f;
+    _shadowView.layer.shadowColor        = [UIColor blackColor].CGColor;
+    _shadowView.layer.shadowOpacity      = 0.3f;
+    _shadowView.layer.shadowRadius       = 0.6f;
+    _shadowView.layer.shadowOffset       = CGSizeMake(0, 0.6f);
+    _shadowView.layer.shadowPath         = [[UIBezierPath bezierPathWithRoundedRect:_mainView.bounds cornerRadius:4.0f] CGPath];
+    _shadowView.layer.shouldRasterize    = YES;
     _shadowView.layer.rasterizationScale = 2.0f;
     
     _mainView.layer.masksToBounds = YES;
@@ -65,8 +69,8 @@
     _distanceLabel.font       = detailsFont;
     _distanceLabel.textColor  = [UIColor lightGrayColor];
     
-    _timeLabel.font           = detailsFont;
-    _timeLabel.textColor      = [UIColor lightGrayColor];
+    _categoryLabel.font           = detailsFont;
+    _categoryLabel.textColor      = [UIColor lightGrayColor];
     
     _creatorLabel.font = detailsFont;
     _creatorLabel.textColor = [UIColor lightGrayColor];

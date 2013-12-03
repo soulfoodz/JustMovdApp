@@ -17,7 +17,7 @@
 @interface BucketListCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSMutableArray *bucketList;
-@property (strong, nonatomic) PFGeoPoint *userLocation;
+@property (strong, nonatomic) PFGeoPoint     *userLocation;
 
 @end
 
@@ -39,7 +39,7 @@
 {
     [ParseServices queryForBucketListNear:self.userLocation
                           completionBlock:^(NSArray *results, BOOL success) {
-                              NSLog(@"%d", success);
+                              
                               if (success == NO)
                                   [self displayAlertForNoBucketList];
                               else{
@@ -52,7 +52,7 @@
 
 #pragma mark - CollectionView DataSource
 
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 1;
 }
@@ -83,7 +83,6 @@
 {
     BucketCell *cell;
     PFObject   *bucket;
-    PFGeoPoint *bucketLocation;
     PFUser     *creator;
     double     milesApart;
     
@@ -96,14 +95,11 @@
     creator = bucket[@"creator"];
     
     // Get the distance in miles between the user's location and the bucket's location
-    bucketLocation = bucket[@"location"];
-    milesApart     = (double)[self.userLocation distanceInMilesTo:bucketLocation];
+    milesApart = [self usersDistanceToBucketLocation:bucket[@"location"]];
     
-    // Set the cell's text labels
     cell.titleLabel.text     = bucket[@"title"];
+    cell.categoryLabel.text  = bucket[@"category"];
     cell.distanceLabel.text  = [NSString stringWithFormat:@"%.1f mi", milesApart];
-    //cell.bucketNumLabel.text = [NSString stringWithFormat:@"%@ bucket lists", bucket[@"bucketListCount"]];
-    cell.timeLabel.text      = @"2 hrs";
     cell.creatorLabel.text   = @"Created by:";
     
     // Set the cell's image in background
@@ -116,13 +112,13 @@
 
 #pragma mark - CollectionView Delegate
 
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self performSegueWithIdentifier:@"SegueToBucketDetailViewController" sender:indexPath];
 }
 
 
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
 }
@@ -130,13 +126,13 @@
 
 #pragma mark - CollectionView FlowLayoutDelegate
 
--(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return CGSizeMake(300, 162);
 }
 
 
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(10, 10, 10, 10);
 }
@@ -160,7 +156,7 @@
 
 #pragma mark - Segue
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"SegueToBucketDetailViewController"])
     {
@@ -173,6 +169,15 @@
         dvc             = segue.destinationViewController;
         dvc.bucket      = selectedBucket;
     }
+}
+
+
+- (double)usersDistanceToBucketLocation:(PFGeoPoint *)location
+{
+    double milesApart;
+    
+    milesApart = (double)[self.userLocation distanceInMilesTo:location];
+    return milesApart;
 }
 
 @end

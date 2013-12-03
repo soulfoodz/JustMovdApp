@@ -10,11 +10,14 @@
 #import "BucketDetailCell.h"
 #import "FoursquareServices.h"
 #import "PFImageView+ImageHandler.h"
+#import "FoursquareVenue.h"
 
 @interface BucketDetailViewController ()
 
 // Outlets
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) NSString                *venueID;
+@property (strong, nonatomic) FoursquareServices      *fsService;
 
 @end
 
@@ -25,39 +28,116 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = self.bucket[@"title"];
+    self.venueID   = self.bucket[@"FSVenueID"];
+    self.fsService = [[FoursquareServices alloc] init];
+
+    self.navigationItem.title = @"#ATX";
     
     [self getVenueImages];
+    
 }
      
 
 - (void)getVenueImages
 {
-    FoursquareServices *service;
-    NSString *venueID;
-    
-    service = [[FoursquareServices alloc] init];
-    venueID = self.bucket[@"FSVenueID"];
-    
-    [service getImagesForVenue:venueID
-                      withSize:@"width320"
-               completionBlock:^(BOOL success, NSArray *results) {
+    [self.fsService getImagesForVenue:self.venueID
+                             withSize:@"width320"
+                      completionBlock:^(BOOL success, NSArray *results) {
                    
                    if (success == YES)
                    {
                        self.photosArray = [NSMutableArray new];
                        for (id data in results)
                        {
-                           UIImage *image = [UIImage imageWithData:data];
+                           UIImage *image;
+                           
+                           image = [UIImage imageWithData:data];
                            [self.photosArray addObject:image];
                            [self.collectionView reloadData];
                        }
-                       
-                      [self saveImageFileForVenue];
+                      
+                       if ([self bucketNeedsToBeUpdated] == YES)
+                           [self getVenueInfo];
                    }
                    else NSLog(@"Uh-Oh! Error getting photos!");
                }];
 }
+
+
+- (BOOL)bucketNeedsToBeUpdated
+{
+    NSDate *today;
+    double timeSinceUpdate;
+    long   oneWeek;
+    
+    today           = [NSDate date];
+    timeSinceUpdate = [today timeIntervalSinceDate:self.bucket[@"updatedAt"]];
+    oneWeek         = 7*24*60*60;
+    
+    if (timeSinceUpdate < oneWeek)
+        return YES;
+    else
+        return NO;
+}
+
+
+- (void)getVenueInfo
+{
+    [self.fsService getInfoForVenueWithID:self.venueID
+                          completionBlock:^(BOOL success, NSArray *results) {
+        
+                              FoursquareVenue *venue;
+                              PFGeoPoint      *geoPoint;
+                              PFFile          *imageFile;
+                              
+                              venue     = [results lastObject];
+                              geoPoint  = [PFGeoPoint geoPointWithLatitude:venue.lat longitude:venue.lng];
+                              imageFile = [self imageFileForVenue];
+                              
+                              if (geoPoint)
+                                  [self.bucket setObject:geoPoint         forKey:@"location"];
+                              if (venue.address)
+                                  [self.bucket setObject:venue.address    forKey:@"streetAddress"];
+                              if (venue.city)
+                                  [self.bucket setObject:venue.city       forKey:@"city"];
+                              if (venue.postalCode)
+                                  [self.bucket setObject:venue.postalCode forKey:@"postalCode"];
+                              if (venue.phone)
+                                  [self.bucket setObject:venue.phone      forKey:@"phone"];
+                              if (venue.url)
+                                  [self.bucket setObject:venue.url        forKey:@"website"];
+                              if (venue.category)
+                                  [self.bucket setObject:venue.category   forKey:@"category"];
+//                              if (imageFile)
+//                                  [self.bucket setObject:imageFile forKey:@"image"];
+                              
+                              [self.bucket saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                  if (succeeded) {
+                                      NSLog(@"SAVED THE Bucket!");
+                                  } else NSLog(@"FAIL");
+                              }];
+                          }];
+}
+
+
+- (PFFile *)imageFileForVenue
+{
+    UIImage         *image;
+    NSData          *data;
+    NSString        *fileName;
+    NSMutableString *fileString;
+    PFFile          *imageFile;
+    
+    image      = self.photosArray[0];
+    data       = UIImagePNGRepresentation(image);
+    fileName   = [NSString stringWithFormat:@"%@.png", self.bucket[@"title"]];
+    fileString = (NSMutableString *)[fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    fileString = (NSMutableString *)[fileString stringByReplacingOccurrencesOfString:@"'" withString:@""];
+    imageFile  = [PFFile fileWithName:fileString data:data];
+    
+    return imageFile;
+}
+
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -87,31 +167,17 @@
     
     // Configure the cell's subviews
     cell.titleLabel.text    = self.bucket[@"title"];
-    cell.subtitleLabel.text = @"Nothing yet";
-    cell.creatorLabel.text  = [NSString stringWithFormat:@"%@ says:", creatorName];
+    cell.subtitleLabel.text = self.bucket[@"category"];
     cell.quoteLabel.text    = self.bucket[@"creatorQuote"];
     cell.mainImage.image    = self.photosArray[0];
+    cell.creatorLabel.text  = [NSString stringWithFormat:@"%@ says:", creatorName];
     [cell.creatorAvatar setFile:creator[@"profilePictureFile"] forAvatarImageView:cell.creatorAvatar];
     
     return cell;
 }
 
-- (void)saveImageFileForVenue
-{
-    UIImage *image       = self.photosArray[0];
-    NSData *data         = UIImagePNGRepresentation(image);
-    NSString *fileName   = [NSString stringWithFormat:@"%@.png", self.bucket[@"title"]];
-    NSMutableString *fileString = (NSMutableString *)[fileName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-    fileString   = (NSMutableString *)[fileString stringByReplacingOccurrencesOfString:@"'" withString:@""];
-    PFFile *file         = [PFFile fileWithName:fileString data:data];
-    
-    [self.bucket setObject:file forKey:@"image"];
-    [self.bucket saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"SAVED THE IMAGE!");
-        } else NSLog(@"FAIL");
-    }];
-}
+
+
 
 
 

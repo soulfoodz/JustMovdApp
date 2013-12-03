@@ -15,6 +15,7 @@ typedef void (^VenueSearchCompletionBlock)(BOOL success, NSArray *results);
 - (void)findVenuesNearLatitude:(double)latitude longitude:(double)longitude searchterm:(NSString *)searchterm completionBlock:(VenueSearchCompletionBlock)completionBlock;
 - (NSURL *)getURLForVenueWithID:(NSString *)venueID;
 - (void)getImagesForVenue:(NSString *)venueID withSize:(NSString *)imageSize completionBlock:(VenueSearchCompletionBlock)completionBlock;
+- (void)getInfoForVenueWithID:(NSString *)venueID completionBlock:(VenueSearchCompletionBlock)completionBlock;
 
 
 
