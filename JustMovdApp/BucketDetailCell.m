@@ -9,7 +9,7 @@
 #import "BucketDetailCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define titleFont    [UIFont fontWithName:@"Roboto-Medium"  size:17.0]
+#define titleFont    [UIFont fontWithName:@"Roboto-Medium"  size:18.0]
 #define subtitleFont [UIFont fontWithName:@"Roboto-Medium"  size:15.0]
 #define detailsFont  [UIFont fontWithName:@"Roboto-Regular" size:13.0]
 #define titleColor   [UIColor colorWithRed:80.0/255.0 green:187.0/255.0 blue:182.0/255.0 alpha:1.0]
@@ -24,11 +24,12 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    if (self)
+    {
     }
     return self;
 }
+
 
 - (void)styleSubviews
 {
@@ -57,6 +58,18 @@
 }
 
 
+- (void)setCheckButtonImageFor:(NSString *)state
+{
+    if ([state isEqualToString:@"checked"])
+        [self.checkButton setImage:[UIImage imageNamed:@"bucketdetailviewcontroller_checkbutton_selected.png"]
+                          forState:UIControlStateNormal];
+    
+    if ([state isEqualToString:@"unchecked"])
+        [self.checkButton setImage:[UIImage imageNamed:@"bucketdetailviewcontroller_checkbutton_normal.png"]
+                          forState:UIControlStateNormal];
+}
+
+
 - (void)resetContents
 {
     _mainImage.image     = nil;
@@ -70,12 +83,15 @@
 }
 
 
-
-
-
-
-
-
-
-
+- (IBAction)checkButtonTapped:(UIButton *)sender
+{
+    NSLog(@"Check Tapped");
+    
+//    if ([sender isSelected])
+//        [self setCheckButtonImageFor:UIControlStateSelected];
+//    else
+//        [self setCheckButtonImageFor:UIControlStateNormal];
+    
+    [self.delegate checkButtonWasTappedInCell:self];
+}
 @end

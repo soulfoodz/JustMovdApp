@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) NSMutableArray *bucketList;
 @property (strong, nonatomic) PFGeoPoint     *userLocation;
+@property (strong, nonatomic) NSMutableArray *completedBuckets;
 
 @end
 
@@ -28,8 +29,10 @@
 {
     [super viewDidLoad];
     
+    // Get values for properties
     self.userLocation                   = [[PFUser currentUser] objectForKey:@"geoPoint"];
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.completedBuckets               = (NSMutableArray *)[[PFUser currentUser] objectForKey:@"buckets"];
     
     [self queryForBucketList];
 }
@@ -42,13 +45,14 @@
                               
                               if (success == NO)
                                   [self displayAlertForNoBucketList];
-                              else{
-                                  
+                              else
+                              {
                                   self.bucketList = [NSMutableArray arrayWithArray:results];
                                   [self.collectionView reloadData];
                               }
                             }];
 }
+
 
 #pragma mark - CollectionView DataSource
 
@@ -93,6 +97,11 @@
     // Get the bucket for the indexPath.row
     bucket  = self.bucketList[indexPath.row];
     creator = bucket[@"creator"];
+    
+    // Here we check to see if the bucket item has been completed by the user, and set the
+    // indicating buttons state accordingly.
+    if ([self.completedBuckets containsObject:bucket])
+        cell.isChecked = YES;
     
     // Get the distance in miles between the user's location and the bucket's location
     milesApart = [self usersDistanceToBucketLocation:bucket[@"location"]];
@@ -160,14 +169,23 @@
 {
     if ([segue.identifier isEqualToString:@"SegueToBucketDetailViewController"])
     {
+        BucketCell                 *cell;
         PFObject                   *selectedBucket;
         NSIndexPath                *ip;
         BucketDetailViewController *dvc;
         
         ip              = (NSIndexPath *)sender;
+        cell            = (BucketCell *)[self.collectionView cellForItemAtIndexPath:ip];
         selectedBucket  = self.bucketList[ip.row];
         dvc             = segue.destinationViewController;
         dvc.bucket      = selectedBucket;
+        
+        if (cell.isChecked == YES)
+            dvc.isChecked = YES;
+        
+        // If the bucket being passed has been completed, notify the BucketDetailVC
+        //if (sender.checkedButton.state == UIControlStateSelected)
+        //    dvc.isChecked = YES;
     }
 }
 

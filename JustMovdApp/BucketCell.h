@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
+@property (nonatomic) BOOL isChecked;
+
 - (void)resetContents;
 
 @end

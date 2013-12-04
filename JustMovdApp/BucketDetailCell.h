@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BucketItemCheckButtonDataSource <NSObject>
+
+- (void)checkButtonWasTappedInCell:(id)cell;
+
+@end
+
 @interface BucketDetailCell : UICollectionViewCell
+
+@property (weak) id <BucketItemCheckButtonDataSource> delegate;
 
 // Outlets
 @property (weak, nonatomic) IBOutlet UIView      *mainView;
@@ -19,8 +27,14 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *mainImage;
 @property (weak, nonatomic) IBOutlet PFImageView *creatorAvatar;
+@property (weak, nonatomic) IBOutlet UIButton    *checkButton;
+@property (nonatomic) BOOL isSelected;
 
+
+- (IBAction)checkButtonTapped:(id)sender;
+- (void)setCheckButtonImageFor:(NSString *)state;
 - (void)styleSubviews;
 - (void)resetContents;
+
 
 @end

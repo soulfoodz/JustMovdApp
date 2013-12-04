@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSString     *postalCode;
 @property (strong, nonatomic) NSString     *city;
 @property (strong, nonatomic) UIImage      *fullImage;
-@property (nonatomic) float lat;
-@property (nonatomic) float lng;
+@property (nonatomic) double lat;
+@property (nonatomic) double lng;
 
 @end

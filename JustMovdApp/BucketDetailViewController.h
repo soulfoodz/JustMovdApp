@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BucketDetailCell.h"
 
-@interface BucketDetailViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface BucketDetailViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,BucketItemCheckButtonDataSource>
 
 @property (strong, nonatomic) PFObject       *bucket;
 @property (strong, nonatomic) NSMutableArray *photosArray;
+@property (nonatomic) BOOL isChecked;
 
 @end

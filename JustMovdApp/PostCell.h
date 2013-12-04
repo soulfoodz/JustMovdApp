@@ -11,7 +11,7 @@
 
 @interface PostCell : UITableViewCell <UIActionSheetDelegate>
 
-@property (strong, nonatomic) id <PostCellDelegate> delegate;
+@property (weak) id <PostCellDelegate> delegate;
 @property (nonatomic) BOOL hasCheckIn;
 
 // Outlets

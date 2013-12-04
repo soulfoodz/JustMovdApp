@@ -92,10 +92,10 @@
                                
                                // Pull out the longitude and latitude values
                                lngString            = (NSString *)venueDict[@"location"][@"lng"];
-                               newVenue.lng         = lngString.floatValue;
+                               newVenue.lng         = lngString.doubleValue;
                                
                                latString            = (NSString *)venueDict[@"location"][@"lat"];
-                               newVenue.lng         = latString.floatValue;
+                               newVenue.lat         = latString.doubleValue;
                                
                                venue = @[newVenue];
                                
@@ -206,10 +206,9 @@
                                    imageURL  = [NSURL URLWithString:urlString];
                                    imageData = [NSData dataWithContentsOfURL:imageURL];
                                    
-                                   if (photos.count < 5)
-                                       [photos addObject:imageData];
-                                   else
-                                       break;
+                                   if (imageData == nil) continue;
+                                   if (photos.count < 5) [photos addObject:imageData];
+                                   else break;
                                 }
                                
                                completionBlock(YES, photos);

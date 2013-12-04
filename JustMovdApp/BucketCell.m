@@ -27,8 +27,8 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    if (self)
+    {
     }
     return self;
 }
@@ -41,13 +41,13 @@
     _distanceLabel.text  = nil;
     _categoryLabel.text  = nil;
     
-    [self styleCell];
+    [self styleSubviews];
 }
 
 
-- (void)styleCell
+- (void)styleSubviews
 {
-    // This view goes under the mainView and is strictly used for a shadow
+    // This shadowView goes under the mainView and is strictly used for a shadow
     // It needs to be here because we maskToBounds all subviews of mainView,
     // which means the cell's shadow wouldn't be displayed
     
@@ -63,20 +63,20 @@
     _mainView.layer.masksToBounds = YES;
     _mainView.layer.cornerRadius  = 4.0f;
 
-    _titleLabel.font          = titleFont;
-    _titleLabel.textColor     = titleColor;
+    _titleLabel.font         = titleFont;
+    _titleLabel.textColor    = titleColor;
     
-    _distanceLabel.font       = detailsFont;
-    _distanceLabel.textColor  = [UIColor lightGrayColor];
+    _distanceLabel.font      = detailsFont;
+    _distanceLabel.textColor = [UIColor whiteColor];
     
-    _categoryLabel.font           = detailsFont;
-    _categoryLabel.textColor      = [UIColor lightGrayColor];
+    _categoryLabel.font      = detailsFont;
+    _categoryLabel.textColor = [UIColor lightGrayColor];
     
-    _creatorLabel.font = detailsFont;
-    _creatorLabel.textColor = [UIColor lightGrayColor];
+    _creatorLabel.font       = detailsFont;
+    _creatorLabel.textColor  = [UIColor lightGrayColor];
     
-    _mainImage.contentMode        = UIViewContentModeScaleAspectFill;
-    _mainImage.clipsToBounds      = YES;
+    _mainImage.contentMode   = UIViewContentModeScaleAspectFill;
+    _mainImage.clipsToBounds = YES;
     
     float radiusFloat                  = _creatorAvatar.frame.size.width/2;
     _creatorAvatar.contentMode         = UIViewContentModeScaleAspectFill;
@@ -92,7 +92,6 @@
                                                                     cornerRadius:radiusFloat].CGPath;
     _creatorAvatar.layer.shouldRasterize = YES;
     _creatorAvatar.layer.rasterizationScale = 2.0f;
-
 }
 
 

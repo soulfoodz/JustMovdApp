@@ -12,14 +12,14 @@
 		5233218218349A77003879C5 /* CheckInDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218118349A77003879C5 /* CheckInDetailViewController.m */; };
 		5233218518354B32003879C5 /* CheckInLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233218418354B31003879C5 /* CheckInLocation.m */; };
 		5233218B183AFBD2003879C5 /* postcell_reportbutton_flagicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */; };
-		5233218E183B2FEC003879C5 /* bucketlistcell_timeicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */; };
-		5233218F183B2FEC003879C5 /* bucketlistcell_distanceicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */; };
 		5233223218498DB7003879C5 /* BucketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223118498DB7003879C5 /* BucketCell.m */; };
 		52332235184991A6003879C5 /* BucketListCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52332234184991A6003879C5 /* BucketListCollectionViewController.m */; };
 		5233223818499348003879C5 /* ParseServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223718499348003879C5 /* ParseServices.m */; };
 		5233223B184D26D5003879C5 /* FoursquareServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223A184D26D5003879C5 /* FoursquareServices.m */; };
 		5233223F184D40D4003879C5 /* FoursquareVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223E184D40D4003879C5 /* FoursquareVenue.m */; };
 		52332242184D7F05003879C5 /* BucketDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52332241184D7F05003879C5 /* BucketDetailCell.m */; };
+		523D5483184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 523D5481184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png */; };
+		523D5484184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 523D5482184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png */; };
 		526D2DA1182BC2D300D2F5E4 /* avatar_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */; };
 		526D2DA4182C35C400D2F5E4 /* FBCheckInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */; };
 		526D2DA8182C3C3200D2F5E4 /* checkin_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 526D2DA7182C3C3200D2F5E4 /* checkin_placeholder.png */; };
@@ -168,8 +168,6 @@
 		5233218318354B31003879C5 /* CheckInLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckInLocation.h; sourceTree = "<group>"; };
 		5233218418354B31003879C5 /* CheckInLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckInLocation.m; sourceTree = "<group>"; };
 		5233218A183AFBD2003879C5 /* postcell_reportbutton_flagicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = postcell_reportbutton_flagicon.png; sourceTree = "<group>"; };
-		5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketlistcell_timeicon.png; sourceTree = "<group>"; };
-		5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketlistcell_distanceicon.png; sourceTree = "<group>"; };
 		5233223018498DB7003879C5 /* BucketCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketCell.h; sourceTree = "<group>"; };
 		5233223118498DB7003879C5 /* BucketCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketCell.m; sourceTree = "<group>"; };
 		52332233184991A6003879C5 /* BucketListCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListCollectionViewController.h; sourceTree = "<group>"; };
@@ -182,6 +180,8 @@
 		5233223E184D40D4003879C5 /* FoursquareVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareVenue.m; sourceTree = "<group>"; };
 		52332240184D7F05003879C5 /* BucketDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketDetailCell.h; sourceTree = "<group>"; };
 		52332241184D7F05003879C5 /* BucketDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketDetailCell.m; sourceTree = "<group>"; };
+		523D5481184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetailviewcontroller_checkbutton_selected.png; sourceTree = "<group>"; };
+		523D5482184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetailviewcontroller_checkbutton_normal.png; sourceTree = "<group>"; };
 		526D2DA0182BC2D300D2F5E4 /* avatar_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_placeholder.png; sourceTree = "<group>"; };
 		526D2DA2182C35C400D2F5E4 /* FBCheckInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBCheckInViewController.h; sourceTree = "<group>"; };
 		526D2DA3182C35C400D2F5E4 /* FBCheckInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBCheckInViewController.m; sourceTree = "<group>"; };
@@ -430,8 +430,6 @@
 				528AEF8118207E77002AB658 /* AddNewPostToActivityFeedDelegate.h */,
 				5233217D18345B40003879C5 /* BucketDetailViewController.h */,
 				5233217E18345B40003879C5 /* BucketDetailViewController.m */,
-				5233218D183B2FEC003879C5 /* bucketlistcell_distanceicon.png */,
-				5233218C183B2FEC003879C5 /* bucketlistcell_timeicon.png */,
 				523321781832EE4C003879C5 /* BucketListStoryBoard.storyboard */,
 				52332240184D7F05003879C5 /* BucketDetailCell.h */,
 				52332241184D7F05003879C5 /* BucketDetailCell.m */,
@@ -453,6 +451,8 @@
 				5A169AA518201F340042767E /* PostCellDelegate.h */,
 				5AC9DC45182ACAEE0051EF9A /* StatusUpdateViewController.h */,
 				5AC9DC46182ACAEE0051EF9A /* StatusUpdateViewController.m */,
+				523D5481184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png */,
+				523D5482184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png */,
 			);
 			name = "Eric's Files";
 			sourceTree = "<group>";
@@ -781,7 +781,6 @@
 				528AEF991821CF50002AB658 /* location.png in Resources */,
 				5A2F2B25182C032A0050A227 /* chicago_skyline_blur@2x.png in Resources */,
 				E5DB80CA18286F3500C0DA0C /* sports@2x.png in Resources */,
-				5233218F183B2FEC003879C5 /* bucketlistcell_distanceicon.png in Resources */,
 				5A4F5D2D1821666600CA6F17 /* sports_circle.png in Resources */,
 				5A2F2B1F182BFF640050A227 /* skyline_blur@2x.png in Resources */,
 				5A50BD01182C3111002DD7AD /* walkthrough_ashley@2x.png in Resources */,
@@ -793,15 +792,16 @@
 				5A4F5D281821666600CA6F17 /* Roboto-Medium.ttf in Resources */,
 				5A4F5D341821666600CA6F17 /* yoga_circle.png in Resources */,
 				5A4F5D291821666600CA6F17 /* Roboto-Regular.ttf in Resources */,
+				523D5483184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png in Resources */,
 				5A4F5D201821666600CA6F17 /* InfoPlist.strings in Resources */,
 				5AC9DC36182ACA4A0051EF9A /* messageButton@2x.png in Resources */,
+				523D5484184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png in Resources */,
 				5A169B3218201F340042767E /* UpdateCellHeader.xib in Resources */,
 				5AC9DC53182ACBE90051EF9A /* JustMovdApp-Info.plist in Resources */,
 				523321791832EE4C003879C5 /* BucketListStoryBoard.storyboard in Resources */,
 				5A50BD03182C3133002DD7AD /* walkthrough_sarah@2x.png in Resources */,
 				5A4AD427182C1A61001CBDE6 /* menu@2x.png in Resources */,
 				5A4F5D271821666600CA6F17 /* Roboto-Light.ttf in Resources */,
-				5233218E183B2FEC003879C5 /* bucketlistcell_timeicon.png in Resources */,
 				5A4F5D321821666600CA6F17 /* weightlifting_circle.png in Resources */,
 				52ED7EB21829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png in Resources */,
 				5A4F5D2A1821666600CA6F17 /* Roboto-Thin.ttf in Resources */,
