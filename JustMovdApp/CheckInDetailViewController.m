@@ -26,6 +26,8 @@
     
     self.mapView.zoomEnabled           = YES;
     self.mapView.showsPointsOfInterest = YES;
+    
+    self.navigationItem.title          = self.checkIn[@"placeName"];
 }
 
 - (void)viewDidAppear:(BOOL)animated

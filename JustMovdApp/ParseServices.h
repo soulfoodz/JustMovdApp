@@ -13,10 +13,6 @@ typedef void (^PFQueryCompletionBlock)(NSArray *results, BOOL success);
 @interface ParseServices : NSObject
 
 + (void)queryForBucketListNear:(PFGeoPoint *)coord completionBlock:(PFQueryCompletionBlock)completionBlock;
-
-
-
-
-
++ (void)queryForBucketsCompletedByUser:(PFUser *)user completionBlock:(PFQueryCompletionBlock)completionBlock;
 
 @end

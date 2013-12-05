@@ -81,8 +81,8 @@
         PFObject *newCheckIn  = [PFObject objectWithClassName:@"CheckIn"];
         
         // Format the location
-        double latitude       = self.selectedPlace.location.latitude;
-        double longitude      = self.selectedPlace.location.longitude;
+        double latitude       = self.selectedPlace.coordinate.latitude;
+        double longitude      = self.selectedPlace.coordinate.longitude;
         PFGeoPoint *geoPoint  = [PFGeoPoint geoPointWithLatitude:latitude longitude:longitude];
         
         // Format the mapImage

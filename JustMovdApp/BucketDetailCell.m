@@ -85,13 +85,6 @@
 
 - (IBAction)checkButtonTapped:(UIButton *)sender
 {
-    NSLog(@"Check Tapped");
-    
-//    if ([sender isSelected])
-//        [self setCheckButtonImageFor:UIControlStateSelected];
-//    else
-//        [self setCheckButtonImageFor:UIControlStateNormal];
-    
     [self.delegate checkButtonWasTappedInCell:self];
 }
 @end

@@ -13,6 +13,7 @@
 #import "FeedConnectorVC.h"
 #import "OpenConversationViewController.h"
 #import "UserProfileViewController.h"
+#import "BucketListCollectionViewController.h"
 
 @interface SideBarViewController ()
 {
@@ -38,7 +39,7 @@
 {
     [super viewDidLoad];
 
-    titlesForRows = @[@"justmovd", @"feed", @"around", @"messages", @"profile", @"empty", @"empty", @"empty", @"empty", @"empty", @"sign"];
+    titlesForRows = @[@"justmovd", @"feed", @"around", @"messages", @"profile", @"bucket list", @"empty", @"empty", @"empty", @"empty", @"empty", @"sign"];
     self.tableView.scrollEnabled = NO;
     
     self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
@@ -116,6 +117,14 @@
                 
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[profileVC] animated: NO ];
+                [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+                
+            } else if (indexPath.row == 5){
+                UIStoryboard *bucketListSB = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
+                BucketListCollectionViewController *bucketListVC = [bucketListSB instantiateViewControllerWithIdentifier:@"bucketList"];
+                
+                UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+                [navController setViewControllers: @[bucketListVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
                 
             } else{

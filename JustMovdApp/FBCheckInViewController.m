@@ -104,10 +104,12 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"SegueFromCheckInLocationSelection"]){
-        StatusUpdateViewController *updateVC = segue.destinationViewController;
-        updateVC.selectedPlace = sender;
+        StatusUpdateViewController *updateVC;
+        
+        updateVC                   = segue.destinationViewController;
+        updateVC.selectedPlace     = sender;
         updateVC.presentingCheckIn = NO;
-        updateVC.mapImage.image = self.mapViewImage;
+        updateVC.mapImage.image    = self.mapViewImage;
     }
     
     if ([segue.identifier isEqualToString:@"unwindFromCheckInVC"]) {

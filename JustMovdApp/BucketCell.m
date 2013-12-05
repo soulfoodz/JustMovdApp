@@ -36,10 +36,12 @@
 
 - (void)resetContents
 {
+    _creatorAvatar.image = nil;
     _mainImage.image     = nil;
     _titleLabel.text     = nil;
     _distanceLabel.text  = nil;
     _categoryLabel.text  = nil;
+    _isChecked           = NO;
     
     [self styleSubviews];
 }

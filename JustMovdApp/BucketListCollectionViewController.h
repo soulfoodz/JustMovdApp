@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
 
-@interface BucketListCollectionViewController : UICollectionViewController 
+@interface BucketListCollectionViewController : UICollectionViewController
+
+@property (strong, nonatomic) SWRevealViewController *revealViewController;
 
 
 @end

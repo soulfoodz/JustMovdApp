@@ -430,24 +430,19 @@
 
 -(void)avatarImageWasTappedInCell:(PostCell *)cell
 {
+    NSIndexPath               *indexPath;
+    PFUser                    *postCreator;
+    UIStoryboard              *storyboard;
     UserProfileViewController *profileVC;
-    NSIndexPath  *indexPath;
-    PFUser       *postCreator;
-    UIStoryboard *storyboard;
-    NSString     *fbUsername;
     
     storyboard  = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
     profileVC   = [storyboard instantiateViewControllerWithIdentifier:@"profile"];
     indexPath   = [self.tableView indexPathForCell:cell];
+    postCreator = [self.commentsArray[indexPath.row] objectForKey:@"user"];
     
-    if (indexPath.section == 0)
-        postCreator = self.post[@"user"];
-    else
-        postCreator = [self.commentsArray[indexPath.row] objectForKey:@"user"];
+    profileVC.user               = postCreator;
+    profileVC.userProfilePicture = (UIImage *)cell.profilePicture.image;
     
-    fbUsername  = [postCreator objectForKey:@"FBUsername"];
-    
-    profileVC.facebookUsername = fbUsername;
     [self.navigationController pushViewController:profileVC animated:YES];
 }
 

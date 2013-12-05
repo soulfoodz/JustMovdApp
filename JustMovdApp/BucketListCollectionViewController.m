@@ -17,8 +17,9 @@
 @interface BucketListCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
 @property (strong, nonatomic) NSMutableArray *bucketList;
-@property (strong, nonatomic) PFGeoPoint     *userLocation;
 @property (strong, nonatomic) NSMutableArray *completedBuckets;
+@property (strong, nonatomic) PFGeoPoint     *userLocation;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
 
 @end
 
@@ -29,28 +30,41 @@
 {
     [super viewDidLoad];
     
-    // Get values for properties
+    [self queryForBucketList];
+    [self queryForCompletedBuckets];
+    
     self.userLocation                   = [[PFUser currentUser] objectForKey:@"geoPoint"];
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.completedBuckets               = (NSMutableArray *)[[PFUser currentUser] objectForKey:@"buckets"];
     
-    [self queryForBucketList];
+    self.menuButton.target = self.revealViewController;
+    self.menuButton.action = @selector(revealToggle:);
 }
 
 
 - (void)queryForBucketList
 {
     [ParseServices queryForBucketListNear:self.userLocation
-                          completionBlock:^(NSArray *results, BOOL success) {
+                          completionBlock:^(NSArray *results, BOOL success)
+                                           {
                               
-                              if (success == NO)
-                                  [self displayAlertForNoBucketList];
-                              else
-                              {
-                                  self.bucketList = [NSMutableArray arrayWithArray:results];
-                                  [self.collectionView reloadData];
-                              }
-                            }];
+                                           if (success == NO)
+                                              [self displayAlertForNoBucketList];
+                                           else
+                                           {
+                                              self.bucketList = [NSMutableArray arrayWithArray:results];
+                                              [self.collectionView reloadData];
+                                           }
+                                           }];
+}
+
+
+- (void)queryForCompletedBuckets
+{
+    [ParseServices queryForBucketsCompletedByUser:[PFUser currentUser]
+                                  completionBlock:^(NSArray *results, BOOL success)
+                                                   {
+                                                        if (success) self.completedBuckets = results.mutableCopy;
+                                                   }];
 }
 
 
@@ -94,24 +108,16 @@
                                          forIndexPath:indexPath];
     [cell resetContents];
     
-    // Get the bucket for the indexPath.row
-    bucket  = self.bucketList[indexPath.row];
-    creator = bucket[@"creator"];
-    
-    // Here we check to see if the bucket item has been completed by the user, and set the
-    // indicating buttons state accordingly.
-    if ([self.completedBuckets containsObject:bucket])
-        cell.isChecked = YES;
-    
-    // Get the distance in miles between the user's location and the bucket's location
-    milesApart = [self usersDistanceToBucketLocation:bucket[@"location"]];
+    bucket         = self.bucketList[indexPath.row];
+    creator        = bucket[@"creator"];
+    cell.isChecked = [self checkForCompletionOfBucket:bucket];
+    milesApart     = [self usersDistanceToBucketLocation:bucket[@"location"]];
     
     cell.titleLabel.text     = bucket[@"title"];
     cell.categoryLabel.text  = bucket[@"category"];
     cell.distanceLabel.text  = [NSString stringWithFormat:@"%.1f mi", milesApart];
     cell.creatorLabel.text   = @"Created by:";
     
-    // Set the cell's image in background
     [cell.mainImage setFile:bucket[@"image"] forImageView:cell.mainImage];
     [cell.creatorAvatar setFile:creator[@"profilePictureFile"] forAvatarImageView:cell.creatorAvatar];
     
@@ -173,29 +179,46 @@
         PFObject                   *selectedBucket;
         NSIndexPath                *ip;
         BucketDetailViewController *dvc;
+    
+        ip               = (NSIndexPath *)sender;
+        cell             = (BucketCell *)[self.collectionView cellForItemAtIndexPath:ip];
+        selectedBucket   = self.bucketList[ip.row];
+        dvc              = segue.destinationViewController;
+        dvc.bucket       = selectedBucket;
+        dvc.updateBlock  = ^(PFObject *bucket, NSString *command)   // updates this collectionview based on whether the detail view
+                                                                    // is checked or unchecked when popped
+                           {
+                                if ([command isEqualToString:@"add"])
+                                    [self.completedBuckets addObject:bucket];
+                               
+                                if([command isEqualToString:@"remove"])
+                                    [self.completedBuckets removeObject:bucket];
+                               
+                                [self.collectionView reloadItemsAtIndexPaths:@[(NSIndexPath *)sender]];
+                           };
         
-        ip              = (NSIndexPath *)sender;
-        cell            = (BucketCell *)[self.collectionView cellForItemAtIndexPath:ip];
-        selectedBucket  = self.bucketList[ip.row];
-        dvc             = segue.destinationViewController;
-        dvc.bucket      = selectedBucket;
-        
-        if (cell.isChecked == YES)
-            dvc.isChecked = YES;
-        
-        // If the bucket being passed has been completed, notify the BucketDetailVC
-        //if (sender.checkedButton.state == UIControlStateSelected)
-        //    dvc.isChecked = YES;
+        dvc.initialImage = cell.mainImage.image;
+        dvc.isChecked    = cell.isChecked;
     }
+}
+
+
+- (BOOL)checkForCompletionOfBucket:(PFObject *)bucket
+{
+    for (PFObject *buck in self.completedBuckets)
+    {
+        if ([buck[@"title"] isEqualToString:bucket[@"title"]]) return YES;
+    }
+    
+    return NO;
 }
 
 
 - (double)usersDistanceToBucketLocation:(PFGeoPoint *)location
 {
-    double milesApart;
-    
-    milesApart = (double)[self.userLocation distanceInMilesTo:location];
-    return milesApart;
+    return (double)[self.userLocation distanceInMilesTo:location];
 }
 
+- (IBAction)toggleMenuVC:(id)sender {
+}
 @end

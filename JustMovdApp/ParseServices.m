@@ -38,6 +38,24 @@
     }];
 }
 
++ (void)queryForBucketsCompletedByUser:(PFUser *)user completionBlock:(PFQueryCompletionBlock)completionBlock
+{
+    PFQuery *queryForCompletedBuckets;
+    
+    queryForCompletedBuckets = [PFUser query];
+    [queryForCompletedBuckets whereKey:@"username" equalTo:user.username];
+    //[queryForCompletedBuckets whereKey:@"objectId" equalTo:user[@"objectId"]];
+    [queryForCompletedBuckets includeKey:@"buckets"];
+    [queryForCompletedBuckets findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+                                                                {
+                                                                    if (!error)
+                                                                    {
+                                                                        NSArray *buckets = objects[0][@"buckets"];
+                                                                        completionBlock(buckets, YES);
+                                                                    }
+                                                                }];
+}
+
 
 
 @end

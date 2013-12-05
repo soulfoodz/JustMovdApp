@@ -18,9 +18,13 @@
 
 @property (strong, nonatomic) NSString                *venueID;
 @property (strong, nonatomic) FoursquareServices      *fsService;
-@property (nonatomic) BOOL                            bucketCheckedForUser;
+@property (nonatomic) BOOL                            wasChecked;
 
 @end
+
+static NSString *addCheckString    = @"add";
+static NSString *removeCheckString = @"remove";
+
 
 @implementation BucketDetailViewController
 
@@ -30,7 +34,7 @@
     [super viewDidLoad];
     
     // Set our original state holder for whether or not the user has done the bucket
-    if (self.isChecked) self.bucketCheckedForUser = YES;
+    self.wasChecked = self.isChecked;
     
     self.venueID   = self.bucket[@"FSVenueID"];
     self.fsService = [[FoursquareServices alloc] init];
@@ -39,7 +43,7 @@
     
     [self getVenueImages];
 }
-     
+
 
 - (void)getVenueImages
 {
@@ -179,7 +183,7 @@
     cell.titleLabel.text    = self.bucket[@"title"];
     cell.subtitleLabel.text = self.bucket[@"category"];
     cell.quoteLabel.text    = self.bucket[@"creatorQuote"];
-    cell.mainImage.image    = self.photosArray[0];
+    cell.mainImage.image    = self.initialImage;  //self.photosArray[0];
     cell.creatorLabel.text  = [NSString stringWithFormat:@"%@ says:", creatorName];
     [cell.creatorAvatar setFile:creator[@"profilePictureFile"] forAvatarImageView:cell.creatorAvatar];
     
@@ -187,21 +191,17 @@
 }
 
 
-- (void)checkButtonWasTappedInCell:(id)cell
+- (void)checkButtonWasTappedInCell:(BucketDetailCell *)cell
 {
-    BucketDetailCell *detailCell;
-    
-    detailCell = (BucketDetailCell *)cell;
-    
     if (self.isChecked == YES)
     {
         self.isChecked = NO;
-        [detailCell setCheckButtonImageFor:@"unchecked"];
+        [cell setCheckButtonImageFor:@"unchecked"];
     }
     else
     {
         self.isChecked = YES;
-        [detailCell setCheckButtonImageFor:@"checked"];
+        [cell setCheckButtonImageFor:@"checked"];
     }
 }
 
@@ -211,13 +211,20 @@
     // Check to see if the state of the checkButton has changed while on the page
     // If it has, save the final state (isChecked) to the users array of checked buckets
     
-    if (self.isChecked == NO && self.bucketCheckedForUser == YES)
-        [[[PFUser currentUser] objectForKey:@"buckets"] removeObjectIdenticalTo:self.bucket];
+    if (self.isChecked == self.wasChecked) return;
     
-    if (self.isChecked == YES && self.bucketCheckedForUser == NO)
-        [[PFUser currentUser] addObject:self.bucket forKey:@"buckets"];
+    if (self.isChecked == NO && self.wasChecked == YES)
+    {
+        [[PFUser currentUser] removeObject:self.bucket forKey:@"buckets"];
+        self.updateBlock(self.bucket, removeCheckString);
+    }
+    else if (self.isChecked == YES && self.wasChecked == NO)
+    {
+        [[PFUser currentUser] addUniqueObject:self.bucket forKey:@"buckets"];
+        self.updateBlock(self.bucket, addCheckString);
+    }
     
-    [self.bucket saveEventually:^(BOOL succeeded, NSError *error) {
+    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded == YES)
             NSLog(@"Saved changes");
         else

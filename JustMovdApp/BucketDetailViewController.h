@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "BucketDetailCell.h"
 
+typedef void (^updateCompletedBucketsBlock)(PFObject *bucket, NSString *command);
+
 @interface BucketDetailViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,BucketItemCheckButtonDataSource>
 
+@property (strong, nonatomic) updateCompletedBucketsBlock updateBlock;
 @property (strong, nonatomic) PFObject       *bucket;
+@property (strong, nonatomic) UIImage        *initialImage;
 @property (strong, nonatomic) NSMutableArray *photosArray;
 @property (nonatomic) BOOL isChecked;
 

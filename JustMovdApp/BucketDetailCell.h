@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class BucketDetailCell;
+
 @protocol BucketItemCheckButtonDataSource <NSObject>
 
-- (void)checkButtonWasTappedInCell:(id)cell;
+- (void)checkButtonWasTappedInCell:(BucketDetailCell *)cell;
 
 @end
 
@@ -24,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel     *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *creatorLabel;
 @property (weak, nonatomic) IBOutlet UILabel     *quoteLabel;
-
 @property (weak, nonatomic) IBOutlet UIImageView *mainImage;
 @property (weak, nonatomic) IBOutlet PFImageView *creatorAvatar;
 @property (weak, nonatomic) IBOutlet UIButton    *checkButton;

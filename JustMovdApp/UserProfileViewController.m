@@ -120,7 +120,7 @@
 
 - (void)checkInMapImageWasTappedInCell:(PostCell *)cell
 {
-    NSIndexPath *indexPath = [userProfileTableView indexPathForSelectedRow];
+    NSIndexPath *indexPath = [userProfileTableView indexPathForCell:cell];
     PFObject *checkIn = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"checkIn"];
     
     UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
