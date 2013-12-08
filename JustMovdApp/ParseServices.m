@@ -57,5 +57,65 @@
 }
 
 
++ (void)queryForCommentsForPost:(PFObject *)post completionBlock:(PFQueryCompletionBlock)completionBlock
+{
+    PFQuery *queryForPostComments;
+    
+    queryForPostComments = [PFQuery queryWithClassName:@"Activity"];
+    [queryForPostComments whereKey:@"type" equalTo:@"JMComment"];
+    [queryForPostComments whereKey:@"post" equalTo:post];
+    [queryForPostComments includeKey:@"user"];
+    [queryForPostComments orderByAscending:@"createdAt"];
+    
+    queryForPostComments.limit = 30;
+    queryForPostComments.cachePolicy = kPFCachePolicyNetworkOnly;
+    
+    [queryForPostComments findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error)
+     {
+         if (!error)
+         {
+             completionBlock(comments, YES);
+         }
+         else
+         {
+             NSLog(@"Error fetching posts : %@", error);
+             completionBlock(comments, NO);
+         }
+     }];
+}
+
+
++ (void)queryForInterestsForUser:(PFUser *)user completionBlock:(PFQueryCompletionBlock)completionBlock
+{
+    PFQuery *interestQuery;
+    
+    interestQuery = [PFQuery queryWithClassName:@"Interests"];
+    [interestQuery includeKey:@"User"];
+    [interestQuery whereKey:@"User" equalTo:user];
+    [interestQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+                                                        {
+                                                            if (!error)
+                                                            {
+                                                                NSMutableArray *interests;
+            
+                                                                interests = [NSMutableArray new];
+                                                                [interests addObject:object[@"first"]];
+                                                                [interests addObject:object[@"second"]];
+                                                                [interests addObject:object[@"third"]];
+                                                                [interests addObject:object[@"fourth"]];
+                                                                
+                                                                completionBlock(interests, YES);
+                                                            }
+                                                         
+                                                             if (error)
+                                                             {
+                                                                 NSLog(@"There was an error fetching interests: %@", error);
+                                                                 completionBlock(nil, NO);
+                                                             }
+                                                        }];
+}
+
+
+
 
 @end

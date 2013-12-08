@@ -13,6 +13,7 @@
 @interface CommentViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PostCellDelegate, UITextViewDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) PFObject *post;
+@property (strong, nonatomic) PFUser *poster;
 @property (strong, nonatomic) NSMutableArray *commentsArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;

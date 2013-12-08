@@ -550,7 +550,6 @@
 }
 
 
-
 #pragma mark - TableViewHeader
 
 - (void)setupTableViewHeader
@@ -576,7 +575,6 @@
     
     self.tableView.tableHeaderView = toolBar;
 }
-
 
 
 @end

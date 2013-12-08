@@ -277,6 +277,7 @@ static CGFloat scaledValue( CGFloat v1, CGFloat min2, CGFloat max2, CGFloat min1
 }
 
 
+
 # pragma mark private
 
 
@@ -410,6 +411,21 @@ const int FrontViewPositionNone = 0xff;
 }
 
 
+- (void)displayMessageBadgeInNavigationBar:(NSNotification *)notification
+{
+    if ([notification.name isEqualToString:@"displayBadgeInNavBarForMessage"])
+    {
+        self.messageBadge = [[UIImageView alloc] initWithFrame:CGRectMake(35, 70, 20, 20)];
+        self.messageBadge.layer.cornerRadius = 10;
+        self.messageBadge.layer.masksToBounds = YES;
+        self.messageBadge.image = [UIImage imageNamed:@"newmessageindicator"];
+        self.messageBadge.hidden = NO;
+
+        [self.frontViewController.view addSubview:self.messageBadge];
+    }
+}
+
+
 - (void)_initDefaultProperties
 {
     _frontViewPosition = FrontViewPositionLeft;
@@ -528,7 +544,6 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
     // set our contentView to the controllers view
     self.view = _contentView;
     
-
     
     // load any defined front/rear controllers from the storyboard
     if ( self.storyboard && _rearViewController == nil )
@@ -596,7 +611,6 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
     // and resume it back to the previous state, it is possible to override this behaviour by
     // intercepting it on the panGestureBegan and panGestureEnded delegates
     _userInteractionStore = _contentView.userInteractionEnabled;
-    
 }
 
 

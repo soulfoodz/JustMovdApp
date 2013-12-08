@@ -7,6 +7,7 @@
 //
 
 #import "CommentViewController.h"
+#import "ParseServices.h"
 #import "PostCell.h"
 #import "JMCache.h"
 #import "TTTTimeIntervalFormatter.h"
@@ -16,7 +17,7 @@
 #import <MapKit/MapKit.h>
 
 
-#define maxContentWidth 300.0f
+#define maxContentWidth 200.0f
 #define nameOriginX (avatarSpacing + avatarImageView.frame.size.width + 10.0f)
 #define dateOriginX (avatarSpacing + avatarImageView.frame.size.width + 10.0f)
 #define headerInsetY 6.0f
@@ -35,6 +36,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.poster = self.post[@"user"];
     
     self.tableView.contentOffset = CGPointMake(0, 0);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -55,28 +58,16 @@
 
 - (void)queryForComments
 {
-    PFQuery *queryForPostComments;
-    
-    queryForPostComments = [PFQuery queryWithClassName:@"Activity"];
-    [queryForPostComments whereKey:@"type" equalTo:@"JMComment"];
-    [queryForPostComments whereKey:@"post" equalTo:self.post];
-    [queryForPostComments includeKey:@"user"];
-    [queryForPostComments orderByAscending:@"createdAt"];
-    
-    queryForPostComments.limit = 30;
-    queryForPostComments.cachePolicy = kPFCachePolicyNetworkOnly;
-    
-    [queryForPostComments findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error)
-     {
-         if (!error)
-         {
-             self.commentsArray = [[NSMutableArray arrayWithArray:comments] mutableCopy];
-             [self.tableView reloadData];
-             [self updateCommentCount];
-         }
-         else NSLog(@"Error fetching posts : %@", error);
-     }];
-    
+    [ParseServices queryForCommentsForPost:self.post
+                           completionBlock:^(NSArray *results, BOOL success)
+                                            {
+                                                if (success == YES)
+                                                {
+                                                     self.commentsArray = [[NSMutableArray arrayWithArray:results] mutableCopy];
+                                                     [self.tableView reloadData];
+                                                     [self updateCommentCount];
+                                                 }
+                                            }];
 }
 
 
@@ -135,8 +126,9 @@
         cell.timeLabel.text         = [self setTimeSincePostDate:createdDate];
         [cell.profilePicture setFile:imageFile forAvatarImageView:cell.profilePicture];
     }
-    else{
-        
+
+    if (indexPath.section == 1)
+    {
         // Section 2 is for comments on the post
         postCreator   = [self.commentsArray[indexPath.row] objectForKey:@"user"];
         contentString = [self.commentsArray[indexPath.row] objectForKey:@"textContent"];
@@ -159,19 +151,18 @@
     CGFloat textHeight;
     int addCheckIn = 190;
 
-    
     if (indexPath.section == 0){
         contentString = [self.post objectForKey:@"textContent"];
         textHeight    = [self sizeForString:contentString withFont:CONTENT_FONT];
         if (self.post[@"checkIn"])
             return textHeight + addCheckIn + 80;
         else
-            return textHeight + 88;
+            return textHeight + 78;
     }
     else
         contentString = [self.commentsArray[indexPath.row] objectForKey:@"textContent"];
         textHeight = [self sizeForString:contentString withFont:CONTENT_FONT];
-        return textHeight + 88;
+        return textHeight + 78;
 }
 
 
@@ -438,7 +429,11 @@
     storyboard  = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
     profileVC   = [storyboard instantiateViewControllerWithIdentifier:@"profile"];
     indexPath   = [self.tableView indexPathForCell:cell];
-    postCreator = [self.commentsArray[indexPath.row] objectForKey:@"user"];
+    
+    if (indexPath.section == 0)
+        postCreator = self.poster;
+    else
+        postCreator = [self.commentsArray[indexPath.row] objectForKey:@"user"];
     
     profileVC.user               = postCreator;
     profileVC.userProfilePicture = (UIImage *)cell.profilePicture.image;

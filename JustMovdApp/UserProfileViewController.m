@@ -26,10 +26,20 @@
 #import "NotificationIndicatorViewController.h"
 #import "ActivityFeedViewController.h"
 #import "CheckInDetailViewController.h"
+#import "ParseServices.h"
 
 
 #define kLoadingCellTag 7
 #define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:14.0]
+
+
+typedef enum
+{
+    currentUserFromMenu,
+    currentUserFromOther,
+    otherUser
+} UserState;
+
 
 @interface UserProfileViewController ()
 {
@@ -37,7 +47,6 @@
     UIBarButtonItem *doneButton;
     UIImage *profilePicture;
     UIImage *profilePictureBlur;
-    NSMutableDictionary *userInfoDictionary;
     CGRect aboutCellHeight;
     CGRect postCellHeight;
     TTTTimeIntervalFormatter *timeFormatter;
@@ -49,392 +58,125 @@
     PFFile *imageFile;
 }
 
+@property (nonatomic) UserState userState;
+@property (strong, nonatomic) NSArray *interestsArray;
+
 @end
 
 @implementation UserProfileViewController
+
 @synthesize userInfosArray;
 @synthesize userProfileTableView;
-@synthesize facebookUsername;
 @synthesize editButton;
 @synthesize sideBarButton;
 @synthesize user;
 @synthesize userProfilePicture;
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
+    userProfileTableView.backgroundColor = [UIColor whiteColor];
+    
+    [self checkUser];
     [self intializeNeededStuff];
-    
-    facebookUsername = user.username;
-    if ([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[ActivityFeedViewController class]]) {
-        [self.navigationItem setLeftBarButtonItem:nil];
-    }
-    
-    NSLog(@"Title: %@", [self.navigationController.viewControllers objectAtIndex:0]);
+    [self fetchUserInterests];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+
+- (void)checkUser
 {
-    [self retrieveUserInfoFromParse];
+    if (!self.user)
+    {
+        [self handleViewState:currentUserFromMenu];
+        self.user = [PFUser currentUser];
+        [self getImageForFile:self.user[@"profilePictureFile"]];
+        return;
+    }
+    
+    if ([self.user[@"username"] isEqualToString:[PFUser currentUser][@"username"]])
+    {
+        [self handleViewState:currentUserFromOther];
+        return;
+    }
+    else
+    {
+        [self handleViewState:otherUser];
+    }
 }
+
+
+- (void)handleViewState:(UserState)state
+{
+    if (state == currentUserFromMenu)
+    {
+        [self showEditButton:YES];
+    }
+    
+    if (state == currentUserFromOther)
+    {
+        [self.navigationItem setLeftBarButtonItem:nil];
+        [self showEditButton:YES];
+    }
+    
+    if (state == otherUser)
+    {
+        [self.navigationItem setLeftBarButtonItem:nil];
+        [self showEditButton:NO];
+    }
+}
+
+
+- (void)getImageForFile:(PFFile *)file
+{
+    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+        userProfilePicture = [UIImage imageWithData:data scale:2.0];
+        profilePictureBlur = [self.userProfilePicture stackBlur:10];
+    }];
+}
+
 
 - (void)intializeNeededStuff
 {
-    self.view.layer.shouldRasterize = YES;
-    self.view.layer.rasterizationScale = 2.0;
-    
-    //Initialize stuff
-    NotificationIndicatorViewController *notifyIndicator = [[NotificationIndicatorViewController alloc] initWithView:self.navigationController.navigationBar];
-    
-    spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
-    
-    commentCount = [[NSMutableArray alloc] init];
+    //spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
     
     sideBarButton.target = self.revealViewController;
     sideBarButton.action = @selector(revealToggle:);
     
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
-    //NSLog(@"User: %@", user);
-    
-    userInfoDictionary = [[NSMutableDictionary alloc] init];
-    userInfoDictionary[@"name"]             = @"";
-    userInfoDictionary[@"gender"]           = @"";
-    userInfoDictionary[@"email"]            = @"";
-    userInfoDictionary[@"about"]            = @"";
-    userInfoDictionary[@"location"]         = @"";
-    userInfoDictionary[@"age"]              = @"";
-    userInfoDictionary[@"firstInterest"]    = @"";
-    userInfoDictionary[@"secondInterest"]   = @"";
-    userInfoDictionary[@"thirdInterest"]    = @"";
-    userInfoDictionary[@"fourthInterest"]   = @"";
-    
-    userInfosArray = [[NSMutableArray alloc] init];
-    
     timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
     
-    headerLabelViewSection2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    profilePictureBlur = [self.userProfilePicture stackBlur:10];
 }
 
-- (void)checkInMapImageWasTappedInCell:(PostCell *)cell
+
+- (void)fetchUserInterests
 {
-    NSIndexPath *indexPath = [userProfileTableView indexPathForCell:cell];
-    PFObject *checkIn = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"checkIn"];
-    
-    UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
-    CheckInDetailViewController *checkInDetailVC = [feedSB instantiateViewControllerWithIdentifier:@"checkInDetailVC"];
-    
-    checkInDetailVC.checkIn = checkIn;
-    
-    [self.navigationController pushViewController:checkInDetailVC animated:YES];
+    [ParseServices queryForInterestsForUser:self.user
+                            completionBlock:^(NSArray *results, BOOL success)
+                                             {
+                                                 if (success)
+                                                 {
+                                                     self.interestsArray = nil;
+                                                     self.interestsArray = results;
+                                                     [userProfileTableView reloadData];
+                                                 }
+                                                 else NSLog(@"Handle Error fetching interests");
+                                             }];
 }
 
-///////////////////////
 
-- (void)retrieveUserInfoFromParse
+- (NSString *)getStringForUsersAge
 {
-    [spinner.view setHidden:NO];
+    NSInteger age;
     
-    if ([[self.navigationController.viewControllers objectAtIndex:0] isKindOfClass:[ActivityFeedViewController class]])
-    {
-        [self showEditButton:NO];
-        
-        profilePicture = userProfilePicture;
-        profilePictureBlur = [profilePicture stackBlur:10];
-        [userProfileTableView reloadData];
-        
-        userInfoDictionary[@"name"]     = [user objectForKey:@"firstName"];
-        userInfoDictionary[@"gender"]   = [user objectForKey:@"gender"];
-        userInfoDictionary[@"email"]    = [user objectForKey:@"email"];
-        userInfoDictionary[@"about"]    = [user objectForKey:@"about"];
-        userInfoDictionary[@"location"] = [user objectForKey:@"location"];
-        
-        PFQuery *interestQuery = [PFQuery queryWithClassName:@"Interests"];
-        [interestQuery includeKey:@"User"];
-        [interestQuery whereKey:@"User" equalTo:user];
-        [interestQuery getFirstObjectInBackgroundWithBlock:^(PFObject *interestObject, NSError *error)
-         {
-             if (interestObject)
-             {
-                 userInfoDictionary[@"firstInterest"]     = [interestObject objectForKey:@"first"];
-                 userInfoDictionary[@"secondInterest"]    = [interestObject objectForKey:@"second"];
-                 userInfoDictionary[@"thirdInterest"]     = [interestObject objectForKey:@"third"];
-                 userInfoDictionary[@"fourthInterest"]    = [interestObject objectForKey:@"fourth"];
-                 [userProfileTableView reloadData];
-             }
-         }];
-        
-        //Convert age
-        NSInteger age = [self calculateYearsFromDateStringWithFormatMMddyyyy:[user objectForKey:@"birthday"]];
-        //////////////
-        
-        userInfoDictionary[@"age"] = [NSString stringWithFormat:@"%li", (long)age];
-        
-        //[self retriveUserPostsAndCommentsCount];
-        [self queryForTable];
-        
-        [userProfileTableView reloadData];
-    }
-    else
-    {
-        [self showEditButton:YES];
-        
-        imageFile = [[PFUser currentUser] objectForKey:@"profilePictureFile"];
-        [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            profilePicture = [UIImage imageWithData:data];
-            profilePictureBlur = [profilePicture stackBlur:10];
-            [userProfileTableView reloadData];
-        }];
-        
-        userInfoDictionary[@"name"]     = [[PFUser currentUser] objectForKey:@"firstName"];
-        userInfoDictionary[@"gender"]   = [[PFUser currentUser] objectForKey:@"gender"];
-        userInfoDictionary[@"email"]    = [[PFUser currentUser] objectForKey:@"email"];
-        userInfoDictionary[@"about"]    = [[PFUser currentUser] objectForKey:@"about"];
-        userInfoDictionary[@"location"] = [[PFUser currentUser] objectForKey:@"location"];
-        
-        PFQuery *interestQuery = [PFQuery queryWithClassName:@"Interests"];
-        [interestQuery whereKey:@"User" equalTo:[PFUser currentUser]];
-        [interestQuery getFirstObjectInBackgroundWithBlock:^(PFObject *interestObject, NSError *error)
-         {
-             if (interestObject)
-             {
-                 userInfoDictionary[@"firstInterest"]     = [interestObject objectForKey:@"first"];
-                 userInfoDictionary[@"secondInterest"]     = [interestObject objectForKey:@"second"];
-                 userInfoDictionary[@"thirdInterest"]     = [interestObject objectForKey:@"third"];
-                 userInfoDictionary[@"fourthInterest"]     = [interestObject objectForKey:@"fourth"];
-                 [userProfileTableView reloadData];
-             }
-         }];
-        
-        //Convert age
-        NSInteger age = [self calculateYearsFromDateStringWithFormatMMddyyyy:[[PFUser currentUser] objectForKey:@"birthday"]];
-        //////////////
-        userInfoDictionary[@"age"] = [NSString stringWithFormat:@"%li", (long)age];
-        
-        //[self retriveUserPostsAndCommentsCount];
-        [self queryForTable];
-        
-        [userProfileTableView reloadData];
-    }
+    age = [self calculateYearsFromDateStringWithFormatMMddyyyy:[user objectForKey:@"birthday"]];
+    
+    return [NSString stringWithFormat:@"%d", age];
 }
 
-- (void)queryForTable
-{
-    if (!user || [user.username isEqualToString:[PFUser currentUser].username])
-    {
-        if ([userInfoDictionary[@"posts"] count] == 0){
-            PFQuery *queryForAllPosts;
-            queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
-            [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
-            [queryForAllPosts whereKey:@"user" equalTo:[PFUser currentUser]];
-            [queryForAllPosts includeKey:@"checkIn"];
-            queryForAllPosts.limit = 10;
-            queryForAllPosts.cachePolicy = kPFCachePolicyNetworkOnly;
-            [queryForAllPosts orderByDescending:@"createdAt"];
-            
-            [queryForAllPosts findObjectsInBackgroundWithBlock:^(NSArray *queryResults, NSError *error)
-            {
-                 if (!error)
-                 {
-                     // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
-                     if (queryResults.count < 6)
-                         isAll = YES;
-                     else
-                         isAll = NO;
-
-                     // Sort the array into descending order
-                     [queryResults.mutableCopy sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                         int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
-                         return dateOrder;
-                     }];
-                     
-                     // Add queryResults to userInfoDictionary[@"posts"]
-                     [userInfoDictionary setObject:queryResults forKey:@"posts"];
-                     [userProfileTableView reloadData];
-                     [spinner.view setHidden:YES];
-                 }
-                 else NSLog(@"Error fetching posts : %@", error);
-             }];
-            
-        }
-        
-        if ([userInfoDictionary[@"posts"] count] > 0){
-            PFQuery *queryForAllPosts;
-            queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
-            [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
-            [queryForAllPosts whereKey:@"user" equalTo:[PFUser currentUser]];
-            [queryForAllPosts whereKey:@"createdAt" lessThan:[[userInfoDictionary[@"posts"] lastObject] createdAt]];
-            
-            PFQuery *greaterThanQuery;
-            greaterThanQuery = [PFQuery queryWithClassName:@"Activity"];
-            [greaterThanQuery whereKey:@"type" equalTo:@"JMPost"];
-            [greaterThanQuery whereKey:@"createdAt"
-                           greaterThan:[[userInfoDictionary[@"posts"] firstObject] createdAt]];
-            
-            PFQuery *bigQuery;
-            bigQuery = [PFQuery orQueryWithSubqueries:@[queryForAllPosts, greaterThanQuery]];
-            [bigQuery includeKey:@"user"];
-            [bigQuery includeKey:@"checkIn"];
-            bigQuery.limit = 10;
-            bigQuery.cachePolicy = kPFCachePolicyNetworkOnly;
-            [bigQuery orderByDescending:@"createdAt"];
-            [bigQuery findObjectsInBackgroundWithBlock:^(NSArray *queryResults, NSError *error)
-             {
-                 if (!error)
-                 {
-                     // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
-                     if (queryResults.count < 10)
-                         isAll = YES;
-                     else
-                         isAll = NO;
-                     
-                     // Sort the array into descending order
-                     [queryResults.mutableCopy sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                         int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
-                         return dateOrder;
-                     }];
-                     
-                     // Add queryResults to postsArray
-                     [userInfoDictionary[@"posts"] addObjectsFromArray:queryResults];
-                     [userProfileTableView reloadData];
-                     [spinner.view setHidden:YES];
-                 }
-                 else
-                     NSLog(@"Error fetching posts : %@", error);
-             }];
-        }
-    }
-    else /////// User is somebody
-    {
-        if ([userInfoDictionary[@"posts"] count] == 0){
-            PFQuery *queryForAllPosts;
-            queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
-            [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
-            [queryForAllPosts whereKey:@"user" equalTo:user];
-            [queryForAllPosts includeKey:@"checkIn"];
-            queryForAllPosts.limit = 10;
-            queryForAllPosts.cachePolicy = kPFCachePolicyNetworkOnly;
-            [queryForAllPosts orderByDescending:@"createdAt"];
-            
-            [queryForAllPosts findObjectsInBackgroundWithBlock:
-             ^(NSArray *queryResults, NSError *error) {
-                 if (!error)
-                 {
-                     // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
-                     if (queryResults.count < 6)
-                         isAll = YES;
-                     else
-                         isAll = NO;
-                     
-                     // Sort the array into descending order
-                     [queryResults.mutableCopy sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                         int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
-                         return dateOrder;
-                     }];
-                     
-                     // Add queryResults to userInfoDictionary[@"posts"]
-                     [userInfoDictionary setObject:queryResults forKey:@"posts"];
-                     [userProfileTableView reloadData];
-                     [spinner.view setHidden:YES];
-                 }
-                 else NSLog(@"Error fetching posts : %@", error);
-             }];
-        }
-        
-        if ([userInfoDictionary[@"posts"] count] > 0){
-            PFQuery *queryForAllPosts;
-            queryForAllPosts = [PFQuery queryWithClassName:@"Activity"];
-            [queryForAllPosts whereKey:@"type" equalTo:@"JMPost"];
-            [queryForAllPosts whereKey:@"user" equalTo:user];
-            [queryForAllPosts whereKey:@"createdAt" lessThan:[[userInfoDictionary[@"posts"] lastObject] createdAt]];
-            
-            PFQuery *greaterThanQuery;
-            greaterThanQuery = [PFQuery queryWithClassName:@"Activity"];
-            [greaterThanQuery whereKey:@"type" equalTo:@"JMPost"];
-            [greaterThanQuery whereKey:@"createdAt"
-                           greaterThan:[[userInfoDictionary[@"posts"] firstObject] createdAt]];
-            
-            PFQuery *bigQuery;
-            bigQuery = [PFQuery orQueryWithSubqueries:@[queryForAllPosts, greaterThanQuery]];
-            [bigQuery includeKey:@"user"];
-            [bigQuery includeKey:@"checkIn"];
-            bigQuery.limit = 10;
-            bigQuery.cachePolicy = kPFCachePolicyNetworkOnly;
-            [bigQuery orderByDescending:@"createdAt"];
-            [bigQuery findObjectsInBackgroundWithBlock:^(NSArray *queryResults, NSError *error)
-             {
-                 if (!error)
-                 {
-                     // Check to see if a "Load more" or "That's All" cell needs to be added to the end of the tableview
-                     if (queryResults.count < 10)
-                         isAll = YES;
-                     else
-                         isAll = NO;
-                     
-                     // Sort the array into descending order
-                     [queryResults.mutableCopy sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                         int dateOrder = [[obj2 createdAt] compare:[obj1 createdAt]];
-                         return dateOrder;
-                     }];
-                     
-                     // Add queryResults to postsArray
-                     [userInfoDictionary[@"posts"] addObjectsFromArray:queryResults];
-                     [userProfileTableView reloadData];
-                     [spinner.view setHidden:YES];
-                 }
-                 else
-                     NSLog(@"Error fetching posts : %@", error);
-             }];
-        }
-
-    }
-}
-
-- (UITableViewCell *)loadingCell
-{
-    UIActivityIndicatorView *activityIndicator;
-    UITableViewCell *cell;
-    
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    
-    activityIndicator = [UIActivityIndicatorView new];
-    activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    activityIndicator.center = cell.center;
-    
-    [cell addSubview:activityIndicator];
-    
-    [activityIndicator startAnimating];
-    
-    cell.tag = kLoadingCellTag;
-    cell.userInteractionEnabled = NO;
-    
-    [self queryForTable];
-    
-    return cell;
-}
-
-- (UITableViewCell *)isAllCell
-{
-    UITableViewCell *cell;
-    UILabel *label;
-    
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    label = [UILabel new];
-    
-    // Setup the contentLabel
-    label.frame         = CGRectMake(0.0f, 0.0f, 70.0f, 14.0f);
-    label.center        = cell.center;
-    label.font          = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
-    label.textColor     = [UIColor blackColor];
-    label.numberOfLines = 1;
-    label.text          = @"That's all!";
-    
-    [cell addSubview:label];
-    
-    return cell;
-}
 
 - (NSInteger)calculateYearsFromDateStringWithFormatMMddyyyy:(NSString *)dateString
 {
@@ -451,6 +193,7 @@
     return [ageComponents year];
 }
 
+
 - (void)showEditButton:(BOOL)state
 {
     if (state) {
@@ -463,51 +206,6 @@
     }
 }
 
-///////////////////////////
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"editProfileSegue"]) {
-        EditProfileViewController *editProfileVC = segue.destinationViewController;
-        editProfileVC.passInUserInfoDictionary = userInfoDictionary;
-    }
-    
-    if ([segue.identifier isEqualToString:@"segueProfileToMessaging"]) {
-        MessagingViewController *conversationVC = segue.destinationViewController;
-        conversationVC.selectedUser = user;
-        
-        PFQuery *checkExistingConversationMeToOther = [PFQuery queryWithClassName:@"Conversation"];
-        [checkExistingConversationMeToOther whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-        [checkExistingConversationMeToOther whereKey:@"toUser" equalTo:user];
-        [checkExistingConversationMeToOther countObjectsInBackgroundWithBlock:^(int number, NSError *error)
-        {
-            if (number == 0)
-            {
-                PFObject *newMessage1 = [PFObject objectWithClassName:@"Conversation"];
-                [newMessage1 setObject:[PFUser currentUser] forKey:@"fromUser"];
-                [newMessage1 setObject:user forKey:@"toUser"];
-                [newMessage1 setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
-                [newMessage1 saveInBackground];
-            }
-        }];
-        
-        PFQuery *checkExistingConversationOtherToMe = [PFQuery queryWithClassName:@"Conversation"];
-        [checkExistingConversationOtherToMe whereKey:@"toUser" equalTo:[PFUser currentUser]];
-        [checkExistingConversationOtherToMe whereKey:@"fromUser" equalTo:user];
-        [checkExistingConversationOtherToMe countObjectsInBackgroundWithBlock:^(int number, NSError *error)
-         {
-             if (number == 0)
-             {
-                 PFObject *newMessage2 = [PFObject objectWithClassName:@"Conversation"];
-                 [newMessage2 setObject:[PFUser currentUser] forKey:@"toUser"];
-                 [newMessage2 setObject:user forKey:@"fromUser"];
-                 [newMessage2 setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
-                 [newMessage2 saveInBackground];
-             }
-         }];
-        
-    }
-}
 
 - (NSString *)getImageNameFromString:(NSString *)string
 {
@@ -542,240 +240,141 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    headerLabelViewSection2.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
-    headerLabelViewSection2.textAlignment = NSTextAlignmentCenter;
-    headerLabelViewSection2.font = [UIFont fontWithName:@"Roboto-Regular" size:17.0];
-    headerLabelViewSection2.textColor = [UIColor lightGrayColor];
-    if ([userInfoDictionary[@"posts"] count] == 0)
-    {
-        headerLabelViewSection2.text = @"No Recent Activity";
-    }
-    else
-    {
-        headerLabelViewSection2.text = @"Recent Activities";
-    }
-    
-    return headerLabelViewSection2;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section == 1) {
-        return 40;
-    }
-    else
-        return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 3;
-    }
-    else
-    {
-        return [userInfoDictionary[@"posts"] count];
-    }
+    return 3;
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0)
-        {
-            return 320;
-        }
-        else if (indexPath.row == 1)
-        {
-            aboutCellHeight = [userInfoDictionary[@"about"] boundingRectWithSize:CGSizeMake(212.0, FLT_MAX)
-                                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                                      attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Roboto-Regular" size:14.0]} context:nil];
-            return (aboutCellHeight.size.height < 30) ? 45.0 : (aboutCellHeight.size.height + 50);
-        }
-        else
-        {
-            return 45.0;
-        }
+    if (indexPath.row == 0)
+        return 320;
+    
+    if (indexPath.row == 1)
+    {
+        aboutCellHeight = [self.user[@"about"] boundingRectWithSize:CGSizeMake(212.0, FLT_MAX)
+                                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                                  attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Roboto-Regular" size:14.0]} context:nil];
+        return (aboutCellHeight.size.height < 30) ? 45.0 : (aboutCellHeight.size.height + 50);
     }
     else
-    {
-        NSString *textString;
-        CGRect textRect;
-        int checkInHeight;
-        
-        // CheckinHeight is equal to the check in label and image views on the cell
-        checkInHeight = 190;
-        
-        if (indexPath.row == [userInfoDictionary[@"posts"] count])
-            return 40.0f;
-        else {
-            textString = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"textContent"];
-            textRect = [textString boundingRectWithSize:CGSizeMake(200.0, 0)
-                                                options:NSStringDrawingUsesLineFragmentOrigin
-                                             attributes:@{NSFontAttributeName:CONTENT_FONT}
-                                                context:nil];
-            
-            if ([userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"checkIn"] != nil) {
-                return (textRect.size.height + checkInHeight + 110);
-            }
-            else return (textRect.size.height + 120);
-        }
-    }
+        return 45.0;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    PFObject *checkIn;
-    NSString *placeName;
-    UITableViewCell *returnCell;
+    UITableViewCell     *returnCell;
+    PictureCell         *pictureCell;
+    InfoCell            *infoCell;
+    ProfileInterestCell *interestCell;
     
-    static NSString *pictureCellID = @"pictureCell";
-    static NSString *infoCellID = @"infoCell";
-    static NSString *postCellID = @"postCell";
+    static NSString *pictureCellID  = @"pictureCell";
     static NSString *interestCellID = @"interestCell";
+    static NSString *infoCellID     = @"infoCell";
     
-    checkIn = [PFObject objectWithClassName:@"CheckIn"];
+    pictureCell  = [tableView dequeueReusableCellWithIdentifier:pictureCellID];
+    interestCell = [tableView dequeueReusableCellWithIdentifier:interestCellID];
+    infoCell     = [tableView dequeueReusableCellWithIdentifier:infoCellID];
     
-    PictureCell *pictureCell = [tableView dequeueReusableCellWithIdentifier:pictureCellID];
-    pictureCell.messageButton.titleLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:18.0];
-    pictureCell.usernameLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:20.0];
-    pictureCell.fromTownLabel.font = [UIFont fontWithName:@"Roboto-Light" size:15.0];
-    [pictureCell.profilePictureBlur setContentMode:UIViewContentModeScaleAspectFill];
-    pictureCell.profilePictureBlur.layer.masksToBounds = YES;
-    [pictureCell.profilePictureOriginal setContentMode:UIViewContentModeScaleAspectFill];
-    pictureCell.profilePictureOriginal.layer.masksToBounds = YES;
-    [pictureCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        
-    InfoCell *infoCell = [tableView dequeueReusableCellWithIdentifier:infoCellID];
-    if (!infoCell) {
-        infoCell = [[InfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellID];
-        infoCell.titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:14.0];
-        infoCell.descriptionLabel.font = [UIFont fontWithName:@"Roboto-Light" size:14.0];
-        [infoCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    }
-    infoCell.descriptionLabel.numberOfLines = 0;
-    infoCell.descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    PostCell *postCell = [tableView dequeueReusableCellWithIdentifier:postCellID];
-    if (!postCell) {
-        postCell = [[PostCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:postCellID];
-        [postCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        postCell.delegate = self;
-    }
-    
-    ProfileInterestCell *interestCell = [tableView dequeueReusableCellWithIdentifier:interestCellID];
     if (!interestCell) {
         interestCell = [[ProfileInterestCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:interestCellID];
         [interestCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
-    
-    NSArray *nameArray = [userInfoDictionary[@"name"] componentsSeparatedByString:@" "];
-    NSString *name = nameArray[0];
-    NSString *age = userInfoDictionary[@"age"];
-    NSString *gender;
-    if ([userInfoDictionary[@"gender"] isEqualToString:@"male"]) {
-        gender = @"m";
-    }
-    else {
-        gender = @"f";
+    if (!infoCell) {
+        infoCell = [[InfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:infoCellID];
     }
     
-    if (indexPath.section == 0) {
-        switch (indexPath.row)
-        {
-            case 0:
-                pictureCell.profilePictureBlur.image = profilePictureBlur ;
-                pictureCell.profilePictureOriginal.image = profilePicture;
-                pictureCell.usernameLabel.text = [NSString stringWithFormat:@"%@, %@/%@", name, age, gender];
-                pictureCell.fromTownLabel.text = [NSString stringWithFormat:@"via %@", userInfoDictionary[@"location"]];
-                if (!user || [user.username isEqualToString:[PFUser currentUser].username]) {
-                    [pictureCell.messageButton setHidden:YES];
-                }
-                returnCell = pictureCell;
-                break;
-                
-            case 1:
-                infoCell.titleLabel.text = @"About:";
-                infoCell.descriptionLabel.text = userInfoDictionary[@"about"];
-                returnCell = infoCell;
-                break;
-                
-            case 2:
-                interestCell.titleLabel.text = @"Interests:";
-                interestCell.firstImageView.image = [UIImage imageNamed:[self getImageNameFromString:userInfoDictionary[@"firstInterest"]]];
-                interestCell.secondImageView.image = [UIImage imageNamed:[self getImageNameFromString:userInfoDictionary[@"secondInterest"]]];
-                interestCell.thirdImageView.image = [UIImage imageNamed:[self getImageNameFromString:userInfoDictionary[@"thirdInterest"]]];
-                interestCell.fourthImageView.image = [UIImage imageNamed:[self getImageNameFromString:userInfoDictionary[@"fourthInterest"]]];
-                returnCell = interestCell;
-                break;
-                
-            case 3:
-                infoCell.titleLabel.text = @"Age:";
-                infoCell.descriptionLabel.text = userInfoDictionary[@"age"];
-                returnCell = infoCell;
-                break;
-        }
-    }
-    else
+    NSString *name     = self.user[@"firstName"];
+    NSString *location = self.user[@"location"];
+    NSString *age      = [self getStringForUsersAge];
+
+
+    switch (indexPath.row)
     {
-        // Configure cell at end of TableView based on whether or not all posts in DB are being shown
-        if (indexPath.row == [userInfoDictionary[@"posts"] count] && isAll == NO)
-            return [self loadingCell];
-        else if (indexPath.row == [userInfoDictionary[@"posts"] count] && isAll == YES)
-            return [self isAllCell];
-        
-        checkIn = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"checkIn"];
-        
-        if (checkIn) {
-            postCell.hasCheckIn        = YES;
-            placeName              = [NSString stringWithFormat:@"at %@", [checkIn objectForKey:@"placeName"]];
-            postCell.checkInLabel.text = placeName;
-            [postCell.checkInImage setFile:(PFFile *)checkIn[@"mapImage"] forImageView:postCell.checkInImage];
-            NSLog(@"Setting the file: %@ in background", checkIn[@"mapImage"]);
-        }
-        
-        NSString *timeString = [timeFormatter stringForTimeIntervalFromDate:[NSDate date] toDate:[userInfoDictionary[@"posts"][indexPath.row] createdAt]];
-        //[cell.profilePicture setFile:avatarFile forAvatarImageView:cell.profilePicture];
-        postCell.profilePicture.image = profilePicture;
-        postCell.nameLabel.text = name;
-        postCell.timeLabel.text = timeString;
-        postCell.detailLabel.text = [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"textContent"];
-        postCell.commentCountLabel.text = [NSString stringWithFormat:@"%@ Comments", [userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"postCommentCounter"]];
-        returnCell = postCell;
+        case 0:
+            pictureCell.profilePictureBlur.image = profilePictureBlur;
+            pictureCell.profilePictureOriginal.image = userProfilePicture;
+            pictureCell.usernameLabel.text = [NSString stringWithFormat:@"%@, %@", name, age];
+            pictureCell.fromTownLabel.text = [NSString stringWithFormat:@"via %@", location];
+            returnCell = pictureCell;
+            break;
+            
+        case 1:
+            infoCell.titleLabel.text = @"About:";
+            infoCell.descriptionLabel.text = self.user[@"about"];
+            returnCell = infoCell;
+            break;
+            
+        case 2:
+            interestCell.titleLabel.text = @"Interests:";
+            interestCell.firstImageView.image = [UIImage imageNamed:[self getImageNameFromString:self.interestsArray[0]]];
+            interestCell.secondImageView.image = [UIImage imageNamed:[self getImageNameFromString:self.interestsArray[1]]];
+            interestCell.thirdImageView.image = [UIImage imageNamed:[self getImageNameFromString:self.interestsArray[2]]];
+            interestCell.fourthImageView.image = [UIImage imageNamed:[self getImageNameFromString:self.interestsArray[3]]];
+            returnCell = interestCell;
+            break;
+            
+        case 3:
+            infoCell.titleLabel.text = @"Age:";
+            infoCell.descriptionLabel.text = age;
+            returnCell = infoCell;
+            break;
     }
     
     return returnCell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if (indexPath.section == 1)
-    {
-        UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
-        CommentViewController *commentVC = [feedSB instantiateViewControllerWithIdentifier:@"commentVC"];
-        commentVC.post = userInfoDictionary[@"posts"][indexPath.row];
+    if ([segue.identifier isEqualToString:@"editProfileSegue"]) {
+        EditProfileViewController *editProfileVC = segue.destinationViewController;
+        //editProfileVC.passInUserInfoDictionary = userInfoDictionary;
+    }
+    
+    if ([segue.identifier isEqualToString:@"segueProfileToMessaging"]) {
+        MessagingViewController *conversationVC = segue.destinationViewController;
+        conversationVC.selectedUser = user;
         
-        PFUser *selectUser = (PFUser *)[userInfoDictionary[@"posts"][indexPath.row] objectForKey:@"user"];
+        PFQuery *checkExistingConversationMeToOther = [PFQuery queryWithClassName:@"Conversation"];
+        [checkExistingConversationMeToOther whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+        [checkExistingConversationMeToOther whereKey:@"toUser" equalTo:user];
+        [checkExistingConversationMeToOther countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+         {
+             if (number == 0)
+             {
+                 PFObject *newMessage1 = [PFObject objectWithClassName:@"Conversation"];
+                 [newMessage1 setObject:[PFUser currentUser] forKey:@"fromUser"];
+                 [newMessage1 setObject:user forKey:@"toUser"];
+                 [newMessage1 setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
+                 [newMessage1 saveInBackground];
+             }
+         }];
         
-        if (user) {
-            [selectUser setObject:[user objectForKey:@"firstName"] forKey:@"firstName"];
-            [selectUser setObject:[user objectForKey:@"profilePictureFile"] forKey:@"profilePictureFile"];
-        }
-        else {
-            [selectUser setObject:imageFile forKey:@"profilePictureFile"];
-            [selectUser setObject:[[PFUser currentUser] objectForKey:@"firstName"] forKey:@"firstName"];
-        }
-        
-        [self.navigationController pushViewController:commentVC animated:YES];
+        PFQuery *checkExistingConversationOtherToMe = [PFQuery queryWithClassName:@"Conversation"];
+        [checkExistingConversationOtherToMe whereKey:@"toUser" equalTo:[PFUser currentUser]];
+        [checkExistingConversationOtherToMe whereKey:@"fromUser" equalTo:user];
+        [checkExistingConversationOtherToMe countObjectsInBackgroundWithBlock:^(int number, NSError *error)
+         {
+             if (number == 0)
+             {
+                 PFObject *newMessage2 = [PFObject objectWithClassName:@"Conversation"];
+                 [newMessage2 setObject:[PFUser currentUser] forKey:@"toUser"];
+                 [newMessage2 setObject:user forKey:@"fromUser"];
+                 [newMessage2 setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
+                 [newMessage2 saveInBackground];
+             }
+         }];
     }
 }
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -783,10 +382,6 @@
         [PFQuery cancelPreviousPerformRequestsWithTarget:self];
     }
 }
-
-
-
-
 
 
 @end

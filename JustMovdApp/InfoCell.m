@@ -40,19 +40,26 @@
     self.backgroundColor = [UIColor clearColor];
     [backgroundView setFrame:CGRectMake(10, 1, 300, self.frame.size.height - 1)];
     backgroundView.backgroundColor = [UIColor whiteColor];
-    backgroundView.layer.cornerRadius = 3;
     [self addSubview:backgroundView];
+    
+    titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:14.0];
+    descriptionLabel.font = [UIFont fontWithName:@"Roboto-Light" size:14.0];
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 
     
     [descriptionLabel setFrame:CGRectMake(88, 12, 200, self.frame.size.height - 15)];
     descriptionLabel.contentMode = UIViewContentModeTop;
     descriptionLabel.textColor = [UIColor darkGrayColor];
     descriptionLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
+    descriptionLabel.numberOfLines = 0;
+    descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [backgroundView addSubview:descriptionLabel];
     
     [titleLabel setFrame:CGRectMake(20, 17, 60, 20)];
     titleLabel.textColor = [UIColor orangeColor];
     titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
+    
     [backgroundView addSubview:titleLabel];
 }
 

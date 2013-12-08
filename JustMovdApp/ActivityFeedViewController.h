@@ -11,7 +11,6 @@
 #import "PostCellDelegate.h"
 #import "AddNewPostToActivityFeedDelegate.h"
 
-
 @class UpdateCellHeader;
 
 @interface ActivityFeedViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PostCellDelegate, AddNewPostToActivityFeedDelegate>

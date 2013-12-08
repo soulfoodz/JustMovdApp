@@ -338,7 +338,6 @@
 }
 
 
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
@@ -380,8 +379,6 @@
         
         [user saveInBackground];
         [locationManager stopUpdatingLocation];
-        
-        
     }
 }
 

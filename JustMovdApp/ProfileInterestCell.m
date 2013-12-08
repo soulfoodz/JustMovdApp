@@ -21,7 +21,6 @@
     if (self) {
         // Initialization code
         backgroundView = [[UIView alloc] initWithFrame:CGRectMake(10, 1, 300, self.frame.size.height - 1)];
-        backgroundView.layer.cornerRadius = 3;
         [self addSubview:backgroundView];
         
         titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 17, 60, 20)];

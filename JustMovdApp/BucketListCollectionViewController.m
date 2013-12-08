@@ -205,9 +205,9 @@
 
 - (BOOL)checkForCompletionOfBucket:(PFObject *)bucket
 {
-    for (PFObject *buck in self.completedBuckets)
+    for (PFObject *object in self.completedBuckets)
     {
-        if ([buck[@"title"] isEqualToString:bucket[@"title"]]) return YES;
+        if ([object[@"title"] isEqualToString:bucket[@"title"]]) return YES;
     }
     
     return NO;
@@ -219,6 +219,5 @@
     return (double)[self.userLocation distanceInMilesTo:location];
 }
 
-- (IBAction)toggleMenuVC:(id)sender {
-}
+
 @end

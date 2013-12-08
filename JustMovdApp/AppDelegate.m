@@ -112,6 +112,9 @@
         
         SWRevealViewController *revealVC = [[SWRevealViewController alloc] initWithRearViewController:sideBarVC frontViewController:navigationForConversationVC];
         [self.window setRootViewController:revealVC];
+        
+        // Notifies the app that we received a message while app was in background
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"displayBadgeInNavBarForMessage" object:self];
     }
 }
 
@@ -136,7 +139,6 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -151,6 +153,18 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    // Adds a notification observer to keep track of when we receive a message
+    
+    NSNotificationCenter *center;
+    
+    center = [NSNotificationCenter defaultCenter];
+    
+    [center addObserver:self
+               selector:@selector(displayMessageBadgeInNavigationBar:)
+                   name:@"displayBadgeInNavBarForMessage"
+                 object:nil];
+
+
     if ([PFUser currentUser]) {
         [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error)
         {
@@ -161,9 +175,8 @@
             }
         }];
     }
-    
-    
 }
+
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {

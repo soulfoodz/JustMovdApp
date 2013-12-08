@@ -47,6 +47,19 @@
 
 - (void)layoutSubviews
 {
+    
+    self.messageButton.titleLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:18.0];
+    self.usernameLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:20.0];
+    self.fromTownLabel.font = [UIFont fontWithName:@"Roboto-Light" size:15.0];
+    
+    self.profilePictureBlur.contentMode = UIViewContentModeScaleAspectFill;
+    self.profilePictureBlur.layer.masksToBounds = YES;
+    
+    self.profilePictureOriginal.contentMode = UIViewContentModeScaleAspectFill;
+    self.profilePictureOriginal.layer.masksToBounds = YES;
+    
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     maskLayer = [CALayer layer];
     [maskLayer setFrame:CGRectMake(0, 240, 320, 80)];
     maskLayer.backgroundColor = [UIColor whiteColor].CGColor;

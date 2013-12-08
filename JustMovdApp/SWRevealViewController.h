@@ -61,6 +61,11 @@ typedef enum
 // Object instance init and rear view setting
 - (id)initWithRearViewController:(UIViewController *)rearViewController frontViewController:(UIViewController *)frontViewController;
 
+// Displays a message badge on UIBarButtonItem of the frontViewController
+- (void)displayMessageBadgeInNavigationBar:(NSNotification *)notification;
+
+@property (strong, nonatomic) UIImageView *messageBadge;
+
 // Rear view controller, can be nil if not used
 @property (strong, nonatomic) UIViewController *rearViewController;
 

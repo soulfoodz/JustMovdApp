@@ -17,8 +17,6 @@
 
 //Properties
 @property (strong, nonatomic) NSMutableArray *userInfosArray;
-@property (strong, nonatomic) NSString *facebookUsername;
-
 
 @property (strong, nonatomic) PFUser *user;
 @property (strong, nonatomic) UIImage *userProfilePicture;

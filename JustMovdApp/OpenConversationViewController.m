@@ -186,7 +186,6 @@
                  [spinner.view setHidden:YES];
              }
          }
-         
      }];
 }
 

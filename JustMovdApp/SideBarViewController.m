@@ -39,7 +39,7 @@
 {
     [super viewDidLoad];
 
-    titlesForRows = @[@"justmovd", @"feed", @"around", @"messages", @"profile", @"bucket list", @"empty", @"empty", @"empty", @"empty", @"empty", @"sign"];
+    titlesForRows = @[@"justmovd", @"feed", @"around", @"messages", @"profile", @"bucket list", @"empty", @"empty", @"empty", @"empty", @"sign"];
     self.tableView.scrollEnabled = NO;
     
     self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
@@ -62,10 +62,12 @@
     return 1;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [titlesForRows count];
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -75,7 +77,6 @@
     
     return cell;
 }
-
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -137,18 +138,8 @@
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
                 
             }
-    
-                
-        
-            
-            
-
-            
         };
-        
     }
-    
-    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
