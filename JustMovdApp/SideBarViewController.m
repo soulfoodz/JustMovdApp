@@ -14,6 +14,7 @@
 #import "OpenConversationViewController.h"
 #import "UserProfileViewController.h"
 #import "BucketListCollectionViewController.h"
+#import "PFImageView+ImageHandler.h"
 
 @interface SideBarViewController ()
 {
@@ -39,20 +40,21 @@
 {
     [super viewDidLoad];
 
-    titlesForRows = @[@"justmovd", @"feed", @"around", @"messages", @"profile", @"bucket list", @"empty", @"empty", @"empty", @"empty", @"sign"];
+    titlesForRows = @[@"profile", @"feed", @"around", @"messages", @"bucket list", @"empty", @"empty", @"empty", @"empty", @"sign"];
     self.tableView.scrollEnabled = NO;
     
-    self.tableView.backgroundView.backgroundColor = [UIColor grayColor];
+    //self.tableView.backgroundView.backgroundColor = [UIColor colorWithRed:185.0/255.0 green:185.0/255.0 blue:185.0/255.0 alpha:1.0];
+    //self.tableView.backgroundColor = [UIColor colorWithRed:185.0/255.0 green:185.0/255.0 blue:185.0/255.0 alpha:1.0];
+    self.tableView.backgroundView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
+    self.tableView.backgroundColor                = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
     
-    self.tableView.backgroundColor = [UIColor grayColor];
-        
+    
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserverForName:@"gotofeed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self performSegueWithIdentifier:@"feed" sender:self];
     }];
     
 }
-
 
 
 #pragma mark - Table view data source
@@ -71,10 +73,40 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     NSString *CellIdentifier = [titlesForRows objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    if (indexPath.row == 0) {
+        UIView *shadow = [cell.contentView viewWithTag:3];
+        UILabel *nameLabel = (UILabel *)[cell.contentView viewWithTag:2];
+        PFImageView *avatar = (PFImageView *)[cell.contentView viewWithTag:1];
+        
+        shadow.layer.cornerRadius = 32.0f;
+        shadow.layer.borderWidth = 6.0f;
+        shadow.layer.borderColor = [UIColor whiteColor].CGColor;
+        shadow.clipsToBounds = NO;
+        
+        avatar.layer.cornerRadius = 32.0f;
+        avatar.layer.borderWidth = 2.0f;
+        avatar.layer.borderColor = [UIColor whiteColor].CGColor;
+        avatar.layer.masksToBounds = YES;
+        avatar.clipsToBounds = YES;
+        avatar.contentMode = UIViewContentModeScaleAspectFill;
+        
+        nameLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:24.0];
+        nameLabel.textColor = [UIColor darkGrayColor];
+        
+        [avatar setFile:[PFUser currentUser][@"profilePictureFile"] forAvatarImageView:avatar];
+        nameLabel.text = [PFUser currentUser][@"firstName"];
+    }
     
+    if (indexPath.row >= 1){
+        UILabel *label = (UILabel *)[cell.contentView viewWithTag:1];
+        label.font = [UIFont fontWithName:@"Roboto-Medium" size:17.0];
+        label.textColor = [UIColor darkGrayColor];
+    }
+
     return cell;
 }
 
@@ -89,7 +121,14 @@
         
         swSegue.performBlock = ^(SWRevealViewControllerSegue* rvc_segue, UIViewController* svc, UIViewController* dvc) {
             
-            if (indexPath.row == 1){
+            if (indexPath.row == 0){
+                UIStoryboard *profileSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
+                UserProfileViewController *profileVC = [profileSB instantiateViewControllerWithIdentifier:@"profile"];
+                
+                UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
+                [navController setViewControllers: @[profileVC] animated: NO ];
+                [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+            } else if (indexPath.row == 1){
                 
                 UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
                 activityVC = [feedSB instantiateViewControllerWithIdentifier:@"recentActivityVC"];
@@ -113,14 +152,6 @@
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
                 
             } else if (indexPath.row == 4){
-                UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
-                UserProfileViewController *profileVC = [messagesSB instantiateViewControllerWithIdentifier:@"profile"];
-                
-                UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
-                [navController setViewControllers: @[profileVC] animated: NO ];
-                [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-                
-            } else if (indexPath.row == 5){
                 UIStoryboard *bucketListSB = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
                 BucketListCollectionViewController *bucketListVC = [bucketListSB instantiateViewControllerWithIdentifier:@"bucketList"];
                 
@@ -144,7 +175,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 10){
+    if (indexPath.row == 9){
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you sure you want to sign out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
         [alert show];
@@ -173,6 +204,16 @@
     [self presentViewController:signupVC animated:YES completion:^{
         nil;
     }];
+}
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        return 80.0f;
+    }
+    
+    return 44.0f;
 }
 
 

@@ -3,7 +3,6 @@
 //  JustMovd
 //
 //  Created by Kabir Mahal on 10/19/13.
-//  Copyright (c) 2013 Tyler Mikev. All rights reserved.
 //
 
 #import "IntroParentViewController.h"
@@ -11,16 +10,17 @@
 #import "QuestionnaireViewController.h"
 #import "SpinnerViewController.h"
 #import "AppDelegate.h"
+#import "ParseServices.h"
 
 @interface IntroParentViewController ()
 {
     FBRequest *request;
     NSData *profilePictureData;
-
+    
     NSArray *backgroundImages;
     NSArray *backgroundViews;
     UIPageControl *pageControl;
-
+    
 }
 
 @property (nonatomic, retain) UIBarButtonItem *skipBarButton;
@@ -40,9 +40,10 @@
     
     backgroundImages = [[NSArray alloc] initWithObjects:@"chicago_skyline_blur", @"skyline_blur", @"boston_skyline_blur", nil];
     backgroundViews = [[NSArray alloc] initWithObjects:@"walkthrough_david", @"walkthrough_sarah", @"walkthrough_ashley", nil];
+    backgroundImages = [[NSArray alloc] initWithObjects:@"walkthrough_meetpeople", @"walkthrough_localspots", @"walkthrough_havefun",@"walkthrough_atx", nil];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"skyline_blur"]];
-
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"skyline_blur"]];
+    
     [self loadIntro];
     
 }
@@ -83,6 +84,7 @@
     UIButton *eulaLabelBtn       = [UIButton buttonWithType:UIButtonTypeCustom];
     eulaLabelBtn.frame           = CGRectMake(0, 0, 180, 20);
     eulaLabelBtn.center          = CGPointMake(160, 520);
+    eulaLabelBtn.titleLabel.textColor = [UIColor lightGrayColor];
     eulaLabelBtn.titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:10.0f];
     [eulaLabelBtn setTitle:@"By signing up you agree to the EULA"
                   forState:UIControlStateNormal];
@@ -91,8 +93,8 @@
            forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:eulaLabelBtn];
- 
-
+    
+    
     UILabel *justMovdLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 150, 200, 50)];
     
     justMovdLabel.text = @"JustMovd";
@@ -105,15 +107,15 @@
     [self.view addSubview:justMovdLabel];
     
     UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 400, 300, 50)];
-
+    
     descriptionLabel.text = @"The App For People New To A City";
     descriptionLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:15];
     descriptionLabel.textAlignment = NSTextAlignmentCenter;
     
     descriptionLabel.center = CGPointMake(self.view.frame.size.width/2, 250);
     descriptionLabel.textColor = [UIColor whiteColor];
-
-   // [self.view addSubview:descriptionLabel];
+    
+    // [self.view addSubview:descriptionLabel];
     
     
     pageControl = [[UIPageControl alloc] init];
@@ -121,9 +123,9 @@
     pageControl.currentPage = 0;
     pageControl.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height - 20);
     
-   // [self.view addSubview:pageControl];
+    // [self.view addSubview:pageControl];
     
-
+    
 }
 
 
@@ -139,26 +141,26 @@
     
     [eulaAlert show];
     
-/*
-    UIViewController *eulaVC;
-    UINavigationController *navC;
-    UIWebView        *webView;
-    NSString         *urlString;
-    NSURL            *url;
-    NSURLRequest     *aRequest;
-    
-    urlString  = @"http://www.apple.com/legal/internet-services/itunes/appstore/dev/stdeula/";
-    url        = [NSURL URLWithString:urlString];
-    aRequest   = [NSURLRequest requestWithURL:url];
-    
-    webView     = [UIWebView new];
-    eulaVC      = [[UIViewController alloc] init];
-    eulaVC.view = webView;
-    
-    [webView loadRequest:aRequest];
-    navC = [[UINavigationController alloc] initWithRootViewController:eulaVC];
-    [self presentViewController:eulaVC animated:YES completion:nil];
-*/
+    /*
+     UIViewController *eulaVC;
+     UINavigationController *navC;
+     UIWebView        *webView;
+     NSString         *urlString;
+     NSURL            *url;
+     NSURLRequest     *aRequest;
+     
+     urlString  = @"http://www.apple.com/legal/internet-services/itunes/appstore/dev/stdeula/";
+     url        = [NSURL URLWithString:urlString];
+     aRequest   = [NSURLRequest requestWithURL:url];
+     
+     webView     = [UIWebView new];
+     eulaVC      = [[UIViewController alloc] init];
+     eulaVC.view = webView;
+     
+     [webView loadRequest:aRequest];
+     navC = [[UINavigationController alloc] initWithRootViewController:eulaVC];
+     [self presentViewController:eulaVC animated:YES completion:nil];
+     */
 }
 
 
@@ -171,17 +173,10 @@
 
 - (void)commsDidLogin:(BOOL)loggedIn
 {
-    
-
-
-    
 	if (loggedIn)
     {
-        
         SpinnerViewController *spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
         spinner.view.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
-        
-        
         
         UIView *coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
         
@@ -189,57 +184,49 @@
         coverView.alpha = 0.1;
         
         [self.view addSubview:coverView];
-        
         [self.view addSubview:spinner.view];
         
-        
-        
-		// Send out request to facebook and get information that we need
-        NSString *fbInfoToRequest = @"me/?fields=username,name,gender,id,email,birthday,location";  // <--- asking for these
-        
-        
-        request = [FBRequest requestForGraphPath:fbInfoToRequest];
-        
-        [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error)
-         {
+        [self saveDeviceTokenToCurrentInstallation];
+        [self requestAndWritingFacebookInfo];
+	}
+    else {
+		[[[UIAlertView alloc] initWithTitle:@"Login Failed"
+                                    message:@"Facebook Login failed. Please try again!"
+                                   delegate:nil
+                          cancelButtonTitle:@"Ok"
+                          otherButtonTitles:nil] show];
+	}
+}
 
+- (void)requestAndWritingFacebookInfo
+{
+    // Request for Facebook ID
+    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error)
+     {
+         if (!error)
+         {
+             NSString *facebookId = [result objectForKey:@"id"];
+             NSLog(@"Facebook data: %@", result);
              
              PFUser *user = [PFUser currentUser];
              
-             NSLog(@"RESULTS: %@", result);
-             
-             //Writing info to PARSE, I think we will need user's Latitude and Longitude too
-             
+             //Writing info to PARSE
              user[@"username"]      = [result objectForKey:@"username"];
-             if (!user[@"name"]) {
-                 user[@"name"]          = [result objectForKey:@"name"];
-             }
-             if (!user[@"firstName"]) {
-                 user[@"firstName"]          = [self getFirstName:[result objectForKey:@"name"]];
-             }
+             user[@"name"]          = [result objectForKey:@"name"];
+             user[@"firstName"]     = [result objectForKey:@"first_name"];
+             user[@"FBUsername"]    = [result objectForKey:@"username"];
+             user[@"gender"]        = [result objectForKey:@"gender"];
+             user[@"FBID"]          = facebookId;
+             user[@"email"]         = [result objectForKey:@"email"];
+             user[@"birthday"]      = [result objectForKey:@"birthday"];
              
-             if (!user[@"FBUsername"]) {
-                 user[@"FBUsername"]    = [result objectForKey:@"username"];
-             }
-             if (!user[@"gender"]) {
-                 user[@"gender"]        = [result objectForKey:@"gender"];
-             }
-             if (!user[@"FBID"]) {
-                 user[@"FBID"]          = [result objectForKey:@"id"];
-             }
-             if (!user[@"email"]) {
-                 user[@"email"]         = [result objectForKey:@"email"];
-             }
-             if (!user[@"birthday"]) {
-                 user[@"birthday"]      = [result objectForKey:@"birthday"];
-             }
              if (!user[@"about"]){
-                 user[@"about"] = @"...";
+                 user[@"about"]     = @"...";
              }
              
-             if ([[result objectForKey:@"location"] objectForKey:@"name"]){
+             if ([result valueForKeyPath:@"location.name"]){
                  if (!user[@"location"]){
-                     user[@"location"] = [[result objectForKey:@"location"] objectForKey:@"name"];
+                     user[@"location"] = [result valueForKeyPath:@"location.name"];
                  }
              } else {
                  if (!user[@"location"]){
@@ -250,10 +237,8 @@
              [user save];
              
              
-             //Getting user profile picture size LARGE
-             NSString *fbAPIForProfilePicture = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=320&height=400", [result objectForKey:@"username"]];
-             
-             NSURL *profilePictureURL = [NSURL URLWithString:fbAPIForProfilePicture];
+             //Getting user profile picture size medium, file size about 40kb
+             NSURL *profilePictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=320&height=400", facebookId]];
              profilePictureData = [NSData dataWithContentsOfURL:profilePictureURL];
              
              ///Save profile picture to Parse as a file
@@ -264,44 +249,40 @@
              [user setObject:imageFile forKey:@"profilePictureFile"];
              
              [user save];
-             [[NSURLCache sharedURLCache] removeAllCachedResponses];
+             //[[NSURLCache sharedURLCache] removeAllCachedResponses];
              
-             if ([PFUser currentUser]) {
-                 AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-                 PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-                 [currentInstallation setDeviceTokenFromData:appDelegate.deviceTokenForPush];
-                 [currentInstallation deviceType];
-                 [currentInstallation setObject:[PFUser currentUser] forKey:@"owner"];
-                 [currentInstallation setBadge:0];
-                 [currentInstallation saveInBackground];
-             }
-             
-             
-             PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
-             [query whereKey:@"User" equalTo:[PFUser currentUser]];
-             
-             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                 if ([objects count] == 0){
-                     [self performSegueWithIdentifier:@"abc" sender:self];
-                 } else {
-                     [self dismissViewControllerAnimated:YES completion:^{
-                         [[NSNotificationCenter defaultCenter] postNotificationName:@"gotofeed" object:nil];
-                     }];
-                 }
-             }];
-             
-             
-         }];
-	}
-    else {
-		[[[UIAlertView alloc] initWithTitle:@"Login Failed"
-                                    message:@"Facebook Login failed. Please try again"
-                                   delegate:nil
-                          cancelButtonTitle:@"Ok"
-                          otherButtonTitles:nil] show];
-	}
-    
-    
+             //Checking user's interests to know which ViewController will be presented next
+             [ParseServices queryForInterestsForUser:[PFUser currentUser] completionBlock:^(NSArray *interestResult, BOOL success)
+              {
+                  if (success) {
+                      if ([interestResult count] == 0){
+                          [self performSegueWithIdentifier:@"abc" sender:self];
+                      } else {
+                          [self dismissViewControllerAnimated:YES completion:^{
+                              [[NSNotificationCenter defaultCenter] postNotificationName:@"gotofeed" object:nil];
+                          }];
+                      }
+                  }
+                  else
+                      NSLog(@"Error getting interests for logged in user!");
+              }];
+         }
+         else
+             NSLog(@"Error request Facebook info: %@", error);
+     }];
+}
+
+- (void)saveDeviceTokenToCurrentInstallation
+{
+    if ([PFUser currentUser]) {
+        AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation setDeviceTokenFromData:appDelegate.deviceTokenForPush];
+        [currentInstallation deviceType];
+        [currentInstallation setObject:[PFUser currentUser] forKey:@"owner"];
+        [currentInstallation setBadge:0];
+        [currentInstallation saveInBackground];
+    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -318,9 +299,11 @@
     IntroChildViewController *childViewController = [sb instantiateViewControllerWithIdentifier:@"introChild"];
     
     childViewController.index = index;
+    
     childViewController.backgroundImage = [backgroundImages objectAtIndex:index];
     
-    childViewController.backgroundView = [backgroundViews objectAtIndex:index];
+    //    childViewController.backgroundImage = [backgroundImages objectAtIndex:index];
+    //    childViewController.backgroundView = [backgroundViews objectAtIndex:index];
     
     return childViewController;
     
@@ -384,7 +367,5 @@
     return firstName;
     
 }
-
-
 
 @end

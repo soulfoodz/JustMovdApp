@@ -11,7 +11,10 @@
 #import "ParseServices.h"
 #import "BucketCell.h"
 #import "PFImageView+ImageHandler.h"
-#import "BucketDetailViewController.h"
+#import "BucketDetailsViewController.h"
+#import "FoursquareVenue.h"
+#import "FoursquareServices.h"
+
 
 
 @interface BucketListCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
@@ -29,12 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    self.userLocation                   = [[PFUser currentUser] objectForKey:@"geoPoint"];
+    self.collectionView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
+
     [self queryForBucketList];
     [self queryForCompletedBuckets];
-    
-    self.userLocation                   = [[PFUser currentUser] objectForKey:@"geoPoint"];
-    self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     self.menuButton.target = self.revealViewController;
     self.menuButton.action = @selector(revealToggle:);
@@ -129,7 +132,33 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"SegueToBucketDetailViewController" sender:indexPath];
+    BucketCell                  *cell;
+    PFObject                    *selectedBucket;
+    BucketDetailsViewController *dvc;
+    FoursquareVenue             *newVenue;
+    
+    cell             = (BucketCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    dvc              = [[BucketDetailsViewController alloc] initWithNibName:nil bundle:nil];
+    selectedBucket   = self.bucketList[indexPath.row];
+    newVenue         = [FoursquareVenue newVenueFromBucket:selectedBucket];
+
+    dvc.venue        = newVenue;
+    dvc.bucket       = selectedBucket;
+    dvc.initialImage = cell.mainImage.image;
+    dvc.isChecked    = cell.isChecked;
+    dvc.updateBlock  = ^(PFObject *bucket, NSString *command)   // updates this collectionview based on whether the detail view
+                                                                // is checked or unchecked when popped
+                        {
+                            if ([command isEqualToString:@"add"])
+                                [self.completedBuckets addObject:bucket];
+                            
+                            if([command isEqualToString:@"remove"])
+                                [self.completedBuckets removeObject:bucket];
+                            
+                            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                        };
+    
+    [self.navigationController pushViewController:dvc animated:YES];
 }
 
 
@@ -166,40 +195,6 @@
                                  otherButtonTitles:nil];
     
     [alertView show];
-}
-
-
-#pragma mark - Segue
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"SegueToBucketDetailViewController"])
-    {
-        BucketCell                 *cell;
-        PFObject                   *selectedBucket;
-        NSIndexPath                *ip;
-        BucketDetailViewController *dvc;
-    
-        ip               = (NSIndexPath *)sender;
-        cell             = (BucketCell *)[self.collectionView cellForItemAtIndexPath:ip];
-        selectedBucket   = self.bucketList[ip.row];
-        dvc              = segue.destinationViewController;
-        dvc.bucket       = selectedBucket;
-        dvc.updateBlock  = ^(PFObject *bucket, NSString *command)   // updates this collectionview based on whether the detail view
-                                                                    // is checked or unchecked when popped
-                           {
-                                if ([command isEqualToString:@"add"])
-                                    [self.completedBuckets addObject:bucket];
-                               
-                                if([command isEqualToString:@"remove"])
-                                    [self.completedBuckets removeObject:bucket];
-                               
-                                [self.collectionView reloadItemsAtIndexPaths:@[(NSIndexPath *)sender]];
-                           };
-        
-        dvc.initialImage = cell.mainImage.image;
-        dvc.isChecked    = cell.isChecked;
-    }
 }
 
 

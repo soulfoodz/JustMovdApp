@@ -39,8 +39,7 @@
 
 - (void)setFrame:(CGRect)frame
 {
-//    frame.origin.x = 10;
-//    frame.size.width = 300;
+
     frame.size.height = 320;
     [super setFrame:frame];
 }
@@ -63,7 +62,6 @@
     maskLayer = [CALayer layer];
     [maskLayer setFrame:CGRectMake(0, 240, 320, 80)];
     maskLayer.backgroundColor = [UIColor whiteColor].CGColor;
-    //maskLayer.contents = (id)profilePictureOriginal.image.CGImage;
     profilePictureBlur.layer.mask = maskLayer;
     //profilePictureBlur.layer.masksToBounds = YES;
 }

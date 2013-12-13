@@ -10,12 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MessageBubbleLeftCell.h"
 #import "MessageBubbleRightCell.h"
+#import "ParseServices.h"
 
 @interface MessagingViewController ()
 {
     UITextView *dummyTextView;
-    UIImage *currentUserImage;
-    UIImage *selectedUserImage;
     id lastFetchTime;
 }
 
@@ -29,6 +28,8 @@
 @synthesize chatTextBoxViewContainer;
 @synthesize hiddenButton;
 @synthesize selectedUser;
+@synthesize currentUserImage;
+@synthesize selectedUserImage;
 
  
  
@@ -46,28 +47,35 @@
     
     [self setupChatAccessoriesView];
     [self retrieveMessagesFromParse];
-    [self removeBadgeForConversation];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self checkSendButtonState];
+    [self removeBadgeForConversation];
 }
 
 - (void)setupChatAccessoriesView
 {
     self.title = [selectedUser objectForKey:@"firstName"];
     
-    PFFile *currentUserImageFile = [[PFUser currentUser] objectForKey:@"profilePictureFile"];
-    [currentUserImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        currentUserImage = [UIImage imageWithData:data];
-    }];
+    if (!currentUserImage) {
+        [ParseServices queryForProfilePictureOfUser:[PFUser currentUser] completionBlock:^(NSArray *results, BOOL success) {
+            if (success) {
+                currentUserImage = results[0];
+            }
+        }];
+    }
     
-    PFFile *selectedUserImageFile = [selectedUser objectForKey:@"profilePictureFile"];
-    [selectedUserImageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-        selectedUserImage = [UIImage imageWithData:data];
-    }];
+    if (!selectedUserImage) {
+        [ParseServices queryForProfilePictureOfUser:selectedUser completionBlock:^(NSArray *results, BOOL success) {
+            if (success) {
+                selectedUserImage = results[0];
+            }
+        }];
+    }
     
     chatArray = [[NSMutableArray alloc] init];
     
@@ -76,14 +84,16 @@
     [self.view addSubview:hiddenButton];
     [hiddenButton setHidden:YES];
     
-    //chatTextBoxViewContainer.layer.borderWidth = 0.5;
-    chatTextBoxViewContainer.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    chatTextBoxViewContainer.layer.borderColor = [UIColor colorWithRed:215.0/255.0 green:215.0/255.0 blue:215.0/255.0 alpha:1.0].CGColor;
+    chatTextBoxViewContainer.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
     
-    chatTextBox.layer.cornerRadius  = 5;
-    chatTextBox.layer.borderWidth   = 0.5;
-    chatTextBox.layer.borderColor   = [UIColor lightGrayColor].CGColor;
+    chatTextBox.layer.cornerRadius  = 3;
+    chatTextBox.layer.borderWidth   = 1.0f;
+    chatTextBox.layer.borderColor   = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0].CGColor;
     
-    sendButton.layer.cornerRadius   = 5;
+    sendButton.layer.cornerRadius   = 3;
+    sendButton.titleLabel.font      = [UIFont fontWithName:@"Roboto-Medium" size:17.0];
+    sendButton.backgroundColor      = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
     
     dummyTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];
 }
@@ -238,10 +248,8 @@
     {
         NSLog(@"backspace");
         [self increaseChatTextBoxSize];
-        //return YES; //  <-- must always return YES to delete, else doesnt delete anything
         [self checkSendButtonState];
-        
-        return YES;
+        return YES;//  <-- must always return YES to delete, else doesnt delete anything
     }
     
     if ([text isEqualToString:@"\n"]) {
@@ -280,86 +288,76 @@
 
 - (void)sendMessageToParse
 {
-    PFObject *messageObject = [PFObject objectWithClassName:@"Message"];
-    [messageObject setObject:[PFUser currentUser] forKey:@"fromUser"];
-    [messageObject setObject:selectedUser forKey:@"toUser"];
-    [messageObject setObject:chatTextBox.text forKey:@"contentText"];
-    [messageObject saveInBackground];
-    
+    [ParseServices saveNewMessage:chatTextBox.text forUser:selectedUser];
     chatTextBox.text = @"";
     [self decreaseChatTextBoxSize];
 }
 
-//- (void)retrieveMessagesFromParse
-//{
-//    PFQuery *messageOfCurrentUser = [PFQuery queryWithClassName:@"Message"];
-//    [messageOfCurrentUser whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-//    [messageOfCurrentUser whereKey:@"toUser" equalTo:selectedUser];
-//    
-//    PFQuery *messageOfUserObject = [PFQuery queryWithClassName:@"Message"];
-//    [messageOfUserObject whereKey:@"fromUser" equalTo:selectedUser];
-//    [messageOfUserObject whereKey:@"toUser" equalTo:[PFUser currentUser]];
-//    
-//    PFQuery *messageQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:messageOfCurrentUser, messageOfUserObject, nil]];
-//    [messageQuery orderByAscending:@"createdAt"];
-//    if (lastFetchTime) {
-//        [messageQuery whereKey:@"createdAt" greaterThan:lastFetchTime];
-//    }
-//    //[conversationQuery setCachePolicy:kPFCachePolicyCacheThenNetwork];
-//    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-//    {
-//        
-//        [chatArray addObjectsFromArray:objects];
-//        lastFetchTime = [[chatArray lastObject] createdAt];
-//        [messagesTableView reloadData];
-//        if (lastFetchTime) {
-//            [self scrollToBottomTableViewWithAnimation:YES];
-//        }
-//        else {
-//            [self scrollToBottomTableViewWithAnimation:NO];
-//        }
-//    }];
-//}
 
 - (void)retrieveMessagesFromParse
 {
-    PFQuery *messageOfCurrentUser = [PFQuery queryWithClassName:@"Message"];
-    [messageOfCurrentUser whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [messageOfCurrentUser whereKey:@"toUser" equalTo:selectedUser];
-    
-    PFQuery *messageOfUserObject = [PFQuery queryWithClassName:@"Message"];
-    [messageOfUserObject whereKey:@"fromUser" equalTo:selectedUser];
-    [messageOfUserObject whereKey:@"toUser" equalTo:[PFUser currentUser]];
-    
-    if (!lastFetchTime)
-    {
-        PFQuery *messageQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:messageOfCurrentUser, messageOfUserObject, nil]];
-        [messageQuery orderByAscending:@"createdAt"];
-        [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-         {
-             if (objects.count > 0)
-             {
-                 [chatArray addObjectsFromArray:objects];
-                 lastFetchTime = [[chatArray lastObject] createdAt];
-                 [messagesTableView reloadData];
-                 [self scrollToBottomTableViewWithAnimation:NO];
-             }
-             //NSLog(@"Object Sample %@", chatArray[0]);
-         }];
-    }
-    else
-    {
-        [messageOfUserObject orderByAscending:@"createdAt"];
-        [messageOfUserObject whereKey:@"createdAt" greaterThan:lastFetchTime];
-        [messageOfUserObject findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-         {
-             [chatArray addObjectsFromArray:objects];
-             lastFetchTime = [[chatArray lastObject] createdAt];
-             [messagesTableView reloadData];
-             AudioServicesPlaySystemSound(1103);
-             [self scrollToBottomTableViewWithAnimation:YES];
-         }];
-    }
+    [ParseServices queryForMessagesWithUser:selectedUser withLastFetchTime:lastFetchTime completionBlock:^(NSArray *results, BOOL success) {
+        if (success) {
+            if (!lastFetchTime) {
+                [chatArray addObjectsFromArray:results];
+                lastFetchTime = [[chatArray lastObject] createdAt];
+                [messagesTableView reloadData];
+                [self scrollToBottomTableViewWithAnimation:NO];
+            }
+            else {
+                [chatArray addObjectsFromArray:results];
+                lastFetchTime = [[chatArray lastObject] createdAt];
+                [messagesTableView reloadData];
+                AudioServicesPlaySystemSound(1103);
+                [self scrollToBottomTableViewWithAnimation:YES];
+            }
+        }
+    }];
+//    
+//    if (!lastFetchTime)
+//    {
+//        PFQuery *messageOfCurrentUser = [PFQuery queryWithClassName:@"Message"];
+//        [messageOfCurrentUser whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+//        [messageOfCurrentUser whereKey:@"toUser" equalTo:selectedUser];
+//        
+//        PFQuery *messageOfUserObject = [PFQuery queryWithClassName:@"Message"];
+//        [messageOfUserObject whereKey:@"fromUser" equalTo:selectedUser];
+//        [messageOfUserObject whereKey:@"toUser" equalTo:[PFUser currentUser]];
+//        
+//        PFQuery *messageQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:messageOfCurrentUser, messageOfUserObject, nil]];
+//        [messageQuery orderByAscending:@"createdAt"];
+//        [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//         {
+//             if (objects.count > 0)
+//             {
+//                 [chatArray addObjectsFromArray:objects];
+//                 lastFetchTime = [[chatArray lastObject] createdAt];
+//                 [messagesTableView reloadData];
+//                 [self scrollToBottomTableViewWithAnimation:NO];
+//             }
+//             //NSLog(@"Object Sample %@", chatArray[0]);
+//         }];
+//    }
+//    else
+//    {
+//        PFQuery *messageOfCurrentUser = [PFQuery queryWithClassName:@"Message"];
+//        [messageOfCurrentUser whereKey:@"fromUser" equalTo:[PFUser currentUser]];
+//        [messageOfCurrentUser whereKey:@"toUser" equalTo:selectedUser];
+//        
+//        PFQuery *messageOfUserObject = [PFQuery queryWithClassName:@"Message"];
+//        [messageOfUserObject whereKey:@"fromUser" equalTo:selectedUser];
+//        [messageOfUserObject whereKey:@"toUser" equalTo:[PFUser currentUser]];
+//        [messageOfUserObject orderByAscending:@"createdAt"];
+//        [messageOfUserObject whereKey:@"createdAt" greaterThan:lastFetchTime];
+//        [messageOfUserObject findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+//         {
+//             [chatArray addObjectsFromArray:objects];
+//             lastFetchTime = [[chatArray lastObject] createdAt];
+//             [messagesTableView reloadData];
+//             AudioServicesPlaySystemSound(1103);
+//             [self scrollToBottomTableViewWithAnimation:YES];
+//         }];
+//    }
 }
 
 - (CGFloat)heightForTextView:(UITextView*)textView containingString:(NSString*)string
@@ -398,14 +396,7 @@
     NSString *contentString = [[chatArray objectAtIndex:indexPath.row] objectForKey:@"contentText"];
     dummyTextView.text = contentString;
     
-//    CGFloat fixedWidth = dummyTextView.frame.size.width;
-//    CGSize newSize = [dummyTextView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
-//    CGRect newFrame = dummyTextView.frame;
-//    newFrame.size = CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
-//    dummyTextView.frame = newFrame;
-    
     float height = [self heightForTextView:dummyTextView containingString:contentString];
-    //NSLog(@"Content height: %f Width: %f", height, dummyTextView.contentSize.width);
     return height + 20;
 }
 
@@ -443,7 +434,7 @@
 {
     if ([chatTextBox.text length] > 0)
     {        
-        //Add this message to TableView to save a push notification
+        //Add this message to TableView to save call to parse
         NSMutableDictionary *currentUserNewMessage = [[NSMutableDictionary alloc] init];
         [currentUserNewMessage setObject:selectedUser forKey:@"toUser"];
         [currentUserNewMessage setObject:[PFUser currentUser] forKey:@"fromUser"];
@@ -457,46 +448,23 @@
         [self decreaseChatTextBoxSize];
         [self checkSendButtonState];
         
-        PFQuery *conversationQuery = [PFQuery queryWithClassName:@"Conversation"];
-        [conversationQuery whereKey:@"fromUser" equalTo:selectedUser];
-        [conversationQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
-        [conversationQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            [object setObject:[NSNumber numberWithInt:1] forKey:@"isShowBadge"];
-            [object saveInBackground];
-        }];
-        
-        //Creating package to push
-        NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSString stringWithFormat:@"%@ sent you a message", [[PFUser currentUser] objectForKey:@"firstName"]], @"alert",
-                              @"", @"sound",
-                              @"Increment", @"badge",
-                              nil];
-        
-        //Query push to the right user
-        PFQuery *pushQuery = [PFInstallation query];
-        [pushQuery whereKey:@"owner" equalTo:selectedUser];
-        
-        // Send push notification to query
-        PFPush *push = [[PFPush alloc] init];
-        [push setQuery:pushQuery]; // Set our Installation query
-        [push setData:data];
-        [push sendPushInBackground];
+        [ParseServices setBadgeForConversationWithUser:selectedUser];
+        [ParseServices sendPushNotificationToUser:selectedUser];
     }
 }
 
 - (void)removeBadgeForConversation
 {
-    PFQuery *conversationQuery = [PFQuery queryWithClassName:@"Conversation"];
-    [conversationQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [conversationQuery whereKey:@"toUser" equalTo:selectedUser];
-    [conversationQuery getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        [object setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
-        [object saveInBackground];
-    }];
+    [ParseServices removeBadgeForConversationWithUser:selectedUser];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    if (chatArray.count > 0)
+    {
+        [ParseServices queryForFirstTimeChatBetweenCurrentUserWithUser:selectedUser];
+    }
+    
     [self removeBadgeForConversation];
     if (self.isMovingFromParentViewController || self.isBeingDismissed) {
         [PFQuery cancelPreviousPerformRequestsWithTarget:self selector:@selector(retrieveMessagesFromParse) object:nil];

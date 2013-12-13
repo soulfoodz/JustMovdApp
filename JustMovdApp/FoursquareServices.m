@@ -165,6 +165,7 @@
     return photoURL;
 }
 
+
 - (void)getImagesForVenue:(NSString *)venueID withSize:(NSString *)imageSize completionBlock:(VenueSearchCompletionBlock)completionBlock
 {
     NSURL        *photoURL;
@@ -181,13 +182,20 @@
                                NSArray        *photosArray;
                                NSMutableArray *photos;
                                
-                               dataDict = [NSJSONSerialization JSONObjectWithData:data
-                                                                          options:0
-                                                                            error:&connectionError];
                                
                                // If there's an error, send back the completion block with the error
                                // Else, pull out the data
-                               if (connectionError) completionBlock(NO, nil);
+                               
+                               if (connectionError || !data)
+                               {
+                                   completionBlock(NO, nil);
+                                   return;
+                               }
+                               
+                               dataDict = [NSJSONSerialization JSONObjectWithData:data
+                                                                          options:0
+                                                                            error:&connectionError];
+
                                
                                photosArray = dataDict[@"response"][@"photos"][@"items"];
                                photos      = [NSMutableArray arrayWithCapacity:5];
@@ -207,7 +215,13 @@
                                    imageData = [NSData dataWithContentsOfURL:imageURL];
                                    
                                    if (imageData == nil) continue;
-                                   if (photos.count < 5) [photos addObject:imageData];
+                                   if (photos.count < 5)
+                                   {
+                                       UIImage *image;
+                                       
+                                       image = [UIImage imageWithData:imageData scale:2.0f];
+                                       [photos addObject:image];
+                                   }
                                    else break;
                                 }
                                

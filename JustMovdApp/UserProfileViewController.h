@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PostCellDelegate.h"
+#import "EditProfileDelegate.h"
 
-@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, PostCellDelegate, EditProfileDelegate>
 
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *userProfileTableView;
@@ -17,7 +19,6 @@
 
 //Properties
 @property (strong, nonatomic) NSMutableArray *userInfosArray;
-
 @property (strong, nonatomic) PFUser *user;
 @property (strong, nonatomic) UIImage *userProfilePicture;
 

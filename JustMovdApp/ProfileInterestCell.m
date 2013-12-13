@@ -20,22 +20,23 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(10, 1, 300, self.frame.size.height - 1)];
-        [self addSubview:backgroundView];
+        self.backgroundColor = [UIColor whiteColor];
         
-        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 17, 60, 20)];
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 75, 20)];
         titleLabel.textColor = [UIColor orangeColor];
-        titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
-        [backgroundView addSubview:titleLabel];
+        titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:15.0];
+        [self addSubview:titleLabel];
         
-        firstImageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 10, 22, 22)];
-        [backgroundView addSubview:firstImageView];
-        secondImageView = [[UIImageView alloc] initWithFrame:CGRectMake(132, 10, 22, 22)];
-        [backgroundView addSubview:secondImageView];
-        thirdImageView = [[UIImageView alloc] initWithFrame:CGRectMake(164, 10, 22, 22)];
-        [backgroundView addSubview:thirdImageView];
-        fourthImageView = [[UIImageView alloc] initWithFrame:CGRectMake(196, 10, 22, 22)];
-        [backgroundView addSubview:fourthImageView];
+        firstImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 40, 30, 30)];
+        [self addSubview:firstImageView];
+        secondImageView = [[UIImageView alloc] initWithFrame:CGRectMake(55, 40, 30, 30)];
+        [self addSubview:secondImageView];
+        thirdImageView = [[UIImageView alloc] initWithFrame:CGRectMake(95, 40, 30, 30)];
+        [self addSubview:thirdImageView];
+        fourthImageView = [[UIImageView alloc] initWithFrame:CGRectMake(135, 40, 30, 30)];
+        [self addSubview:fourthImageView];
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
@@ -51,8 +52,7 @@
 {
     [super layoutSubviews];
     
-    self.backgroundColor = [UIColor clearColor];
-    backgroundView.backgroundColor = [UIColor whiteColor];
+    
 }
 
 @end

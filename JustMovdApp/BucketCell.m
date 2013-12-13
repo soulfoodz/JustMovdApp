@@ -53,17 +53,17 @@
     // It needs to be here because we maskToBounds all subviews of mainView,
     // which means the cell's shadow wouldn't be displayed
     
-    _shadowView.layer.cornerRadius       = 4.0f;
+    _shadowView.layer.cornerRadius       = 3.0f;
     _shadowView.layer.shadowColor        = [UIColor blackColor].CGColor;
     _shadowView.layer.shadowOpacity      = 0.3f;
     _shadowView.layer.shadowRadius       = 0.6f;
     _shadowView.layer.shadowOffset       = CGSizeMake(0, 0.6f);
-    _shadowView.layer.shadowPath         = [[UIBezierPath bezierPathWithRoundedRect:_mainView.bounds cornerRadius:4.0f] CGPath];
+    _shadowView.layer.shadowPath         = [[UIBezierPath bezierPathWithRoundedRect:_mainView.bounds cornerRadius:3.0f] CGPath];
     _shadowView.layer.shouldRasterize    = YES;
     _shadowView.layer.rasterizationScale = 2.0f;
     
     _mainView.layer.masksToBounds = YES;
-    _mainView.layer.cornerRadius  = 4.0f;
+    _mainView.layer.cornerRadius  = 3.0f;
 
     _titleLabel.font         = titleFont;
     _titleLabel.textColor    = titleColor;

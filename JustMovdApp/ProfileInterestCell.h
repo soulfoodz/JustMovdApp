@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileInterestCell : UITableViewCell
-{
-    UIView *backgroundView;
-}
 
 //Properties
 @property (strong, nonatomic) UILabel *titleLabel;

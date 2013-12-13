@@ -9,7 +9,6 @@
 #import "CommentViewController.h"
 #import "ParseServices.h"
 #import "PostCell.h"
-#import "JMCache.h"
 #import "TTTTimeIntervalFormatter.h"
 #import "PFImageView+ImageHandler.h"
 #import "UserProfileViewController.h"
@@ -43,12 +42,21 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
     
-    self.textView.layer.cornerRadius = 3.0f;
-    self.textView.font = CONTENT_FONT;
-    self.textView.textColor = [UIColor darkGrayColor];
+    self.textViewContainer.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
+    self.textViewContainer.layer.borderColor = [UIColor colorWithRed:215.0/255.0 green:215.0/255.0 blue:215.0/255.0 alpha:1.0].CGColor;
+    self.textViewContainer.layer.borderWidth = 1.0;
     
-    self.postButton.layer.cornerRadius = 5.0f;
-    self.postButton.backgroundColor = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
+    self.textView.font               = CONTENT_FONT;
+    self.textView.textColor          = [UIColor darkGrayColor];
+    self.textView.layer.borderWidth  = 1.0;
+    self.textView.layer.borderColor  = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0].CGColor;
+    self.textView.layer.cornerRadius = 3.0f;
+
+    
+    self.postButton.layer.cornerRadius = 3.0f;
+    self.postButton.backgroundColor    = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
+    self.postButton.titleLabel.font    = [UIFont fontWithName:@"Roboto-Medium" size:17.0];
+    
     
     [self queryForComments];
     
@@ -286,7 +294,6 @@
     [newComment setObject:self.post forKey:@"post"];
     [newComment setObject:[NSNumber numberWithInt:0] forKey:@"flagCount"];
     [self.post incrementKey:@"postCommentCounter" byAmount:[NSNumber numberWithInt:1]];
-    [[JMCache sharedCache] incrementCommentCountForPost:self.post];
     
     NSTimer *timeOutTimer = [NSTimer timerWithTimeInterval:5.0f target:self selector:@selector(handleConnectionTimeOut) userInfo:nil repeats:NO];
     
@@ -296,7 +303,6 @@
             [self.post saveInBackground];
             [timeOutTimer invalidate];
             [self.commentsArray removeObject:newComment];
-            [[JMCache sharedCache] decrementCommentCountForPost:self.post];
         }
     }];
     

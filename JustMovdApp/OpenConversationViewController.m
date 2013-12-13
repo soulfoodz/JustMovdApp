@@ -12,6 +12,7 @@
 #import "TTTTimeIntervalFormatter.h"
 #import "SpinnerViewController.h"
 #import "SWRevealViewController.h"
+#import "ParseServices.h"
 
 @interface OpenConversationViewController ()
 {
@@ -21,6 +22,7 @@
     NSMutableArray *tempArray;
     int returnedObjectsCount;
     SpinnerViewController *spinner;
+    UIImage *currentUserProfilePicture;
 }
 
 @end
@@ -39,16 +41,15 @@
     
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
+    [ParseServices queryForProfilePictureOfUser:[PFUser currentUser] completionBlock:^(NSArray *results, BOOL success) {
+        if (success) {
+            currentUserProfilePicture = results[0];
+        }
+    }];
+    
     [super viewDidLoad];
     [self initializeStuffing];
     [self removeApplicationBadge];
-    
-    for (UIView *notiView in self.navigationController.navigationBar.subviews) {
-        if (notiView.tag == 1) {
-            [notiView removeFromSuperview];
-            [self.navigationController.navigationBar setNeedsDisplay];
-        }
-    }
 }
 
 - (void)addSideBarMenu
@@ -68,7 +69,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self refreshConversation];
-    spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
 }
 
 - (void)removeApplicationBadge
@@ -78,12 +78,19 @@
         [currentInstallation setBadge:0];
         [currentInstallation saveInBackground];
     }
+    
+//    Remove notification indicator badge
+//    for (UIView *notiView in self.navigationController.navigationBar.subviews) {
+//        if (notiView.tag == 1) {
+//            [notiView removeFromSuperview];
+//        }
+//    }
 }
 
 - (void)initializeStuffing
 {
     [self.navigationItem setRightBarButtonItem:self.editButtonItem];
-    
+    spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
     noConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     noConversationLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:20.0];
     noConversationLabel.textColor = [UIColor lightGrayColor];
@@ -101,89 +108,82 @@
 - (void)loadOpenConversationsForCurrentUserFromParse
 {
     returnedObjectsCount = 0;
-    PFQuery *conversationQuery = [PFQuery queryWithClassName:@"Conversation"];
-    [conversationQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [conversationQuery includeKey:@"toUser"];
-    [conversationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-    {
-        //returnedObjectsCount = (int)objects.count;
-        
-        if (objects.count > 0)
-        {
-            for (PFObject *conversationObject in objects)
-            {
-                PFUser *toUser = [conversationObject objectForKey:@"toUser"];
-                if (toUser) {
-                    returnedObjectsCount++;
-                    PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
-                    NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
-                    if ([conversationObject objectForKey:@"isShowBadge"]) {
-                        [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
-                    }
-                    else {
-                        [userInfoDictionary setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
-                    }
-                    [userInfoDictionary setObject:toUserObject forKey:@"user"];
-                    PFFile *imageFile = [toUserObject objectForKey:@"profilePictureFile"];
-                    [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
-                     {
-                         UIImage *userProfileImage = [UIImage imageWithData:data];
-                         [userInfoDictionary setObject:userProfileImage forKey:@"profilePic"];
-                         [self addLastMessagesWithUser:toUserObject toDictionary:userInfoDictionary];
-                         [tempArray addObject:userInfoDictionary];
-                     }];
-                }
-            }
-        }
-        else
-        {
-            [spinner.view setHidden:YES];
-        }
-    }];
-}
-
-- (void)addLastMessagesWithUser:(PFObject *)user toDictionary:(NSMutableDictionary *)dictionary
-{
-    PFQuery *messageOfCurrentUser = [PFQuery queryWithClassName:@"Message"];
-    [messageOfCurrentUser whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [messageOfCurrentUser whereKey:@"toUser" equalTo:user];
-    
-    PFQuery *messageOfUserObject = [PFQuery queryWithClassName:@"Message"];
-    [messageOfUserObject whereKey:@"fromUser" equalTo:user];
-    [messageOfUserObject whereKey:@"toUser" equalTo:[PFUser currentUser]];
-    
-    PFQuery *messageQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:messageOfCurrentUser, messageOfUserObject, nil]];
-    [messageQuery orderByAscending:@"createdAt"];
-    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *messages, NSError *error)
+    [ParseServices queryForOpenConversationsByCurrentUserWithCompletionBlock:^(NSArray *results, BOOL success)
      {
-         [dictionary setObject:[[messages lastObject] objectForKey:@"contentText"] forKey:@"lastMessage"];
-         [dictionary setObject:[[messages lastObject] createdAt] forKey:@"messageTime"];
-         if (tempArray.count >= 2)
-         {
-             tempArray = [tempArray sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-                 NSDate *obj1Time = [obj1 objectForKey:@"messageTime"];
-                 NSDate *obj2Time = [obj2 objectForKey:@"messageTime"];
-                 return [obj2Time compare:obj1Time];
-             }].mutableCopy;
+         if (success) {
              
-             if (tempArray.count == returnedObjectsCount)
+             if (results.count > 0)
              {
-                 isDataReady = YES;
-                 [openConversationArray removeAllObjects];
-                 [openConversationArray addObjectsFromArray:tempArray];
-                 [openConversationTableView reloadData];
+                 for (PFObject *conversationObject in results)
+                 {
+                     PFUser *toUser = [conversationObject objectForKey:@"toUser"];
+                     if (toUser) {
+                         returnedObjectsCount++;
+                         PFUser *toUserObject = [conversationObject objectForKey:@"toUser"];
+                         NSMutableDictionary *userInfoDictionary = [[NSMutableDictionary alloc] init];
+                         if ([conversationObject objectForKey:@"isShowBadge"]) {
+                             [userInfoDictionary setObject:[conversationObject objectForKey:@"isShowBadge"] forKey:@"isShowBadge"];
+                         }
+                         else {
+                             [userInfoDictionary setObject:[NSNumber numberWithInt:0] forKey:@"isShowBadge"];
+                         }
+                         [userInfoDictionary setObject:toUserObject forKey:@"user"];
+                         [ParseServices queryForProfilePictureOfUser:toUserObject completionBlock:^(NSArray *results, BOOL success)
+                          {
+                              if (success) {
+                                  UIImage *userProfileImage = results[0];
+                                  [userInfoDictionary setObject:userProfileImage forKey:@"profilePic"];
+                                  [self addLastMessagesWithUser:toUserObject toDictionary:userInfoDictionary];
+                                  [tempArray addObject:userInfoDictionary];
+                              }
+                          }];
+                     }
+                 }
+             }
+             else
+             {
                  [spinner.view setHidden:YES];
              }
          }
-         else
+    }];
+}
+
+- (void)addLastMessagesWithUser:(PFUser *)user toDictionary:(NSMutableDictionary *)dictionary
+{
+    [ParseServices queryForLastMessageWithUser:user completionBlock:^(NSArray *results, BOOL success)
+     {
+         if (success && results.count > 0)
          {
-             if (tempArray.count == returnedObjectsCount)
+             [dictionary setObject:[[results lastObject] objectForKey:@"contentText"] forKey:@"lastMessage"];
+             [dictionary setObject:[[results lastObject] createdAt] forKey:@"messageTime"];
+             
+             if (tempArray.count >= 2)
              {
-                 isDataReady = YES;
-                 [openConversationArray removeAllObjects];
-                 [openConversationArray addObjectsFromArray:tempArray];
-                 [openConversationTableView reloadData];
-                 [spinner.view setHidden:YES];
+                 tempArray = [tempArray sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
+                     NSDate *obj1Time = [obj1 objectForKey:@"messageTime"];
+                     NSDate *obj2Time = [obj2 objectForKey:@"messageTime"];
+                     return [obj2Time compare:obj1Time];
+                 }].mutableCopy;
+                 
+                 if (tempArray.count == returnedObjectsCount)
+                 {
+                     isDataReady = YES;
+                     [openConversationArray removeAllObjects];
+                     [openConversationArray addObjectsFromArray:tempArray];
+                     [openConversationTableView reloadData];
+                     [spinner.view setHidden:YES];
+                 }
+             }
+             else
+             {
+                 if (tempArray.count == returnedObjectsCount)
+                 {
+                     isDataReady = YES;
+                     [openConversationArray removeAllObjects];
+                     [openConversationArray addObjectsFromArray:tempArray];
+                     [openConversationTableView reloadData];
+                     [spinner.view setHidden:YES];
+                 }
              }
          }
      }];
@@ -191,31 +191,7 @@
 
 - (void)removeConversationFromParseForUserAtIndexPath:(NSIndexPath *)indexPath
 {
-    //Query for all messages from 
-    PFQuery *messageOfCurrentUser = [PFQuery queryWithClassName:@"Message"];
-    [messageOfCurrentUser whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [messageOfCurrentUser whereKey:@"toUser" equalTo:[openConversationArray[indexPath.row] objectForKey:@"user"]];
-    PFQuery *messageOfUserObject = [PFQuery queryWithClassName:@"Message"];
-    [messageOfUserObject whereKey:@"fromUser" equalTo:[openConversationArray[indexPath.row] objectForKey:@"user"]];
-    [messageOfUserObject whereKey:@"toUser" equalTo:[PFUser currentUser]];
-    PFQuery *messageQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:messageOfCurrentUser, messageOfUserObject, nil]];
-    [messageQuery findObjectsInBackgroundWithBlock:^(NSArray *messages, NSError *error)
-     {
-         [PFObject deleteAll:messages];
-     }];
-    
-
-    PFQuery *conversationFromUserQuery = [PFQuery queryWithClassName:@"Conversation"];
-    [conversationFromUserQuery whereKey:@"fromUser" equalTo:[PFUser currentUser]];
-    [conversationFromUserQuery whereKey:@"toUser" equalTo:[openConversationArray[indexPath.row] objectForKey:@"user"]];
-    PFQuery *conversationToUserQuery = [PFQuery queryWithClassName:@"Conversation"];
-    [conversationToUserQuery whereKey:@"fromUser" equalTo:[openConversationArray[indexPath.row] objectForKey:@"user"]];
-    [conversationToUserQuery whereKey:@"toUser" equalTo:[PFUser currentUser]];
-    PFQuery *conversationQuery = [PFQuery orQueryWithSubqueries:@[conversationFromUserQuery, conversationToUserQuery]];
-    [conversationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        [PFObject deleteAll:objects];
-    }];
-
+    [ParseServices deleteConversationAndMessagesWithUser:[openConversationArray[indexPath.row] objectForKey:@"user"]];
 }
 
 #pragma mark - Table view data source
@@ -295,6 +271,8 @@
     if ([segue.identifier isEqualToString:@"segueConversationToMessage"]) {
         MessagingViewController *messagingVC = segue.destinationViewController;
         messagingVC.selectedUser = [openConversationArray[indexPath.row] objectForKey:@"user"];
+        messagingVC.currentUserImage = currentUserProfilePicture;
+        messagingVC.selectedUserImage = [openConversationArray[indexPath.row] objectForKey:@"profilePic"];
     }
 }
 
@@ -315,12 +293,6 @@
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationAutomatic];
         [tableView endUpdates];
     }
-}
-
-
-- (IBAction)actionLogOut:(id)sender
-{
-    [PFUser logOut];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

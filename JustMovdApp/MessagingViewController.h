@@ -20,7 +20,9 @@
 //Properties
 @property (strong, nonatomic) NSMutableArray *chatArray;
 @property (strong, nonatomic) UIButton *hiddenButton;
-@property (strong, nonatomic) PFObject *selectedUser;
+@property (strong, nonatomic) PFUser *selectedUser;
+@property (strong, nonatomic) UIImage *currentUserImage;
+@property (strong, nonatomic) UIImage *selectedUserImage;
 
 
 //Methods

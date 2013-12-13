@@ -405,15 +405,6 @@
 
 -(void)avatarImageWasTappedInCell:(PostCell *)cell
 {
-/*
-    UIStoryboard *storyboard;
-    BucketListCollectionViewController *bucketVC;
-    
-    storyboard = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
-    bucketVC   = [storyboard instantiateInitialViewController];
-    [self presentViewController:bucketVC animated:YES completion:nil];
-*/
-    
     NSIndexPath               *indexPath;
     PFUser                    *postCreator;
     UIStoryboard              *storyboard;

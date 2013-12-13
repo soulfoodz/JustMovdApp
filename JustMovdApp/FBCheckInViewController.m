@@ -13,8 +13,8 @@
 
 @interface FBCheckInViewController ()
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) CLLocationManager  *locationManager;
+@property (weak, nonatomic) IBOutlet MKMapView   *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
@@ -120,23 +120,28 @@
 
 - (void)drawImageFromMap:(MKCoordinateRegion)region
 {
-    MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
+    MKMapSnapshotOptions *options;
+    MKMapSnapshotter     *snapshotter;
+    CGFloat              width, height;
+    
+    width  = self.mapView.frame.size.width * .9;
+    height = self.mapView.frame.size.height * .9;
+    
+    options        = [[MKMapSnapshotOptions alloc] init];
     options.region = region;
-    options.scale = [UIScreen mainScreen].scale;
+    options.scale  = [UIScreen mainScreen].scale;
+    options.size   = CGSizeMake(width, height);
     
-    CGFloat width  = self.mapView.frame.size.width * .9;
-    CGFloat height = self.mapView.frame.size.height * .9;
-    options.size = CGSizeMake(width, height);
+    snapshotter = [[MKMapSnapshotter alloc] initWithOptions:options];
     
-    MKMapSnapshotter *snapshotter = [[MKMapSnapshotter alloc] initWithOptions:options];
-    [snapshotter startWithCompletionHandler:^(MKMapSnapshot *snapshot, NSError *error) {
-        UIImage *image = snapshot.image;
-        self.mapViewImage = image;
-    }];
+    [snapshotter startWithCompletionHandler:^(MKMapSnapshot *snapshot, NSError *error)
+                                             {
+                                                 UIImage *image;
+                                                 
+                                                 image = snapshot.image;
+                                                 self.mapViewImage = image;
+                                             }];
 }
-
-
-
 
 
 @end

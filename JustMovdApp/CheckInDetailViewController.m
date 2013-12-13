@@ -41,6 +41,7 @@
     
     location             = self.checkIn[@"location"];
     centerCoord          = CLLocationCoordinate2DMake(location.latitude, location.longitude);
+    
     self.checkInLocation.coordinate = centerCoord;
     
     span.latitudeDelta  = 0.01;
@@ -135,7 +136,7 @@
 
 - (CGSize)sizeForString:(NSString *)string
 {
-    CGRect textRect = [string boundingRectWithSize:CGSizeMake(180.0f, 150.0f)
+    CGRect textRect = [string boundingRectWithSize:CGSizeMake(146.0f, 64.0f)
                                            options:NSStringDrawingUsesLineFragmentOrigin
                                         attributes:@{NSFontAttributeName:placeNameFont}
                                            context:nil];

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EditProfileDelegate.h"
 
 @interface EditProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate>
 
@@ -16,9 +17,7 @@
 
 //Properties
 @property (strong, nonatomic) NSMutableDictionary *passInUserInfoDictionary;
-
-
-
+@property (strong, nonatomic) id <EditProfileDelegate> delegate;
 
 
 @end

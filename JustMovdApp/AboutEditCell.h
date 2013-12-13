@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AboutEditCell : UITableViewCell
+@interface AboutEditCell : UITableViewCell <UITextViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UITextView *detailTextView;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UITextView *detailTextView;
 
 @end

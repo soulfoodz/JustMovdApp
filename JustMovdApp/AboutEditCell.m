@@ -7,8 +7,12 @@
 //
 
 #import "AboutEditCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation AboutEditCell
+{
+    UIView *backgroundView;
+}
 @synthesize detailTextView;
 @synthesize titleLabel;
 
@@ -17,6 +21,21 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(10, 5, 300, 150)];
+        backgroundView.backgroundColor = [UIColor whiteColor];
+        backgroundView.layer.cornerRadius = 3;
+        
+        self.backgroundColor = [UIColor clearColor];
+        
+        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 280, 30)];
+        titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:16.0];
+        titleLabel.textColor = [UIColor blackColor];
+        titleLabel.text = @"About Me";
+        
+        detailTextView = [[UITextView alloc] initWithFrame:CGRectMake(15, 40, 270, 100)];
+        detailTextView.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
+        detailTextView.backgroundColor = [UIColor clearColor];
+        detailTextView.textColor = [UIColor darkGrayColor];
     }
     return self;
 }
@@ -28,23 +47,15 @@
     // Configure the view for the selected state
 }
 
-- (void)setFrame:(CGRect)frame
-{
-    frame.origin.x = 10;
-    frame.size.width = 300;
-    frame.size.height = 160;
-    
-    [super setFrame:frame];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    detailTextView.editable = YES;
-    detailTextView.userInteractionEnabled = YES;
-    detailTextView.scrollEnabled = YES;
-    //[detailTextView scrollRangeToVisible:NSMakeRange([detailTextView.text length] -1, 1)];
+
+    [detailTextView scrollRangeToVisible:NSMakeRange([detailTextView.text length] -1, 1)];
+    [backgroundView addSubview:titleLabel];
+    [backgroundView addSubview:detailTextView];
+    [self addSubview:backgroundView];
 }
+
 
 @end

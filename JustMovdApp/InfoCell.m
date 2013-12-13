@@ -17,11 +17,9 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        backgroundView = [[UIView alloc] init];
+        self.backgroundColor = [UIColor whiteColor];
         titleLabel = [[UILabel alloc] init];
         descriptionLabel = [[UILabel alloc] init];
-        //self.layer.cornerRadius = 5;
-        //self.layer.masksToBounds = YES;
     }
     return self;
 }
@@ -37,30 +35,22 @@
 {
     [super layoutSubviews];
     
-    self.backgroundColor = [UIColor clearColor];
-    [backgroundView setFrame:CGRectMake(10, 1, 300, self.frame.size.height - 1)];
-    backgroundView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:backgroundView];
-    
-    titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:14.0];
-    descriptionLabel.font = [UIFont fontWithName:@"Roboto-Light" size:14.0];
+    [titleLabel setFrame:CGRectMake(15, 12, 60, 20)];
+    titleLabel.textColor = [UIColor orangeColor];
+    titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:15.0];
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    
-    [descriptionLabel setFrame:CGRectMake(88, 12, 200, self.frame.size.height - 15)];
+    [descriptionLabel setFrame:CGRectMake(15, 40, 290, self.frame.size.height - 15)];
     descriptionLabel.contentMode = UIViewContentModeTop;
     descriptionLabel.textColor = [UIColor darkGrayColor];
-    descriptionLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
+    descriptionLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:14.0];
     descriptionLabel.numberOfLines = 0;
     descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [backgroundView addSubview:descriptionLabel];
+    [descriptionLabel sizeToFit];
     
-    [titleLabel setFrame:CGRectMake(20, 17, 60, 20)];
-    titleLabel.textColor = [UIColor orangeColor];
-    titleLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
-    
-    [backgroundView addSubview:titleLabel];
+    [self addSubview:descriptionLabel];
+    [self addSubview:titleLabel];
 }
 
 @end

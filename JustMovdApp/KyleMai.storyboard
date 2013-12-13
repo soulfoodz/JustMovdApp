@@ -275,7 +275,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4o1-HG-Yl2">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.85882359740000003" green="0.86274516580000005" blue="0.85882359740000003" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.9067181540108411" green="0.907826570705488" blue="0.92474085988562094" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btm-Ia-QIs">
                                 <rect key="frame" x="251" y="529" width="61" height="33"/>

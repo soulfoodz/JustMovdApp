@@ -10,4 +10,29 @@
 
 @implementation FoursquareVenue
 
++ (FoursquareVenue *)newVenueFromBucket:(PFObject *)bucket
+{
+    FoursquareVenue *newVenue;
+    PFGeoPoint      *geopoint;
+    
+    geopoint = bucket[@"location"];
+    
+    newVenue = [FoursquareVenue new];
+    
+    newVenue.id         = bucket[@"FSVenueID"];
+    newVenue.name       = bucket[@"title"];
+    newVenue.category   = bucket[@"category"];
+    newVenue.url        = bucket[@"website"];
+    newVenue.address    = bucket[@"streetAddress"];
+    newVenue.city       = bucket[@"city"];
+    newVenue.state      = bucket[@"state"];
+    newVenue.postalCode = bucket[@"postalCode"];
+    newVenue.phone      = bucket[@"phone"];
+    newVenue.fullImage  = bucket[@"image"];
+    newVenue.coord      = CLLocationCoordinate2DMake(geopoint.latitude, geopoint.longitude);
+    
+    return newVenue;
+}
+
+
 @end

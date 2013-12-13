@@ -101,8 +101,8 @@
     [self.backgroundView addSubview:nameLabel];
     
     // Set reportButton
-    reportButton.frame = CGRectMake((self.backgroundView.frame.size.width + self.backgroundView.frame.origin.x) - 30, nameLabel.frame.origin.y +4, 28, 28);
-    [reportButton setImage:[UIImage imageNamed:@"postcell_reportbutton_flagicon"] forState: UIControlStateNormal];
+    reportButton.frame = CGRectMake((self.backgroundView.frame.size.width + self.backgroundView.frame.origin.x) - 36, nameLabel.frame.origin.y, 28, 28);
+    [reportButton setImage:[UIImage imageNamed:@"postcell_icon_flagchevron.png"] forState: UIControlStateNormal];
     [self addSubview:reportButton];
     
     // Set timeLabel

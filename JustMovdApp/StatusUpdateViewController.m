@@ -10,7 +10,6 @@
 #import "ActivityFeedViewController.h"
 #import "PFImageView+ImageHandler.h"
 #import "NavViewController.h"
-#import "JMCache.h"
 
 #define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
 
@@ -102,8 +101,6 @@
         [newPost setObject:newCheckIn forKey:@"checkIn"];
     }
     
-    // Add post to JMCache
-    [[JMCache sharedCache] addNewPost:newPost];
     
     // Send newPost to activityFeed
     [self.delegate addNewlyCreatedPostToActivityFeed:newPost];
@@ -113,7 +110,6 @@
     [newPost saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error){
             [self.delegate removePost:newPost fromActivityFeedWithError:error];
-            [[JMCache sharedCache]removePost:newPost];
             NSLog(@"New post was NOT saved! : %@", newPost);
         } else {
             
@@ -230,6 +226,7 @@
     avatarImageView.frame = CGRectMake(10, 70, 44, 44);
     avatarImageView.layer.cornerRadius = 22.0f;
     avatarImageView.clipsToBounds      = YES;
+    avatarImageView.contentMode        = UIViewContentModeScaleAspectFill;
     
     imageFile = self.user[@"profilePictureFile"];
     [avatarImageView setFile:imageFile forImageView:avatarImageView];

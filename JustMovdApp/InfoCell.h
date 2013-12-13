@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface InfoCell : UITableViewCell
-{
-    UIView *backgroundView;
-}
 
 //Outlets
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;

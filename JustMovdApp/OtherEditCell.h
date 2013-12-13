@@ -10,7 +10,7 @@
 
 @interface OtherEditCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UITextField *detailTextField;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (strong, nonatomic) UITextField *detailTextField;
 
 @end
