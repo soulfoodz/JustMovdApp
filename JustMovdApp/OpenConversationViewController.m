@@ -49,7 +49,7 @@
     
     [super viewDidLoad];
     [self initializeStuffing];
-    [self removeApplicationBadge];
+    
 }
 
 - (void)addSideBarMenu
@@ -69,14 +69,21 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self refreshConversation];
+    [self removeApplicationBadge];
 }
 
 - (void)removeApplicationBadge
 {
     if ([PFUser currentUser]) {
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-        [currentInstallation setBadge:0];
-        [currentInstallation saveInBackground];
+        if (currentInstallation.badge != 0) {
+            currentInstallation.badge = 0;
+            [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    [currentInstallation saveEventually];
+                }
+            }];
+        }
     }
     
 //    Remove notification indicator badge

@@ -62,12 +62,18 @@
     self.deviceTokenForPush = deviceToken;
     
     // Store the deviceToken in the current Installation and save it to Parse.
-    if ([PFUser currentUser]) {
+    if ([PFUser currentUser])
+    {
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
         [currentInstallation setDeviceTokenFromData:deviceToken];
         [currentInstallation deviceType];
         [currentInstallation setObject:[PFUser currentUser] forKey:@"owner"];
-        [currentInstallation saveInBackground];
+        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (error) {
+                 [currentInstallation saveEventually];
+             }
+         }];
     }
 }
 
@@ -79,6 +85,8 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSLog(@"userInfo: %@", userInfo);
+    
+    NSString *pushType = [[[userInfo valueForKeyPath:@"aps.alert"] componentsSeparatedByString:@" "] lastObject];
     
     if (application.applicationState == UIApplicationStateActive)
     {
@@ -102,19 +110,28 @@
     {
         NSLog(@"Background");
         //[PFPush handlePush:userInfo];
-        UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
+        
+        if ([pushType isEqual:@"message"]) {
+            
+            NSLog(@"Push Type is message");
+            
+            UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
             OpenConversationViewController *conversationVC = [messagesSB instantiateViewControllerWithIdentifier:@"conversation"];
-        UINavigationController *navigationForConversationVC = [[UINavigationController alloc] initWithRootViewController:conversationVC];
-        navigationForConversationVC.navigationBar.tintColor = [UIColor blackColor];
-        
-        UIStoryboard *questionSB = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
-        SideBarViewController *sideBarVC = [questionSB instantiateViewControllerWithIdentifier:@"sidebarVC"];
-        
-        SWRevealViewController *revealVC = [[SWRevealViewController alloc] initWithRearViewController:sideBarVC frontViewController:navigationForConversationVC];
-        [self.window setRootViewController:revealVC];
-        
-        // Notifies the app that we received a message while app was in background
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"displayBadgeInNavBarForMessage" object:self];
+            UINavigationController *navigationForConversationVC = [[UINavigationController alloc] initWithRootViewController:conversationVC];
+            navigationForConversationVC.navigationBar.tintColor = [UIColor blackColor];
+            
+            UIStoryboard *questionSB = [UIStoryboard storyboardWithName:@"Questionnaire" bundle:nil];
+            SideBarViewController *sideBarVC = [questionSB instantiateViewControllerWithIdentifier:@"sidebarVC"];
+            
+            SWRevealViewController *revealVC = [[SWRevealViewController alloc] initWithRearViewController:sideBarVC frontViewController:navigationForConversationVC];
+            [self.window setRootViewController:revealVC];
+            
+            // Notifies the app that we received a message while app was in background
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"displayBadgeInNavBarForMessage" object:self];
+        }
+        else {
+            NSLog(@"Push Type is comment posted");
+        }
     }
 }
 

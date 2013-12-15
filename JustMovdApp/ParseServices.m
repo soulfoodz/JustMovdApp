@@ -325,6 +325,18 @@
     [messageObject saveInBackground];
 }
 
+
++ (void)saveUser:(PFUser *)user
+{
+    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded == YES)
+            NSLog(@"Saved changes for user:%@", user);
+        else
+            NSLog(@"Error saving user info for user:%@ with error:%@", user, error);
+    }];
+}
+
+
 + (void)setBadgeForConversationWithUser:(PFUser *)user
 {
     PFQuery *conversationQuery = [PFQuery queryWithClassName:@"Conversation"];

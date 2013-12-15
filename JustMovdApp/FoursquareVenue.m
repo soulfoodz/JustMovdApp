@@ -29,10 +29,21 @@
     newVenue.postalCode = bucket[@"postalCode"];
     newVenue.phone      = bucket[@"phone"];
     newVenue.fullImage  = bucket[@"image"];
-    newVenue.coord      = CLLocationCoordinate2DMake(geopoint.latitude, geopoint.longitude);
+    newVenue.coordinate = CLLocationCoordinate2DMake(geopoint.latitude, geopoint.longitude);
     
     return newVenue;
 }
+
+
+- (NSString *)title
+{
+    if (self.name)
+        return self.name;
+    else
+        return @"unknown";
+}
+
+
 
 
 @end

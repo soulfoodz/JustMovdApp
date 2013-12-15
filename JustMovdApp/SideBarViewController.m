@@ -40,14 +40,14 @@
 {
     [super viewDidLoad];
 
-    titlesForRows = @[@"profile", @"feed", @"around", @"messages", @"bucket list", @"empty", @"empty", @"empty", @"empty", @"sign"];
+    titlesForRows = @[@"profile", @"feed", @"around", @"messages", @"bucket list", @"empty", @"empty", @"empty", @"sign"];
     self.tableView.scrollEnabled = NO;
     
     //self.tableView.backgroundView.backgroundColor = [UIColor colorWithRed:185.0/255.0 green:185.0/255.0 blue:185.0/255.0 alpha:1.0];
     //self.tableView.backgroundColor = [UIColor colorWithRed:185.0/255.0 green:185.0/255.0 blue:185.0/255.0 alpha:1.0];
-    self.tableView.backgroundView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
-    self.tableView.backgroundColor                = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
-    
+    //self.tableView.backgroundView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
+    self.tableView.backgroundColor                = [UIColor whiteColor];//[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserverForName:@"gotofeed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -103,7 +103,7 @@
     
     if (indexPath.row >= 1){
         UILabel *label = (UILabel *)[cell.contentView viewWithTag:1];
-        label.font = [UIFont fontWithName:@"Roboto-Medium" size:17.0];
+        label.font = [UIFont fontWithName:@"Roboto-Regular" size:17.0];
         label.textColor = [UIColor darkGrayColor];
     }
 
@@ -213,7 +213,7 @@
         return 80.0f;
     }
     
-    return 44.0f;
+    return 54.0f;
 }
 
 

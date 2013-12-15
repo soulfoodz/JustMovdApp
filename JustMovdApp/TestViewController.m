@@ -20,9 +20,9 @@
 @interface TestViewController ()
 {
     NSMutableArray *matches;
-    NSMutableArray *profilePics;
+    NSMutableDictionary *profilePics;
     NSMutableArray *distances;
-    NSMutableArray *sharedInterests;
+    NSMutableDictionary *sharedInterests;
     BOOL isReady;
     
     PFObject *currentUserInterests;
@@ -57,9 +57,9 @@
     myTableView.delegate = self;
     myTableView.dataSource = self;
     matches = [[NSMutableArray alloc] init];
-    profilePics = [[NSMutableArray alloc] init];
+    profilePics = [[NSMutableDictionary alloc] init];
     distances = [[NSMutableArray alloc] init];
-    sharedInterests = [[NSMutableArray alloc] init];
+    sharedInterests = [[NSMutableDictionary alloc] init];
     
     sideBarButton.target = self.revealViewController;
     sideBarButton.action = @selector(revealToggle:);
@@ -90,7 +90,7 @@
      {
          matches = objects.mutableCopy;
          
-         if ([matches count] == 0){
+         if ([matches count] == 0) {
              spinner.view = nil;
              
              UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, self.view.frame.size.height/2-40, 240, 20)];
@@ -113,18 +113,21 @@
              PFQuery *query = [PFQuery queryWithClassName:@"Interests"];
              [query whereKey:@"User" equalTo:[PFUser currentUser]];
              
-             [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+             [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error)
+             {
                  currentUserInterests = object;
                  
-                 
-                 for (PFUser *temp in matches){
+                 [profilePics removeAllObjects];
+                 for (PFUser *temp in matches)
+                 {
                      
                      
                      PFFile *imageFile = [temp objectForKey:@"profilePictureFile"];
-                     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                     [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error)
+                     {
                          
                          UIImage *tempImage = [UIImage imageWithData:data];
-                         [profilePics addObject:tempImage];
+                         [profilePics setObject:tempImage forKey:temp[@"firstName"]];
                          
                          PFQuery *tempQuery = [PFQuery queryWithClassName:@"Interests"];
                          [tempQuery whereKey:@"User" equalTo:temp];
@@ -147,7 +150,7 @@
                              if ([tempInterests[@"fourth"] isEqualToString:currentUserInterests[@"fourth"]]){
                                  [tempArray addObject:[self getImageNameFromString:tempInterests[@"fourth"]]];
                              }
-                             [sharedInterests addObject:tempArray];
+                             [sharedInterests setObject:tempArray forKey:temp[@"firstName"]];
                              
                              if ([sharedInterests count] == [matches count]){
                                  spinner.view = nil;
@@ -178,24 +181,24 @@
     
     PFUser *currentUser = [PFUser currentUser];
     PFGeoPoint *currentPoint = [currentUser objectForKey:@"geoPoint"];
-    double lat1 = currentPoint.latitude;
-    double long1 = currentPoint.longitude;
+//    double lat1 = currentPoint.latitude;
+//    double long1 = currentPoint.longitude;
     
-    for (PFUser *user in array){
+    for (PFUser *user in array)
+    {
         
         PFGeoPoint *tempPoint = [user objectForKey:@"geoPoint"];
-        double lat2 = tempPoint.latitude;
-        double long2 = tempPoint.longitude;
+//        double lat2 = tempPoint.latitude;
+//        double long2 = tempPoint.longitude;
+//        
+//        CLLocation *locA = [[CLLocation alloc] initWithLatitude:lat1 longitude:long1];
+//        CLLocation *locB = [[CLLocation alloc] initWithLatitude:lat2 longitude:long2];
+//        CLLocationDistance distance = [locA distanceFromLocation:locB];
         
-        CLLocation *locA = [[CLLocation alloc] initWithLatitude:lat1 longitude:long1];
-        CLLocation *locB = [[CLLocation alloc] initWithLatitude:lat2 longitude:long2];
-        CLLocationDistance distance = [locA distanceFromLocation:locB];
-        
-        double distanceMiles = distance*0.000621371;
+        double distanceMiles = [currentPoint distanceInMilesTo:tempPoint] * 0.01121371;
         
         [distances addObject:[NSNumber numberWithDouble:distanceMiles]];
     }
-    
     
     
 }
@@ -224,12 +227,12 @@
     if (isReady){
         
         int row = [indexPath row];
-        
-       [cell.profilePicture setImage:[profilePics objectAtIndex:row]];
-        
         PFUser *tempUser = [matches objectAtIndex:row];
+        NSString *firstName = tempUser[@"firstName"];
         
-        NSMutableArray *interestObject = [sharedInterests objectAtIndex:row];
+        [cell.profilePicture setImage:profilePics[firstName]];
+        
+        NSMutableArray *interestObject = sharedInterests[firstName];
         int len = [interestObject count];
         
         if (len == 0){
@@ -261,17 +264,17 @@
         
         int age = [self calculateYearsFromDateStringWithFormatMMddyyyy:tempUser[@"birthday"]];
         
-        NSString *gender;
-        
-        if ([tempUser[@"gender"] isEqualToString:@"male"]){
-            gender = @"m";
-        } else {
-            gender = @"f";
-        }
+//        NSString *gender;
+//        
+//        if ([tempUser[@"gender"] isEqualToString:@"male"]){
+//            gender = @"m";
+//        } else {
+//            gender = @"f";
+//        }
         
         //cell.ageLabel.text = [NSString stringWithFormat:@"%d/%@", age, gender];
         
-        cell.nameLabel.text = [NSString stringWithFormat:@"%@, %d/%@", tempUser[@"firstName"], age, gender];
+        cell.nameLabel.text = [NSString stringWithFormat:@"%@, %d", tempUser[@"firstName"], age];
 
         cell.distanceLabel.text = [NSString stringWithFormat:@"%.1fmi", [[distances objectAtIndex:row] floatValue] ];
         
@@ -338,13 +341,15 @@
 }
 
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PFUser *userToPass = ((PFUser*)[matches objectAtIndex:indexPath.row]);
     
     UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
     UserProfileViewController *profileVC = [messagesSB instantiateViewControllerWithIdentifier:@"profile"];
     
-    profileVC.user               = ((PFUser*)[matches objectAtIndex:indexPath.row]);
-    profileVC.userProfilePicture = (UIImage *)[profilePics objectAtIndex:indexPath.row];
+    profileVC.user               = userToPass;
+    profileVC.userProfilePicture = (UIImage *)profilePics[userToPass[@"firstName"]];
 
     [self.navigationController pushViewController:profileVC animated:YES];
 }

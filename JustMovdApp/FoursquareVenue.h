@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-@interface FoursquareVenue : NSObject
+@interface FoursquareVenue : NSObject <MKAnnotation>
+
+// MKAnnotation protocol
+@property (nonatomic, readonly, copy) NSString *title;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
 
 @property (strong, nonatomic) NSString *id;
 @property (strong, nonatomic) NSString *name;
@@ -20,7 +25,6 @@
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *state;
 @property (strong, nonatomic) UIImage  *fullImage;
-@property (nonatomic) CLLocationCoordinate2D coord;
 @property (nonatomic) double lat;
 @property (nonatomic) double lng;
 

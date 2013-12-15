@@ -136,7 +136,11 @@
     PFObject                    *selectedBucket;
     BucketDetailsViewController *dvc;
     FoursquareVenue             *newVenue;
+    __weak NSMutableArray       *array;
+    __weak UICollectionView     *cv;
     
+    cv               = self.collectionView;
+    array            = self.completedBuckets;
     cell             = (BucketCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     dvc              = [[BucketDetailsViewController alloc] initWithNibName:nil bundle:nil];
     selectedBucket   = self.bucketList[indexPath.row];
@@ -150,12 +154,12 @@
                                                                 // is checked or unchecked when popped
                         {
                             if ([command isEqualToString:@"add"])
-                                [self.completedBuckets addObject:bucket];
+                                [array addObject:bucket];
                             
                             if([command isEqualToString:@"remove"])
-                                [self.completedBuckets removeObject:bucket];
+                                [array removeObject:bucket];
                             
-                            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                           [cv reloadItemsAtIndexPaths:@[indexPath]];
                         };
     
     [self.navigationController pushViewController:dvc animated:YES];
@@ -213,6 +217,7 @@
 {
     return (double)[self.userLocation distanceInMilesTo:location];
 }
+
 
 
 @end

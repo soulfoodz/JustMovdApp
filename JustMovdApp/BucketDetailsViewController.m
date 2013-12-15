@@ -11,6 +11,7 @@
 #import "ParseServices.h"
 #import "FoursquareVenue.h"
 #import "PFImageView+ImageHandler.h"
+#import "BucketDetailMapViewController.h"
 
 #define titleFont    [UIFont fontWithName:@"Roboto-Medium"  size:18.0]
 #define subtitleFont [UIFont fontWithName:@"Roboto-Medium"  size:15.0]
@@ -31,6 +32,7 @@ typedef enum {checked, unchecked} ButtonState;
 @property (weak, nonatomic) IBOutlet UILabel       *quoteLabel;
 @property (weak, nonatomic) IBOutlet UILabel       *streetLabel;
 @property (weak, nonatomic) IBOutlet UILabel       *cityLabel;
+@property (weak, nonatomic) IBOutlet UIButton      *refreshButton;
 @property (weak, nonatomic) IBOutlet UIButton      *checkButton;
 @property (weak, nonatomic) IBOutlet MKMapView     *mapView;
 @property (weak, nonatomic) IBOutlet PFImageView   *creatorAvatar;
@@ -44,6 +46,10 @@ typedef enum {checked, unchecked} ButtonState;
 @property (strong, nonatomic) NSString           *venueID;
 @property (strong, nonatomic) FoursquareServices *fsService;
 @property (nonatomic) BOOL                        wasChecked;
+@property (nonatomic) CGRect                      cachedFrame;
+
+
+- (IBAction)refreshImages:(id)sender;
 
 @end
 
@@ -73,7 +79,18 @@ static NSString *removeCheckString = @"remove";
     [self getVenueImages];
     [self setSubviewValues];
     [self styleSubviews];
-    [self setupMapWithLocation:self.venue.coord];
+    
+    self.cachedFrame = self.imagesScroller.frame;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.mainScroller.delegate == nil || self.imagesScroller.delegate == nil)
+    {
+        self.imagesScroller.delegate = self;
+        self.mainScroller.delegate   = self;
+    }
 }
 
 
@@ -99,8 +116,6 @@ static NSString *removeCheckString = @"remove";
 - (void)styleSubviews
 {
     UITapGestureRecognizer *tapGesture;
-    
-    //self.mainView.clipsToBounds  = YES;
     
     self.titleLabel.font         = titleFont;
     self.titleLabel.textColor    = titleColor;
@@ -142,27 +157,15 @@ static NSString *removeCheckString = @"remove";
     
     self.pageControl.center = CGPointMake(160, 300);
     
+    self.refreshButton.center = CGPointMake(160, 160);
+    self.refreshButton.hidden = YES;
+    
     [self adjustDependentFrames];
-}
-
-- (void)goToMap
-{
-    UIViewController *vc;
-    MKMapView *bigMapView;
-    
-    vc   = [[UIViewController alloc] init];
-    bigMapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
-    [bigMapView setCenterCoordinate:self.venue.coord animated:YES];
-    
-    vc.view = bigMapView;
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
 - (void)adjustDependentFrames
 {
-    UIBezierPath *path;
-    UIColor      *strokeColor;
     int margin;
     CGFloat quoteHeight, mapOriginY, totalHeight, contentHeight, navBarHeight;
 
@@ -195,12 +198,6 @@ static NSString *removeCheckString = @"remove";
     navBarHeight  = 64;
     contentHeight = self.imagesScroller.frame.size.height + self.infoView.frame.size.height + navBarHeight;
     self.mainScroller.contentSize = CGSizeMake(320, contentHeight);
-    
-    path = [UIBezierPath bezierPathWithRoundedRect:self.mapViewContainer.frame cornerRadius:3.0f];
-    path.lineWidth = 2.0f;
-    strokeColor = [UIColor lightGrayColor];
-    [strokeColor setStroke];
-    [path stroke];
 }
 
 
@@ -219,7 +216,12 @@ static NSString *removeCheckString = @"remove";
 //                                               if ([self checkIfbucketNeedsToBeUpdated] == YES)
 //                                                   [self getVenueInfo];
                                            }
-                                           else NSLog(@"Uh-Oh! Error getting photos!");
+                                           else
+                                           {
+                                               NSLog(@"Uh-Oh! Error getting photos!");
+                                               [self.activityIndicator stopAnimating];
+                                               self.refreshButton.hidden = NO;
+                                           }
                                        }];
 }
 
@@ -231,21 +233,6 @@ static NSString *removeCheckString = @"remove";
         UIImageView *imageV = [[UIImageView alloc] initWithImage:image];
         [self.imageViews addObject:imageV];
     }
-}
-
-#pragma mark - MapView Methods
-
-- (void)setupMapWithLocation:(CLLocationCoordinate2D)location
-{
-    MKCoordinateRegion region;
-    MKCoordinateSpan   span;
-    
-    span.latitudeDelta = 0.01;
-    span.longitudeDelta = 0.01;
-    region.span = span;
-    region.center = location;
-    
-    [self.mapView setRegion:region animated:YES];
 }
 
 
@@ -373,7 +360,7 @@ static NSString *removeCheckString = @"remove";
         frame.origin.y = 0.0f;
         
         newImageView = [[UIImageView alloc] initWithImage:[self.imagesArray objectAtIndex:page]];
-        newImageView.contentMode = UIViewContentModeScaleAspectFit;
+        newImageView.contentMode = UIViewContentModeScaleAspectFill;
         newImageView.frame = frame;
         [self.imagesScroller addSubview:newImageView];
         
@@ -464,6 +451,13 @@ static NSString *removeCheckString = @"remove";
                           forState:UIControlStateNormal];
 }
 
+#pragma mark - IBActions
+
+- (IBAction)refreshImages:(id)sender
+{
+    [self getVenueImages];
+}
+
 
 - (IBAction)checkButtonTapped:(UIButton *)sender
 {
@@ -480,30 +474,51 @@ static NSString *removeCheckString = @"remove";
 }
 
 
+- (void)goToMap
+{
+    BucketDetailMapViewController *MVC;
+    
+    MVC       = [[BucketDetailMapViewController alloc] initWithNibName:@"BucketDetailMapViewController" bundle:nil];
+    MVC.venue = self.venue;
+    
+    [self.navigationController pushViewController:MVC animated:YES];
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     // Check to see if the state of the checkButton has changed while on the page
     // If it has, save the final state (isChecked) to the users array of checked buckets
     
+    // Setting scrollers to nil prevents crash occurring on return to BucketListVC.
+    // Apparently, the BucketlistVC's collectionView is calling viewDidScroll in here,
+    // BucketDetail, which is causing a crash. Setting the delegates to nil forces the
+    // collectionView to call it's own scrollview delegate
+    
+    NSArray *viewControllers;
+    __weak PFObject *buckObj;
+    
+    viewControllers = self.navigationController.viewControllers;
+    buckObj = self.bucket;
+    
+    self.imagesScroller.delegate = nil;
+    self.mainScroller.delegate   = nil;
+
     if (self.isChecked == self.wasChecked) return;
     
     if (self.isChecked == NO && self.wasChecked == YES)
     {
         [[PFUser currentUser] removeObject:self.bucket forKey:@"buckets"];
-        self.updateBlock(self.bucket, removeCheckString);
-    }
-    else if (self.isChecked == YES && self.wasChecked == NO)
-    {
-        [[PFUser currentUser] addUniqueObject:self.bucket forKey:@"buckets"];
-        self.updateBlock(self.bucket, addCheckString);
+        self.updateBlock(buckObj, removeCheckString);
     }
     
-    [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded == YES)
-            NSLog(@"Saved changes");
-        else
-            NSLog(@"Failed to save changes");
-    }];
+    if (self.isChecked == YES && self.wasChecked == NO)
+    {
+        [[PFUser currentUser] addUniqueObject:self.bucket forKey:@"buckets"];
+        self.updateBlock(buckObj, addCheckString);
+    }
+    
+    [ParseServices saveUser:[PFUser currentUser]];
 }
 
 

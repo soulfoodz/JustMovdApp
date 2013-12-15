@@ -55,6 +55,8 @@
     [aboutTextView resignFirstResponder];
     [locationTextField resignFirstResponder];
     [editProfileTableView reloadData];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)saveButtonPressed

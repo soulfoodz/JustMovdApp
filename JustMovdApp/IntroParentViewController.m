@@ -49,7 +49,8 @@
 }
 
 
--(void)loadIntro{
+-(void)loadIntro
+{
     
     pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     
@@ -274,14 +275,20 @@
 
 - (void)saveDeviceTokenToCurrentInstallation
 {
-    if ([PFUser currentUser]) {
+    if ([PFUser currentUser])
+    {
         AppDelegate *appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
         [currentInstallation setDeviceTokenFromData:appDelegate.deviceTokenForPush];
         [currentInstallation deviceType];
         [currentInstallation setObject:[PFUser currentUser] forKey:@"owner"];
         [currentInstallation setBadge:0];
-        [currentInstallation saveInBackground];
+        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
+         {
+             if (error) {
+                 [currentInstallation saveEventually];
+             }
+         }];
     }
 }
 

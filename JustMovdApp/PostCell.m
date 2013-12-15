@@ -97,7 +97,8 @@
     
     // Set nameLabel
     nameLabel.font      = nameLabelFont;
-    nameLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:171.0/255.0 blue:40.0/255.0 alpha:1.0];
+    //nameLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:171.0/255.0 blue:40.0/255.0 alpha:1.0];
+    nameLabel.textColor = [UIColor blackColor];
     [self.backgroundView addSubview:nameLabel];
     
     // Set reportButton

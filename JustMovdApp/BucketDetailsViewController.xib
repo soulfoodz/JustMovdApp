@@ -18,6 +18,7 @@
                 <outlet property="mapViewContainer" destination="msF-ij-Cs3" id="5Th-Cr-KWv"/>
                 <outlet property="pageControl" destination="9St-9V-pdj" id="IJy-00-LZO"/>
                 <outlet property="quoteLabel" destination="VYG-rl-QvO" id="Sk5-dL-2rA"/>
+                <outlet property="refreshButton" destination="nHK-c4-uux" id="1kB-vn-Ze3"/>
                 <outlet property="streetLabel" destination="PEn-jm-nNR" id="0Gr-5c-dOH"/>
                 <outlet property="subtitleLabel" destination="C0d-UP-dAW" id="A1y-Cz-SVw"/>
                 <outlet property="titleLabel" destination="hkX-Co-pyb" id="dvd-Li-FYN"/>
@@ -32,6 +33,17 @@
                     <rect key="frame" x="0.0" y="0.0" width="360" height="620"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nHK-c4-uux">
+                            <rect key="frame" x="145" y="145" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" image="bucketdetails_button_refresh.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="refreshImages:" destination="-1" eventType="touchUpInside" id="gVV-Vn-0nM"/>
+                            </connections>
+                        </button>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="uSg-hy-s8g">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -115,8 +127,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </mapView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bucketdetail_icon_pin.png" id="fqI-gA-45l">
-                                            <rect key="frame" x="5" y="0.0" width="60" height="80"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bucketdetails_icon_mappin.png" id="fqI-gA-45l">
+                                            <rect key="frame" x="20" y="15" width="33" height="50"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -136,7 +148,8 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
     </objects>
     <resources>
-        <image name="bucketdetail_icon_pin.png" width="60" height="80"/>
+        <image name="bucketdetails_button_refresh.png" width="60" height="60"/>
+        <image name="bucketdetails_icon_mappin.png" width="66" height="100"/>
         <image name="chevron.png" width="8" height="12"/>
     </resources>
 </document>
