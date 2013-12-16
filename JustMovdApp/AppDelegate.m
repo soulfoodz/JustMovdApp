@@ -25,7 +25,8 @@
     
     
     //[TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
-    [TestFlight takeOff:@"09c38ccf-ba84-43e2-a9f3-db5d4e403fbd"];
+    //[TestFlight takeOff:@"09c38ccf-ba84-43e2-a9f3-db5d4e403fbd"];
+    [TestFlight takeOff:@"c251f572-853f-45b9-8d77-9779c0af92bd"];
     
     //Register for push Notification
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];

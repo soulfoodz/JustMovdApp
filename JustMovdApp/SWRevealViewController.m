@@ -681,7 +681,7 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
         [self setFrontViewControllerUserInteractionEnabled:NO];
     }
     else
-        self.frontViewController.view.userInteractionEnabled = YES;
+        [self setFrontViewControllerUserInteractionEnabled:YES];
     
     [self setFrontViewPosition:toogledFrontViewPosition animated:animated];
 }

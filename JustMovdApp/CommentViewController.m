@@ -78,21 +78,7 @@
                                             }];
 }
 
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 2;
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 0)
-        return 1;
-    else
-        return (self.commentsArray.count);
-}
-
+#pragma mark - TableView Delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -174,6 +160,62 @@
 }
 
 
+#pragma mark - Tableview DataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0)
+        return 1;
+    else
+        return (self.commentsArray.count);
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 1) return 30.0f;
+    else return 0;
+}
+
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section != 1) return nil;
+    else
+        return [self updateCommentCount];
+}
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) return nil;
+    
+    UIView *head;
+    
+    head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    head.layer.borderWidth = 0.5;
+    head.layer.borderColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor;
+    head.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
+    
+    CGRect rect                 = head.bounds;
+    commentsLabel               = [UILabel new];
+    commentsLabel.frame         = CGRectMake(rect.origin.x, rect.origin.y +8, rect.size.width -10, rect.size.height /2);
+    commentsLabel.font          = [UIFont fontWithName:@"Roboto-Regular" size:12.0];
+    commentsLabel.textColor     = [UIColor darkGrayColor];
+    commentsLabel.textAlignment = NSTextAlignmentCenter;
+    commentsLabel.text = [self tableView:self.tableView titleForHeaderInSection:1];
+    
+    [head addSubview:commentsLabel];
+    
+    return head;
+}
+
+
 - (NSString *)setTimeSincePostDate:(NSDate *)date
 {
     TTTTimeIntervalFormatter *timeFormatter;
@@ -203,6 +245,7 @@
     [self animateViewUp];
 }
 
+#pragma mark - TextView Methods
 
 -(void)textViewDidChange:(UITextView *)textView
 {
@@ -223,6 +266,7 @@
     return YES;
 }
 
+#pragma mark - View Animations
 
 - (void)animateViewUp
 {
@@ -303,6 +347,7 @@
             [self.post saveInBackground];
             [timeOutTimer invalidate];
             [self.commentsArray removeObject:newComment];
+            [ParseServices sendPushNotificationToUsersOfPost:self.post fromAuthor:[PFUser currentUser]];
         }
     }];
     
@@ -368,46 +413,6 @@
     int height = textRect.size.height + 1;
     
     return (float)height;
-}
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if (section == 1) return 30.0f;
-    else return 0;
-}
-
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section != 1) return nil;
-    else
-        return [self updateCommentCount];
-}
-
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) return nil;
-   
-    UIView *head;
-    
-    head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-    head.layer.borderWidth = 0.5;
-    head.layer.borderColor = [UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0].CGColor;
-    head.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0];
-
-    CGRect rect                 = head.bounds;
-    commentsLabel               = [UILabel new];
-    commentsLabel.frame         = CGRectMake(rect.origin.x, rect.origin.y +8, rect.size.width -10, rect.size.height /2);
-    commentsLabel.font          = [UIFont fontWithName:@"Roboto-Regular" size:12.0];
-    commentsLabel.textColor     = [UIColor darkGrayColor];
-    commentsLabel.textAlignment = NSTextAlignmentCenter;
-    commentsLabel.text = [self tableView:self.tableView titleForHeaderInSection:1];
-    
-    [head addSubview:commentsLabel];
-    
-    return head;
 }
 
 
@@ -493,6 +498,8 @@ UIAlertView *alert;
  [alert show];
 }
 
+
+#pragma mark - Segue
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
