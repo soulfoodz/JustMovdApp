@@ -1,5 +1,5 @@
 //
-//  UsersViewController.m
+//  UserProfileViewController.m
 //  JustMovdApp
 //
 //  Created by Kyle Mai on 10/23/13.

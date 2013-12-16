@@ -103,6 +103,11 @@ typedef enum
 // is usually added on the top bar of a front controller.
 - (UIPanGestureRecognizer*)panGestureRecognizer;
 
+
+// Adjust the userInteraction of the front VC
+- (void)setFrontViewControllerUserInteractionEnabled:(BOOL)isEnabled;
+
+
 // The following properties are provided for further customization, they are set to default values on initialization,
 // you should not generally have to set them
 

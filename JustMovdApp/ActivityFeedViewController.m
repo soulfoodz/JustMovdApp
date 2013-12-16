@@ -545,26 +545,14 @@
 
 - (void)setupTableViewHeader
 {
-    UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
-    
+    UIView *toolBar      = [[UIView alloc] initWithFrame:CGRectMake(0, 68, 320, 44)];
     UIButton *checkInBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 160, 44)];
-    UIButton *statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 160, 44)];
+    UIButton *statusBtn  = [[UIButton alloc] initWithFrame:CGRectMake(160, 0, 160, 44)];
     
-    checkInBtn.backgroundColor = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
-    [checkInBtn setBackgroundImage:[UIImage imageNamed:@"checkin"] forState:UIControlStateNormal];
-    statusBtn.backgroundColor  = [UIColor colorWithRed:80.0/255.0 green:187.0/255.0 blue:182.0/255.0 alpha:1.0];
-    [statusBtn setBackgroundImage:[UIImage imageNamed:@"status"] forState:UIControlStateNormal];
-    
-    [checkInBtn setTitle:@"Check in" forState:UIControlStateNormal];
-    //[checkInBtn setTitle:@"Check in" forState:UIControlStateSelected];
-    [checkInBtn setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-    [checkInBtn setTitleColor:[UIColor clearColor] forState:UIControlStateSelected];
+    [checkInBtn setBackgroundImage:[UIImage imageNamed:@"activityfeedvc_button_checkin.png"] forState:UIControlStateNormal];
+    [statusBtn setBackgroundImage:[UIImage imageNamed:@"activityfeedvc_button_status.png"] forState:UIControlStateNormal];
+ 
     [checkInBtn addTarget:self action:@selector(goToCheckIn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [statusBtn setTitle:@"Status" forState:UIControlStateNormal];
-    //[statusBtn setTitle:@"Status" forState:UIControlStateSelected];
-    [statusBtn setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-    [statusBtn setTitleColor:[UIColor clearColor] forState:UIControlStateSelected];
     [statusBtn addTarget:self action:@selector(goToStatusUpdate:) forControlEvents:UIControlEventTouchUpInside];
     
     [toolBar addSubview:checkInBtn];

@@ -47,7 +47,6 @@
     
     [self setupChatAccessoriesView];
     [self retrieveMessagesFromParse];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated

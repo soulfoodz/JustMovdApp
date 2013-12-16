@@ -671,15 +671,34 @@ static NSString * const SWSegueRightIdentifier = @"sw_right";
     [self _dispatchSetRightViewController:rightViewController];
 }
 
-
+// Set the FrontVC position
 - (void)revealToggleAnimated:(BOOL)animated
 {
     FrontViewPosition toogledFrontViewPosition = FrontViewPositionLeft;
     if (_frontViewPosition <= FrontViewPositionLeft)
+    {
         toogledFrontViewPosition = FrontViewPositionRight;
+        [self setFrontViewControllerUserInteractionEnabled:NO];
+    }
+    else
+        self.frontViewController.view.userInteractionEnabled = YES;
     
     [self setFrontViewPosition:toogledFrontViewPosition animated:animated];
 }
+
+// Adjust userInteraction for FrontVC
+- (void)setFrontViewControllerUserInteractionEnabled:(BOOL)isEnabled
+{
+    NSArray *array;
+    UIViewController *vc;
+    
+    array = self.frontViewController.childViewControllers;
+    vc = array[0];
+    
+    vc.view.userInteractionEnabled              = isEnabled;
+    vc.navigationItem.leftBarButtonItem.enabled = YES;
+}
+
 
 - (void)rightRevealToggleAnimated:(BOOL)animated
 {

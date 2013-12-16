@@ -41,13 +41,9 @@
     [super viewDidLoad];
 
     titlesForRows = @[@"profile", @"feed", @"around", @"messages", @"bucket list", @"empty", @"empty", @"empty", @"sign"];
-    self.tableView.scrollEnabled = NO;
-    
-    //self.tableView.backgroundView.backgroundColor = [UIColor colorWithRed:185.0/255.0 green:185.0/255.0 blue:185.0/255.0 alpha:1.0];
-    //self.tableView.backgroundColor = [UIColor colorWithRed:185.0/255.0 green:185.0/255.0 blue:185.0/255.0 alpha:1.0];
-    //self.tableView.backgroundView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
-    self.tableView.backgroundColor                = [UIColor whiteColor];//[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.scrollEnabled   = NO;
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserverForName:@"gotofeed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -106,6 +102,12 @@
         label.font = [UIFont fontWithName:@"Roboto-Regular" size:17.0];
         label.textColor = [UIColor darkGrayColor];
     }
+    if (indexPath.row >= 8){
+        UILabel *label = (UILabel *)[cell.contentView viewWithTag:1];
+        label.font = [UIFont fontWithName:@"Roboto-Regular" size:17.0];
+        label.textColor = [UIColor lightGrayColor];
+    }
+    
 
     return cell;
 }
@@ -128,6 +130,8 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[profileVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
+                
             } else if (indexPath.row == 1){
                 
                 UIStoryboard *feedSB = [UIStoryboard storyboardWithName:@"FeedStoryboard" bundle:nil];
@@ -136,12 +140,15 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[activityVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             } else if (indexPath.row == 2){
                 
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[dvc] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
+
                 
             } else if (indexPath.row == 3){
                 UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
@@ -150,6 +157,7 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[conversationVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             } else if (indexPath.row == 4){
                 UIStoryboard *bucketListSB = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
@@ -158,6 +166,7 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[bucketListVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             } else{
                 
@@ -167,6 +176,7 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[activityVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
+                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             }
         };
@@ -175,7 +185,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 9){
+    if (indexPath.row == 8){
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you sure you want to sign out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
         [alert show];

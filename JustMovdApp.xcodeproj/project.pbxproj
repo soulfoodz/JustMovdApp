@@ -52,6 +52,9 @@
 		529FAF9E185D2758006DE8D9 /* BucketDetailMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529FAF9C185D2758006DE8D9 /* BucketDetailMapViewController.m */; };
 		529FAF9F185D2758006DE8D9 /* BucketDetailMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529FAF9D185D2758006DE8D9 /* BucketDetailMapViewController.xib */; };
 		529FAFA3185D2F78006DE8D9 /* bucketdetailmapvc_annotationview_mappin.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FAFA2185D2F78006DE8D9 /* bucketdetailmapvc_annotationview_mappin.png */; };
+		529FAFA5185D32A0006DE8D9 /* activityfeedvc_icon_mappin.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FAFA4185D32A0006DE8D9 /* activityfeedvc_icon_mappin.png */; };
+		529FAFA7185E79E8006DE8D9 /* activityfeedvc_button_checkin.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FAFA6185E79E8006DE8D9 /* activityfeedvc_button_checkin.png */; };
+		529FAFA9185E7BCF006DE8D9 /* activityfeedvc_button_status.png in Resources */ = {isa = PBXBuildFile; fileRef = 529FAFA8185E7BCF006DE8D9 /* activityfeedvc_button_status.png */; };
 		52B9C40A18186ED500A875B7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40918186ED500A875B7 /* Parse.framework */; };
 		52B9C40C1818845C00A875B7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40B1818845C00A875B7 /* AudioToolbox.framework */; };
 		52B9C40E1818846900A875B7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B9C40D1818846900A875B7 /* CFNetwork.framework */; };
@@ -245,6 +248,9 @@
 		529FAF9C185D2758006DE8D9 /* BucketDetailMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketDetailMapViewController.m; sourceTree = "<group>"; };
 		529FAF9D185D2758006DE8D9 /* BucketDetailMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BucketDetailMapViewController.xib; sourceTree = "<group>"; };
 		529FAFA2185D2F78006DE8D9 /* bucketdetailmapvc_annotationview_mappin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetailmapvc_annotationview_mappin.png; sourceTree = "<group>"; };
+		529FAFA4185D32A0006DE8D9 /* activityfeedvc_icon_mappin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activityfeedvc_icon_mappin.png; sourceTree = "<group>"; };
+		529FAFA6185E79E8006DE8D9 /* activityfeedvc_button_checkin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activityfeedvc_button_checkin.png; sourceTree = "<group>"; };
+		529FAFA8185E7BCF006DE8D9 /* activityfeedvc_button_status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = activityfeedvc_button_status.png; sourceTree = "<group>"; };
 		52B9C40918186ED500A875B7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		52B9C40B1818845C00A875B7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		52B9C40D1818846900A875B7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -522,6 +528,8 @@
 		529FAF7A185A905E006DE8D9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				529FAFA6185E79E8006DE8D9 /* activityfeedvc_button_checkin.png */,
+				529FAFA8185E7BCF006DE8D9 /* activityfeedvc_button_status.png */,
 				529FAFA2185D2F78006DE8D9 /* bucketdetailmapvc_annotationview_mappin.png */,
 				529FAF8B185BC1EA006DE8D9 /* sidebarvc_icon_bucketlist_teal.png */,
 				529FAF99185D1676006DE8D9 /* bucketdetails_button_refresh.png */,
@@ -577,6 +585,7 @@
 				5A50BD02182C3133002DD7AD /* walkthrough_sarah@2x.png */,
 				5A4F5D121821666600CA6F17 /* weightlifting_circle.png */,
 				E5DB80C418286F3500C0DA0C /* weights@2x.png */,
+				529FAFA4185D32A0006DE8D9 /* activityfeedvc_icon_mappin.png */,
 				E5DB80C518286F3500C0DA0C /* yoga@2x.png */,
 				5A4F5D141821666600CA6F17 /* yoga_circle.png */,
 			);
@@ -893,6 +902,7 @@
 				529FAF77185A598B006DE8D9 /* sidebarvc_icon_bucketlist_dark.png in Resources */,
 				E5A942BA182B8E9300064BD0 /* newmessageindicator@2x.png in Resources */,
 				5AC9DC2D182AC9CC0051EF9A /* Main.storyboard in Resources */,
+				529FAFA9185E7BCF006DE8D9 /* activityfeedvc_button_status.png in Resources */,
 				529FAFA3185D2F78006DE8D9 /* bucketdetailmapvc_annotationview_mappin.png in Resources */,
 				5A4F5D281821666600CA6F17 /* Roboto-Medium.ttf in Resources */,
 				5A4F5D341821666600CA6F17 /* yoga_circle.png in Resources */,
@@ -911,6 +921,7 @@
 				529FAF92185BC2C6006DE8D9 /* sidebarvc_icon_recentactivity_teal.png in Resources */,
 				5A4AD427182C1A61001CBDE6 /* menu@2x.png in Resources */,
 				5A4F5D271821666600CA6F17 /* Roboto-Light.ttf in Resources */,
+				529FAFA7185E79E8006DE8D9 /* activityfeedvc_button_checkin.png in Resources */,
 				5A4F5D321821666600CA6F17 /* weightlifting_circle.png in Resources */,
 				52ED7EB21829F8BC00BFD440 /* activityfeed_checkin_annotation_resizable.png in Resources */,
 				529FAF73185A588E006DE8D9 /* Questionnaire.storyboard in Resources */,
@@ -936,6 +947,7 @@
 				523D54D51857DA86009A8F7B /* walkthrough_havefun@2x.png in Resources */,
 				5AC9DC20182AC7F90051EF9A /* KyleMai.storyboard in Resources */,
 				E5DB80CD18286F3500C0DA0C /* yoga@2x.png in Resources */,
+				529FAFA5185D32A0006DE8D9 /* activityfeedvc_icon_mappin.png in Resources */,
 				529FAF98185D0304006DE8D9 /* bucketdetails_icon_mappin.png in Resources */,
 				5A2F2B23182C00B30050A227 /* background3_blur@2x.png in Resources */,
 				523D54D41857DA86009A8F7B /* walkthrough_atx@2x.png in Resources */,

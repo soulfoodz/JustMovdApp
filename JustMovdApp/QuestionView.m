@@ -76,7 +76,7 @@
         
         [self addSubview:button2];
         
-        self.layer.cornerRadius = 5;
+        self.layer.cornerRadius = 3.0f;
         self.layer.masksToBounds = YES;
         
         
@@ -94,7 +94,7 @@
         
         self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.90];
         
-        self.layer.cornerRadius = 5;
+        self.layer.cornerRadius = 3.0f;
         self.layer.masksToBounds = YES;
 
         UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 240, 30)];
