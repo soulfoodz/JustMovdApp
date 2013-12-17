@@ -94,9 +94,9 @@
                                                                     cornerRadius:radiusFloat].CGPath;
     _creatorAvatar.layer.shouldRasterize = YES;
     _creatorAvatar.layer.rasterizationScale = 2.0f;
+    
+    _isCheckedOverlay.hidden = YES;
 }
-
-
 
 
 

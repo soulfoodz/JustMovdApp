@@ -15,6 +15,8 @@
 		5233223818499348003879C5 /* ParseServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223718499348003879C5 /* ParseServices.m */; };
 		5233223B184D26D5003879C5 /* FoursquareServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223A184D26D5003879C5 /* FoursquareServices.m */; };
 		5233223F184D40D4003879C5 /* FoursquareVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223E184D40D4003879C5 /* FoursquareVenue.m */; };
+		5234110218609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5234110118609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png */; };
+		523411051860A02E00F6FA5A /* BucketListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523411041860A02E00F6FA5A /* BucketListHeaderView.m */; };
 		523D5483184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 523D5481184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png */; };
 		523D5484184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 523D5482184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png */; };
 		523D548A18539245009A8F7B /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523D548818539245009A8F7B /* UserProfileViewController.m */; };
@@ -203,6 +205,9 @@
 		5233223A184D26D5003879C5 /* FoursquareServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareServices.m; sourceTree = "<group>"; };
 		5233223D184D40D4003879C5 /* FoursquareVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoursquareVenue.h; sourceTree = "<group>"; };
 		5233223E184D40D4003879C5 /* FoursquareVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoursquareVenue.m; sourceTree = "<group>"; };
+		5234110118609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketcell_imageview_ischeckedoverlay.png; sourceTree = "<group>"; };
+		523411031860A02E00F6FA5A /* BucketListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListHeaderView.h; sourceTree = "<group>"; };
+		523411041860A02E00F6FA5A /* BucketListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListHeaderView.m; sourceTree = "<group>"; };
 		523D5481184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetailviewcontroller_checkbutton_selected.png; sourceTree = "<group>"; };
 		523D5482184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetailviewcontroller_checkbutton_normal.png; sourceTree = "<group>"; };
 		523D548818539245009A8F7B /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
@@ -494,6 +499,8 @@
 				529FAF52185985BD006DE8D9 /* BucketDetailsViewController.h */,
 				529FAF53185985BD006DE8D9 /* BucketDetailsViewController.m */,
 				5233223018498DB7003879C5 /* BucketCell.h */,
+				523411031860A02E00F6FA5A /* BucketListHeaderView.h */,
+				523411041860A02E00F6FA5A /* BucketListHeaderView.m */,
 				5233223118498DB7003879C5 /* BucketCell.m */,
 				52332233184991A6003879C5 /* BucketListCollectionViewController.h */,
 				52332234184991A6003879C5 /* BucketListCollectionViewController.m */,
@@ -528,6 +535,7 @@
 		529FAF7A185A905E006DE8D9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				5234110118609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png */,
 				529FAFA6185E79E8006DE8D9 /* activityfeedvc_button_checkin.png */,
 				529FAFA8185E7BCF006DE8D9 /* activityfeedvc_button_status.png */,
 				529FAFA2185D2F78006DE8D9 /* bucketdetailmapvc_annotationview_mappin.png */,
@@ -904,6 +912,7 @@
 				5AC9DC2D182AC9CC0051EF9A /* Main.storyboard in Resources */,
 				529FAFA9185E7BCF006DE8D9 /* activityfeedvc_button_status.png in Resources */,
 				529FAFA3185D2F78006DE8D9 /* bucketdetailmapvc_annotationview_mappin.png in Resources */,
+				5234110218609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png in Resources */,
 				5A4F5D281821666600CA6F17 /* Roboto-Medium.ttf in Resources */,
 				5A4F5D341821666600CA6F17 /* yoga_circle.png in Resources */,
 				5A4F5D291821666600CA6F17 /* Roboto-Regular.ttf in Resources */,
@@ -1019,6 +1028,7 @@
 				5A2F2B03182ACDE40050A227 /* TTTTimeIntervalFormatter.m in Sources */,
 				5A2F2B04182ACDE40050A227 /* UIImage+StackBlur.m in Sources */,
 				5A2F2B05182ACDE40050A227 /* UpdateCellHeader.m in Sources */,
+				523411051860A02E00F6FA5A /* BucketListHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

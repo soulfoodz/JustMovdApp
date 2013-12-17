@@ -12,13 +12,22 @@
 
 typedef void (^updateCompletedBucketsBlock)(PFObject *bucket, NSString *command);
 
+@protocol BucketCompletionUpdateDelegate <NSObject>
+
+- (void)addCheckForBucket:(PFObject *)bucket atIndexPath:(NSIndexPath *)indexPath;
+- (void)removeCheckForBucket:(PFObject *)bucket atIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface BucketDetailsViewController : UIViewController
 
-@property (nonatomic) BOOL isChecked;
+@property (weak, nonatomic) id <BucketCompletionUpdateDelegate> delegate;
 @property (strong, nonatomic) FoursquareVenue *venue;
 @property (strong, nonatomic) PFObject        *bucket;
 @property (strong, nonatomic) UIImage         *initialImage;
-@property (strong, nonatomic) updateCompletedBucketsBlock updateBlock;
+@property (strong, nonatomic) NSIndexPath     *ip;
+@property (nonatomic) BOOL isChecked;
+
 
 - (IBAction)checkButtonTapped:(id)sender;
 - (CGFloat)sizeForString:(NSString *)string withFont:(UIFont *)font;

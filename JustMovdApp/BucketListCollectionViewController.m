@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "ParseServices.h"
 #import "BucketCell.h"
+#import "BucketListHeaderView.h"
 #import "PFImageView+ImageHandler.h"
 #import "BucketDetailsViewController.h"
 #import "FoursquareVenue.h"
@@ -19,11 +20,14 @@
 
 @interface BucketListCollectionViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
+@property (weak, nonatomic) id <BucketCompletionUpdateDelegate> delegate;
 @property (strong, nonatomic) NSMutableArray *bucketList;
 @property (strong, nonatomic) NSMutableArray *completedBuckets;
 @property (strong, nonatomic) PFGeoPoint     *userLocation;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet BucketListHeaderView *header;
+
 
 @end
 
@@ -97,16 +101,20 @@
 }
 
 
-//-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-//{
-//    FCFlickrCollectionHeaderView *header;
-//    
-//    header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-//                                                withReuseIdentifier:@"flickerHeader"
-//                                                       forIndexPath:indexPath];
-//    
-//    return header;
-//}
+-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    BucketListHeaderView *header;
+    
+    header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                                                withReuseIdentifier:@"BucketListHeader"
+                                                       forIndexPath:indexPath];
+    
+    [header styleView];
+    
+    header.completedLabel.text = [NSString stringWithFormat:@"%d/%d", self.completedBuckets.count, self.bucketList.count];
+    
+    return header;
+}
 
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -122,8 +130,11 @@
     
     bucket         = self.bucketList[indexPath.row];
     creator        = bucket[@"creator"];
-    cell.isChecked = [self checkForCompletionOfBucket:bucket];
     milesApart     = [self usersDistanceToBucketLocation:bucket[@"location"]];
+    cell.isChecked = [self checkForCompletionOfBucket:bucket];
+    
+    if (cell.isChecked)
+        cell.isCheckedOverlay.hidden = NO;
     
     cell.titleLabel.text     = bucket[@"title"];
     cell.categoryLabel.text  = bucket[@"category"];
@@ -145,11 +156,7 @@
     PFObject                    *selectedBucket;
     BucketDetailsViewController *dvc;
     FoursquareVenue             *newVenue;
-    __weak NSMutableArray       *array;
-    __weak UICollectionView     *cv;
     
-    cv               = self.collectionView;
-    array            = self.completedBuckets;
     cell             = (BucketCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     dvc              = [[BucketDetailsViewController alloc] initWithNibName:nil bundle:nil];
     selectedBucket   = self.bucketList[indexPath.row];
@@ -159,19 +166,43 @@
     dvc.bucket       = selectedBucket;
     dvc.initialImage = cell.mainImage.image;
     dvc.isChecked    = cell.isChecked;
-    dvc.updateBlock  = ^(PFObject *bucket, NSString *command)   // updates this collectionview based on whether the detail view
-                                                                // is checked or unchecked when popped
-                        {
-                            if ([command isEqualToString:@"add"])
-                                [array addObject:bucket];
-                            
-                            if([command isEqualToString:@"remove"])
-                                [array removeObject:bucket];
-                            
-                           [cv reloadItemsAtIndexPaths:@[indexPath]];
-                        };
+    dvc.delegate     = self;
+    dvc.ip           = indexPath;
     
     [self.navigationController pushViewController:dvc animated:YES];
+}
+
+
+- (void)updateCollectionHeader
+{
+    BucketListHeaderView *header;
+    
+    header = (BucketListHeaderView *)[self.collectionView viewWithTag:1];
+    
+    header.completedLabel.text = [NSString stringWithFormat:@"%d/%d", self.completedBuckets.count, self.bucketList.count];
+}
+
+
+- (void)addCheckForBucket:(PFObject *)bucket atIndexPath:(NSIndexPath *)indexPath
+{
+    [self.completedBuckets addObject:bucket];
+    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    [self updateCollectionHeader];
+}
+
+
+- (void)removeCheckForBucket:(PFObject *)bucket atIndexPath:(NSIndexPath *)indexPath
+{
+    // Update the collection view
+    for (PFObject *object in self.completedBuckets)
+    {
+        if ([object[@"title"] isEqualToString:bucket[@"title"]])
+            [self.completedBuckets removeObject:object];
+    }
+    [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    
+    // Update the header completed label
+    [self updateCollectionHeader];
 }
 
 

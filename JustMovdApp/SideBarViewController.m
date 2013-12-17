@@ -40,7 +40,7 @@
 {
     [super viewDidLoad];
 
-    titlesForRows = @[@"profile", @"feed", @"around", @"messages", @"bucket list", @"empty", @"empty", @"empty", @"sign"];
+    titlesForRows = @[@"profile", @"feed", @"around", @"messages", @"bucket list", @"empty", @"empty", @"sign"];
     self.tableView.scrollEnabled   = NO;
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
@@ -102,12 +102,12 @@
         nameLabel.text = [PFUser currentUser][@"firstName"];
     }
     
-    if (indexPath.row >= 1){
+    if (indexPath.row >= 1 && indexPath.row < 7){
         UILabel *label = (UILabel *)[cell.contentView viewWithTag:1];
         label.font = [UIFont fontWithName:@"Roboto-Regular" size:17.0];
         label.textColor = [UIColor darkGrayColor];
     }
-    if (indexPath.row >= 8){
+    if (indexPath.row == 7){
         UILabel *label = (UILabel *)[cell.contentView viewWithTag:1];
         label.font = [UIFont fontWithName:@"Roboto-Regular" size:17.0];
         label.textColor = [UIColor lightGrayColor];
@@ -183,13 +183,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 8){
-        
+    if (indexPath.row == 7)
+    {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you sure you want to sign out?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
         [alert show];
-        
-       // [self logout];
-        
     }
     
     

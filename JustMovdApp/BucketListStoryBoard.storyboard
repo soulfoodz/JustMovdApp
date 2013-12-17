@@ -21,13 +21,13 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="f3s-P3-VPf">
                                     <size key="itemSize" width="300" height="162"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="LX9-Rn-Sm4" customClass="BucketCell">
-                                        <rect key="frame" x="10" y="64" width="300" height="162"/>
+                                        <rect key="frame" x="10" y="114" width="300" height="162"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="162"/>
@@ -46,6 +46,10 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="296" height="100"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </imageView>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bucketcell_imageview_ischeckedoverlay.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bk5-jb-dX6">
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="100"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEz-Z9-ZvR" userLabel="titleLabel">
                                                             <rect key="frame" x="6" y="103" width="200" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -54,7 +58,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4d-0P-2wv" userLabel="distanceLabel">
-                                                            <rect key="frame" x="248" y="75" width="37" height="21"/>
+                                                            <rect key="frame" x="245" y="75" width="40" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -88,6 +92,7 @@
                                             <outlet property="creatorAvatar" destination="u5w-cb-qUU" id="0kr-EE-0fG"/>
                                             <outlet property="creatorLabel" destination="2jk-oA-gGZ" id="IS6-Ig-6Aj"/>
                                             <outlet property="distanceLabel" destination="d4d-0P-2wv" id="EXa-V4-e2X"/>
+                                            <outlet property="isCheckedOverlay" destination="Bk5-jb-dX6" id="HNY-oi-GXJ"/>
                                             <outlet property="mainImage" destination="6uE-pX-2Hp" id="67k-D5-79h"/>
                                             <outlet property="mainView" destination="cEV-Ha-X9C" id="Obh-iQ-HoN"/>
                                             <outlet property="shadowView" destination="hs4-4x-KJx" id="Zne-hc-DBL"/>
@@ -95,6 +100,37 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="center" reuseIdentifier="BucketListHeader" id="jIs-rx-fGY" customClass="BucketListHeaderView">
+                                    <rect key="frame" x="0.0" y="64" width="320" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ssw-ay-o61">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Completed:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3y-ae-tae">
+                                                    <rect key="frame" x="83" y="14" width="95" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="59" translatesAutoresizingMaskIntoConstraints="NO" id="EUw-ji-Hh6">
+                                                    <rect key="frame" x="179" y="14" width="59" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
+                                    <connections>
+                                        <outlet property="completedLabel" destination="EUw-ji-Hh6" id="aqI-rH-ETX"/>
+                                        <outlet property="mainView" destination="ssw-ay-o61" id="j7m-jl-rVk"/>
+                                        <outlet property="titleLabel" destination="p3y-ae-tae" id="wnH-r7-Oiy"/>
+                                    </connections>
+                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="A7y-cP-ccr" id="I1J-8W-RSb"/>
                                     <outlet property="delegate" destination="A7y-cP-ccr" id="ThA-rU-MIc"/>
@@ -118,6 +154,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bucketcell_imageview_ischeckedoverlay.png" width="600" height="200"/>
         <image name="menu.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

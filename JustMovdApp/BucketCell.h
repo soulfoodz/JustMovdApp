@@ -17,9 +17,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *isCheckedOverlay;
 
 @property (nonatomic) BOOL isChecked;
 
 - (void)resetContents;
+
 
 @end

@@ -495,12 +495,6 @@ static NSString *removeCheckString = @"remove";
     // BucketDetail, which is causing a crash. Setting the delegates to nil forces the
     // collectionView to call it's own scrollview delegate
     
-    NSArray *viewControllers;
-    __weak PFObject *buckObj;
-    
-    viewControllers = self.navigationController.viewControllers;
-    buckObj = self.bucket;
-    
     self.imagesScroller.delegate = nil;
     self.mainScroller.delegate   = nil;
 
@@ -508,14 +502,14 @@ static NSString *removeCheckString = @"remove";
     
     if (self.isChecked == NO && self.wasChecked == YES)
     {
+        [self.delegate removeCheckForBucket:self.bucket atIndexPath:self.ip];
         [[PFUser currentUser] removeObject:self.bucket forKey:@"buckets"];
-        self.updateBlock(buckObj, removeCheckString);
     }
     
     if (self.isChecked == YES && self.wasChecked == NO)
     {
+        [self.delegate addCheckForBucket:self.bucket atIndexPath:self.ip];
         [[PFUser currentUser] addUniqueObject:self.bucket forKey:@"buckets"];
-        self.updateBlock(buckObj, addCheckString);
     }
     
     [ParseServices saveUser:[PFUser currentUser]];

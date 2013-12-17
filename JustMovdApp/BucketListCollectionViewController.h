@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SWRevealViewController.h"
+#import "BucketDetailsViewController.h"
 
-@interface BucketListCollectionViewController : UIViewController <SWRevealViewControllerDelegate>
+@interface BucketListCollectionViewController : UIViewController <SWRevealViewControllerDelegate, BucketCompletionUpdateDelegate>
 
 
 @end
