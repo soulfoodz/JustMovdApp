@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SWRevealViewController.h"
 
-@interface BucketListCollectionViewController : UICollectionViewController
-
-@property (strong, nonatomic) SWRevealViewController *revealViewController;
+@interface BucketListCollectionViewController : UIViewController <SWRevealViewControllerDelegate>
 
 
 @end

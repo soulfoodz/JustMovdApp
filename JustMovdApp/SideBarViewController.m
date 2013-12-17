@@ -49,7 +49,12 @@
     [nc addObserverForName:@"gotofeed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self performSegueWithIdentifier:@"feed" sender:self];
     }];
-    
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 }
 
 
@@ -130,7 +135,6 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[profileVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             } else if (indexPath.row == 1){
                 
@@ -140,16 +144,13 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[activityVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             } else if (indexPath.row == 2){
                 
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[dvc] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
 
-                
             } else if (indexPath.row == 3){
                 UIStoryboard *messagesSB = [UIStoryboard storyboardWithName:@"KyleMai" bundle:nil];
                 OpenConversationViewController *conversationVC = [messagesSB instantiateViewControllerWithIdentifier:@"conversation"];
@@ -157,16 +158,14 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[conversationVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             } else if (indexPath.row == 4){
                 UIStoryboard *bucketListSB = [UIStoryboard storyboardWithName:@"BucketListStoryBoard" bundle:nil];
-                BucketListCollectionViewController *bucketListVC = [bucketListSB instantiateViewControllerWithIdentifier:@"bucketList"];
+                BucketListCollectionViewController *bucketListVC = [bucketListSB instantiateInitialViewController];// instantiateViewControllerWithIdentifier:@"bucketList"];
                 
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[bucketListVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             } else{
                 
@@ -176,7 +175,6 @@
                 UINavigationController* navController = (UINavigationController*)self.revealViewController.frontViewController;
                 [navController setViewControllers: @[activityVC] animated: NO ];
                 [self.revealViewController setFrontViewPosition: FrontViewPositionLeft animated: YES];
-                [self.revealViewController setFrontViewControllerUserInteractionEnabled:YES];
                 
             }
         };

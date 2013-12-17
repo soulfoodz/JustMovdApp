@@ -10,10 +10,11 @@
 #import <Parse/Parse.h>
 #import "PostCellDelegate.h"
 #import "AddNewPostToActivityFeedDelegate.h"
+#import "SWRevealViewController.h"
 
 @class UpdateCellHeader;
 
-@interface ActivityFeedViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PostCellDelegate, AddNewPostToActivityFeedDelegate>
+@interface ActivityFeedViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PostCellDelegate, AddNewPostToActivityFeedDelegate, SWRevealViewControllerDelegate>
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sideBarButton;

@@ -19,7 +19,6 @@
 #import "MessagingViewController.h"
 #import "ProfileInterestCell.h"
 #import "SpinnerViewController.h"
-#import "SWRevealViewController.h"
 #import "PostCell.h"
 #import "PFImageView+ImageHandler.h"
 #import "CommentViewController.h"
@@ -80,13 +79,19 @@ typedef enum {
     [self loadPostsByUser];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.revealViewController.delegate = self;
+}
+
 - (void)intializeNeededStuff
 {
     //spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
     
     sideBarButton.target = self.revealViewController;
     sideBarButton.action = @selector(revealToggle:);
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     
     timeFormatter = [[TTTTimeIntervalFormatter alloc] init];
     headerLabelViewSection2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
@@ -562,6 +567,19 @@ typedef enum {
     }
 }
 
+#pragma mark - SWRevealVCDelegate Methods
+
+- (void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position
+{
+    if (position == FrontViewPositionLeft)
+    {
+        self.userProfileTableView.userInteractionEnabled = YES;
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
+    if (position == FrontViewPositionRight)
+        self.userProfileTableView.userInteractionEnabled = NO;
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {

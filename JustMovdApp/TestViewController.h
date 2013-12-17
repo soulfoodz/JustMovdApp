@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
 
-@interface TestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface TestViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, SWRevealViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 

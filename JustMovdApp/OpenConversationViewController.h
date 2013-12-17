@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
 
-@interface OpenConversationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface OpenConversationViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, SWRevealViewControllerDelegate>
 
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *openConversationTableView;

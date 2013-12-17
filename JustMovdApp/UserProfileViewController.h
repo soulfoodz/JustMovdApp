@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PostCellDelegate.h"
 #import "EditProfileDelegate.h"
+#import "SWRevealViewController.h"
 
-@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, PostCellDelegate, EditProfileDelegate>
+@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, PostCellDelegate, EditProfileDelegate, SWRevealViewControllerDelegate>
 
 //Outlets
 @property (weak, nonatomic) IBOutlet UITableView *userProfileTableView;

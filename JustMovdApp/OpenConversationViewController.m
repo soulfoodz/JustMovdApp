@@ -11,7 +11,6 @@
 #import "MessagingViewController.h"
 #import "TTTTimeIntervalFormatter.h"
 #import "SpinnerViewController.h"
-#import "SWRevealViewController.h"
 #import "ParseServices.h"
 
 @interface OpenConversationViewController ()
@@ -39,8 +38,6 @@
     
     [self addSideBarMenu];
     
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
     [ParseServices queryForProfilePictureOfUser:[PFUser currentUser] completionBlock:^(NSArray *results, BOOL success) {
         if (success) {
             currentUserProfilePicture = results[0];
@@ -49,7 +46,6 @@
     
     [super viewDidLoad];
     [self initializeStuffing];
-    
 }
 
 - (void)addSideBarMenu
@@ -70,6 +66,7 @@
 {
     [self refreshConversation];
     [self removeApplicationBadge];
+    self.revealViewController.delegate = self;
 }
 
 - (void)removeApplicationBadge
@@ -97,6 +94,7 @@
 - (void)initializeStuffing
 {
     [self.navigationItem setRightBarButtonItem:self.editButtonItem];
+    
     spinner = [[SpinnerViewController alloc] initWithDefaultSizeWithView:self.view];
     noConversationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     noConversationLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:20.0];
@@ -301,6 +299,22 @@
         [tableView endUpdates];
     }
 }
+
+
+#pragma mark - SWRevealVCDelegate Methods
+
+- (void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position
+{
+    if (position == FrontViewPositionLeft)
+    {
+        self.openConversationTableView.userInteractionEnabled = YES;
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
+    if (position == FrontViewPositionRight)
+        self.openConversationTableView.userInteractionEnabled = NO;
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {

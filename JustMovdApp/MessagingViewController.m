@@ -11,6 +11,7 @@
 #import "MessageBubbleLeftCell.h"
 #import "MessageBubbleRightCell.h"
 #import "ParseServices.h"
+#import "SWRevealViewController.h"
 
 @interface MessagingViewController ()
 {
@@ -480,5 +481,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewMessageNotification" object:nil];
 }
+
 
 @end

@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSMutableArray *completedBuckets;
 @property (strong, nonatomic) PFGeoPoint     *userLocation;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *menuButton;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
 
@@ -32,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.userLocation                   = [[PFUser currentUser] objectForKey:@"geoPoint"];
     self.collectionView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
 
@@ -41,6 +42,14 @@
     
     self.menuButton.target = self.revealViewController;
     self.menuButton.action = @selector(revealToggle:);
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.revealViewController.delegate = self;
 }
 
 
@@ -216,6 +225,20 @@
 - (double)usersDistanceToBucketLocation:(PFGeoPoint *)location
 {
     return (double)[self.userLocation distanceInMilesTo:location];
+}
+
+#pragma mark - SWRevealVCDelegate Methods
+
+- (void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position
+{
+    if (position == FrontViewPositionLeft)
+    {
+        self.collectionView.userInteractionEnabled = YES;
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
+    if (position == FrontViewPositionRight)
+        self.collectionView.userInteractionEnabled = NO;
 }
 
 

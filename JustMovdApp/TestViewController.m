@@ -9,7 +9,6 @@
 #import "TestViewController.h"
 #import <Parse/Parse.h>
 #import "IntroParentViewController.h"
-#import "SWRevealViewController.h"
 #import "MatchTableViewCell.h"
 #import <CoreLocation/CoreLocation.h>
 #import "UserProfileViewController.h"
@@ -30,7 +29,6 @@
 
     SpinnerViewController *spinner;
     CLLocationManager *locationManager;
-    
 }
 
 @end
@@ -63,20 +61,20 @@
     
     sideBarButton.target = self.revealViewController;
     sideBarButton.action = @selector(revealToggle:);
-    
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    
+        
     self.view.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
     
     myTableView.backgroundColor = [UIColor clearColor];
     myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    
-    
-
-
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.revealViewController.delegate = self;
+}
 
 
 - (void)findUsersWithinMiles:(double)miles
@@ -387,6 +385,20 @@
     }
 }
 
+
+#pragma mark - SWRevealVCDelegate Methods
+
+- (void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position
+{
+    if (position == FrontViewPositionLeft)
+    {
+        self.myTableView.userInteractionEnabled = YES;
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
+    if (position == FrontViewPositionRight)
+        self.myTableView.userInteractionEnabled = NO;
+}
 
 
 

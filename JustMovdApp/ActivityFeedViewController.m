@@ -22,6 +22,8 @@
 
 #define kLoadingCellTag 7
 #define CONTENT_FONT [UIFont fontWithName:@"Roboto-Regular" size:15.0]
+#define checkInBtnTag 1
+#define statusBtnTag 2
 
 @interface ActivityFeedViewController ()
 
@@ -49,7 +51,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
 }
 
 
@@ -70,10 +71,10 @@
         
         self.tableView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
         
+        self.revealViewController.delegate = self;
+
         sideBarButton.target = self.revealViewController;
         sideBarButton.action = @selector(revealToggle:);
-        
-        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
         
         self.isAll = NO;
         
@@ -83,7 +84,6 @@
         
         [self setupTableViewHeader];
         self.refreshControl = refresh;
-        
     }
 }
 
@@ -464,17 +464,32 @@
 }
 
 
+#pragma mark - SWRevealVCDelegate Methods
+
+- (void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position
+{
+    if (position == FrontViewPositionLeft)
+    {
+        self.tableView.userInteractionEnabled = YES;
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
+    if (position == FrontViewPositionRight)
+        self.tableView.userInteractionEnabled = NO;
+}
+
+
 #pragma  mark - Segues
 
 - (void)goToStatusUpdate:(UIButton *)sender
 {
-    [self performSegueWithIdentifier:@"SegueToAddNewStatusUpdate" sender:sender];
+    [self performSegueWithIdentifier:@"SegueToAddNewStatusUpdate" sender:@"statusUpdate"];
 }
 
 
 - (void)goToCheckIn:(UIButton *)sender
 {
-    [self performSegueWithIdentifier:@"SegueToAddNewStatusUpdate" sender:sender];
+    [self performSegueWithIdentifier:@"SegueToAddNewStatusUpdate" sender:@"checkIn"];
 }
 
 
@@ -511,15 +526,10 @@
             [self queryForTable];
         };
         
-        if ([sender isKindOfClass:[UIButton class]])
-        {
-            UIButton *button = sender;
-            if ([button.titleLabel.text isEqualToString:@"Check in"])
-            {
-                statusVC.presentingCheckIn = YES;
-            }
-            else statusVC.presentingCheckIn = NO;
-        }
+        if ([sender isEqualToString:@"checkIn"])
+            statusVC.presentingCheckIn = YES;
+        else
+            statusVC.presentingCheckIn = NO;
     }
     
     if ([segue.identifier isEqualToString:@"SegueToCheckInDetailViewController"])
@@ -551,7 +561,7 @@
     
     [checkInBtn setBackgroundImage:[UIImage imageNamed:@"activityfeedvc_button_checkin.png"] forState:UIControlStateNormal];
     [statusBtn setBackgroundImage:[UIImage imageNamed:@"activityfeedvc_button_status.png"] forState:UIControlStateNormal];
- 
+    
     [checkInBtn addTarget:self action:@selector(goToCheckIn:) forControlEvents:UIControlEventTouchUpInside];
     [statusBtn addTarget:self action:@selector(goToStatusUpdate:) forControlEvents:UIControlEventTouchUpInside];
     

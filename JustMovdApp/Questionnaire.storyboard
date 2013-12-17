@@ -269,11 +269,6 @@
         <scene sceneID="eo8-lr-ZWb">
             <objects>
                 <viewController id="D0O-M5-Cuz" customClass="SWRevealViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tNc-Gj-ccF">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
                     <connections>
                         <segue destination="rVT-bB-le7" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegue" id="H8I-UF-GOR"/>
                         <segue destination="4Ji-G1-zaV" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegue" id="5kP-TG-Bhc"/>
