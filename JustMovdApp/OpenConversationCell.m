@@ -29,17 +29,17 @@
         
         profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 10, 190, 20)];
-        timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 25, 190, 20)];
+        timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 28, 190, 20)];
         detailLabel = [[UILabel alloc] init];
         detailLabel.numberOfLines = 2;
         [detailLabel setLineBreakMode:NSLineBreakByWordWrapping];
         
         newBadgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285, 1, 30, 15)];
-        newBadgeLabel.backgroundColor = [UIColor orangeColor];
+        newBadgeLabel.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
         newBadgeLabel.layer.cornerRadius = 3;
         newBadgeLabel.textAlignment = NSTextAlignmentCenter;
         newBadgeLabel.text = @"New";
-        newBadgeLabel.textColor = [UIColor whiteColor];
+        newBadgeLabel.textColor = [UIColor colorWithRed:249.0/255.0 green:209.0/255.0 blue:70.0/255.0 alpha:1.0];
         newBadgeLabel.font = [UIFont fontWithName:@"Roboto-Light" size:11.0];
         [backgroundView addSubview:newBadgeLabel];
         [newBadgeLabel setHidden:YES];
@@ -63,14 +63,14 @@
     [backgroundView addSubview:profilePicture];
     
     nameLabel.font = [UIFont fontWithName:@"Roboto-Medium" size:17.0];
-    nameLabel.textColor = [UIColor orangeColor];
+    nameLabel.textColor = [UIColor blackColor];
     [backgroundView addSubview:nameLabel];
     
     timeLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:11.0];
     timeLabel.textColor = [UIColor lightGrayColor];
     [backgroundView addSubview:timeLabel];
     
-    [detailLabel setFrame:CGRectMake(80, 35, 200, 40)];
+    [detailLabel setFrame:CGRectMake(80, 43, 220, 38)];
     detailLabel.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
     detailLabel.textColor = [UIColor darkGrayColor];
     detailLabel.numberOfLines = 2;

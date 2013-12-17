@@ -40,6 +40,7 @@
         chatContent.font = [UIFont fontWithName:@"Roboto-Regular" size:13.0];
         chatContent.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
         chatContent.layer.cornerRadius = 7;
+        chatContent.textContainerInset = UIEdgeInsetsMake(8, 4, 8, 4);
         [chatContent setDataDetectorTypes:UIDataDetectorTypeLink];
         [chatContent setDataDetectorTypes:UIDataDetectorTypePhoneNumber];
         [self addSubview:chatContent];

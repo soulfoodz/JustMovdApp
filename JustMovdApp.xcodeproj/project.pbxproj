@@ -17,6 +17,7 @@
 		5233223F184D40D4003879C5 /* FoursquareVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5233223E184D40D4003879C5 /* FoursquareVenue.m */; };
 		5234110218609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 5234110118609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png */; };
 		523411051860A02E00F6FA5A /* BucketListHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523411041860A02E00F6FA5A /* BucketListHeaderView.m */; };
+		523411091860EC3F00F6FA5A /* bucketdetails_imageview_imagebottomshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 523411081860EC3F00F6FA5A /* bucketdetails_imageview_imagebottomshadow.png */; };
 		523D5483184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 523D5481184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png */; };
 		523D5484184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 523D5482184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png */; };
 		523D548A18539245009A8F7B /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 523D548818539245009A8F7B /* UserProfileViewController.m */; };
@@ -208,6 +209,7 @@
 		5234110118609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketcell_imageview_ischeckedoverlay.png; sourceTree = "<group>"; };
 		523411031860A02E00F6FA5A /* BucketListHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketListHeaderView.h; sourceTree = "<group>"; };
 		523411041860A02E00F6FA5A /* BucketListHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketListHeaderView.m; sourceTree = "<group>"; };
+		523411081860EC3F00F6FA5A /* bucketdetails_imageview_imagebottomshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetails_imageview_imagebottomshadow.png; sourceTree = "<group>"; };
 		523D5481184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetailviewcontroller_checkbutton_selected.png; sourceTree = "<group>"; };
 		523D5482184E883E009A8F7B /* bucketdetailviewcontroller_checkbutton_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucketdetailviewcontroller_checkbutton_normal.png; sourceTree = "<group>"; };
 		523D548818539245009A8F7B /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 		529FAF7A185A905E006DE8D9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				523411081860EC3F00F6FA5A /* bucketdetails_imageview_imagebottomshadow.png */,
 				5234110118609D2000F6FA5A /* bucketcell_imageview_ischeckedoverlay.png */,
 				529FAFA6185E79E8006DE8D9 /* activityfeedvc_button_checkin.png */,
 				529FAFA8185E7BCF006DE8D9 /* activityfeedvc_button_status.png */,
@@ -957,6 +960,7 @@
 				5AC9DC20182AC7F90051EF9A /* KyleMai.storyboard in Resources */,
 				E5DB80CD18286F3500C0DA0C /* yoga@2x.png in Resources */,
 				529FAFA5185D32A0006DE8D9 /* activityfeedvc_icon_mappin.png in Resources */,
+				523411091860EC3F00F6FA5A /* bucketdetails_imageview_imagebottomshadow.png in Resources */,
 				529FAF98185D0304006DE8D9 /* bucketdetails_icon_mappin.png in Resources */,
 				5A2F2B23182C00B30050A227 /* background3_blur@2x.png in Resources */,
 				523D54D41857DA86009A8F7B /* walkthrough_atx@2x.png in Resources */,
@@ -1161,8 +1165,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Webb (ZT7499BGJE)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Webb (ZT7499BGJE)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1186,8 +1190,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Affiliate App llc (AYXNN5VFR7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

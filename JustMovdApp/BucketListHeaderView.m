@@ -30,20 +30,22 @@
 
 - (void)styleView
 {
+    UIBezierPath *shadowPath;
+    
+    shadowPath = [UIBezierPath bezierPathWithRect:self.mainView.bounds];
+    
     self.titleLabel.font      = titleFont;
     self.titleLabel.textColor = [UIColor darkGrayColor];
     
     self.completedLabel.font  = titleFont;
     self.completedLabel.textColor = [UIColor colorWithRed:26.0/255.0 green:158.0/255.0 blue:151.0/255.0 alpha:1.0];
     
-    self.mainView.layer.cornerRadius       = 3.0f;
-    self.mainView.layer.shadowColor        = [UIColor blackColor].CGColor;
-    self.mainView.layer.shadowOpacity      = 0.3f;
-    self.mainView.layer.shadowRadius       = 0.6f;
-    self.mainView.layer.shadowOffset       = CGSizeMake(0, 0.6f);
-    self.mainView.layer.shadowPath         = [[UIBezierPath bezierPathWithRoundedRect:self.frame cornerRadius:3.0f] CGPath];
-    self.mainView.layer.shouldRasterize    = YES;
-    self.mainView.layer.rasterizationScale = 2.0f;
+    self.mainView.layer.masksToBounds = NO;
+    self.mainView.layer.shadowColor   = [UIColor blackColor].CGColor;
+    self.mainView.layer.shadowOpacity = 0.3f;
+    self.mainView.layer.shadowRadius  = 0.6f;
+    self.mainView.layer.shadowOffset  = CGSizeMake(0, 0.6f);
+    self.mainView.layer.shadowPath    = shadowPath.CGPath;
     
     self.mainView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
 }

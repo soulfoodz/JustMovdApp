@@ -11,6 +11,7 @@
                 <outlet property="cityLabel" destination="LHK-L9-U9v" id="iLX-bz-LC0"/>
                 <outlet property="creatorAvatar" destination="w1h-eI-FmD" id="pdT-AW-sod"/>
                 <outlet property="creatorLabel" destination="f3G-X0-mfd" id="iFs-Rb-t0F"/>
+                <outlet property="imageShadow" destination="kkn-Bv-HsO" id="efu-gn-I8k"/>
                 <outlet property="imagesScroller" destination="uSg-hy-s8g" id="6cE-6d-Yra"/>
                 <outlet property="infoView" destination="9zr-rF-19C" id="ObE-Ex-chZ"/>
                 <outlet property="mainScroller" destination="VHX-2l-pbA" id="0Xc-YH-K8f"/>
@@ -44,21 +45,34 @@
                                 <action selector="refreshImages:" destination="-1" eventType="touchUpInside" id="gVV-Vn-0nM"/>
                             </connections>
                         </button>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="uSg-hy-s8g">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                        <view contentMode="scaleToFill" id="J2P-nS-8Tc">
+                            <rect key="frame" x="0.0" y="0.0" width="360" height="320"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <connections>
-                                <outlet property="delegate" destination="-1" id="tmx-rA-ILa"/>
-                            </connections>
-                        </scrollView>
-                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="9St-9V-pdj">
-                            <rect key="frame" x="160" y="280" width="39" height="37"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </pageControl>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="z8q-rf-nmH">
-                            <rect key="frame" x="169" y="168" width="20" height="20"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </activityIndicatorView>
+                            <subviews>
+                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="uSg-hy-s8g">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="z8q-rf-nmH">
+                                            <rect key="frame" x="150" y="150" width="20" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="tmx-rA-ILa"/>
+                                    </connections>
+                                </scrollView>
+                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bucketdetails_imageview_imagebottomshadow.png" id="kkn-Bv-HsO">
+                                    <rect key="frame" x="0.0" y="280" width="320" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="9St-9V-pdj">
+                                    <rect key="frame" x="141" y="290" width="39" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </pageControl>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
                         <view contentMode="scaleToFill" id="9zr-rF-19C">
                             <rect key="frame" x="0.0" y="320" width="320" height="269"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -150,6 +164,7 @@
     <resources>
         <image name="bucketdetails_button_refresh.png" width="60" height="60"/>
         <image name="bucketdetails_icon_mappin.png" width="66" height="100"/>
+        <image name="bucketdetails_imageview_imagebottomshadow.png" width="640" height="80"/>
         <image name="chevron.png" width="8" height="12"/>
     </resources>
 </document>

@@ -40,6 +40,8 @@ typedef enum {checked, unchecked} ButtonState;
 @property (weak, nonatomic) IBOutlet UIScrollView  *mainScroller;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *imageShadow;
+
 
 @property (strong, nonatomic) NSArray            *imagesArray;
 @property (strong, nonatomic) NSMutableArray     *imageViews;
@@ -117,6 +119,8 @@ static NSString *removeCheckString = @"remove";
 {
     UITapGestureRecognizer *tapGesture;
     
+    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMap)];
+    
     self.titleLabel.font         = titleFont;
     self.titleLabel.textColor    = titleColor;
     
@@ -143,9 +147,6 @@ static NSString *removeCheckString = @"remove";
     self.cityLabel.font      = subtitleFont;
     self.cityLabel.textColor = [UIColor darkGrayColor];
     
-    
-    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToMap)];
-
     self.mapViewContainer.layer.cornerRadius = 3.0f;
     self.mapViewContainer.clipsToBounds      = YES;
     self.mapViewContainer.backgroundColor    = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0];
@@ -155,7 +156,7 @@ static NSString *removeCheckString = @"remove";
     self.activityIndicator.hidesWhenStopped = YES;
     self.activityIndicator.center           = CGPointMake(160, 160);
     
-    self.pageControl.center = CGPointMake(160, 300);
+    self.pageControl.center = CGPointMake(160, 306);
     
     self.refreshButton.center = CGPointMake(160, 160);
     self.refreshButton.hidden = YES;
@@ -346,22 +347,23 @@ static NSString *removeCheckString = @"remove";
 {
     CGRect frame;
     UIImageView *newImageView;
+    UIView      *pageView;
     
     if (page < 0 || page >= self.imagesArray.count)
-    {
         return;
-    }
     
-    UIView *pageView = [self.imageViews objectAtIndex:page];
+    pageView = [self.imageViews objectAtIndex:page];
+    
     if ((NSNull *)pageView == [NSNull null])
     {
-        frame = CGRectMake(0, 0, 320, 320);//self.imagesScroller.bounds;
+        frame = CGRectMake(0, 0, 320, 320);
         frame.origin.x = frame.size.width * page;
         frame.origin.y = 0.0f;
         
         newImageView = [[UIImageView alloc] initWithImage:[self.imagesArray objectAtIndex:page]];
         newImageView.contentMode = UIViewContentModeScaleAspectFill;
         newImageView.frame = frame;
+        
         [self.imagesScroller addSubview:newImageView];
         
         [self.imageViews replaceObjectAtIndex:page withObject:newImageView];
@@ -381,6 +383,9 @@ static NSString *removeCheckString = @"remove";
     
     // Update the page control and activityIndicator
     self.pageControl.currentPage = image;
+    
+    // Display the shadow at the bottom of the image
+    self.imageShadow.hidden = NO;
     
     // Work out which pages you want to load
     firstImage = image - 1;

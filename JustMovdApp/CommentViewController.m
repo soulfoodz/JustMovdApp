@@ -318,9 +318,7 @@
      ];
 }
 
-
 #pragma mark - Keyboard Notifications
-
 
 - (IBAction)addCommentPressed:(UIButton *)sender
 {
